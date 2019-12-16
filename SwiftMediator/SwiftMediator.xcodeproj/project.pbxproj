@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8350FD8838654FA243BFF033 /* Pods_SwiftMediator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C62ADDA2547DD89604651D /* Pods_SwiftMediator.framework */; };
 		9191156E238E526C00503645 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9191156D238E526C00503645 /* AppDelegate.swift */; };
 		91911570238E526C00503645 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9191156F238E526C00503645 /* SceneDelegate.swift */; };
 		91911572238E526C00503645 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91911571238E526C00503645 /* ViewController.swift */; };
@@ -14,9 +15,11 @@
 		91911577238E526F00503645 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91911576238E526F00503645 /* Assets.xcassets */; };
 		9191157A238E526F00503645 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91911578238E526F00503645 /* LaunchScreen.storyboard */; };
 		91911583238E52BC00503645 /* SwiftMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91911582238E52BC00503645 /* SwiftMediator.swift */; };
+		E239CF8223989B2800745924 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239CF8123989B2800745924 /* TestVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6C919F46FD9D933FC426A6F2 /* Pods-SwiftMediator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftMediator.release.xcconfig"; path = "Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator.release.xcconfig"; sourceTree = "<group>"; };
 		9191156A238E526C00503645 /* SwiftMediator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMediator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9191156D238E526C00503645 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9191156F238E526C00503645 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,9 @@
 		91911579238E526F00503645 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9191157B238E526F00503645 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91911582238E52BC00503645 /* SwiftMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMediator.swift; sourceTree = "<group>"; };
+		99C62ADDA2547DD89604651D /* Pods_SwiftMediator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftMediator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E239CF8123989B2800745924 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
+		FFD56C1FF839DD1FD453C775 /* Pods-SwiftMediator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftMediator.debug.xcconfig"; path = "Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +39,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8350FD8838654FA243BFF033 /* Pods_SwiftMediator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		475EC51265997B865FFC92AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				99C62ADDA2547DD89604651D /* Pods_SwiftMediator.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		532612E215DD55A8A3AA246D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				FFD56C1FF839DD1FD453C775 /* Pods-SwiftMediator.debug.xcconfig */,
+				6C919F46FD9D933FC426A6F2 /* Pods-SwiftMediator.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		91911561238E526C00503645 = {
 			isa = PBXGroup;
 			children = (
 				9191156C238E526C00503645 /* SwiftMediator */,
 				9191156B238E526C00503645 /* Products */,
+				532612E215DD55A8A3AA246D /* Pods */,
+				475EC51265997B865FFC92AF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,6 +88,7 @@
 				9191156D238E526C00503645 /* AppDelegate.swift */,
 				9191156F238E526C00503645 /* SceneDelegate.swift */,
 				91911571238E526C00503645 /* ViewController.swift */,
+				E239CF8123989B2800745924 /* TestVC.swift */,
 				91911573238E526C00503645 /* Main.storyboard */,
 				91911576238E526F00503645 /* Assets.xcassets */,
 				91911578238E526F00503645 /* LaunchScreen.storyboard */,
@@ -85,9 +112,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9191157E238E526F00503645 /* Build configuration list for PBXNativeTarget "SwiftMediator" */;
 			buildPhases = (
+				12B4F0206F38EAD20978EB36 /* [CP] Check Pods Manifest.lock */,
 				91911566238E526C00503645 /* Sources */,
 				91911567238E526C00503645 /* Frameworks */,
 				91911568238E526C00503645 /* Resources */,
+				D74C3B791A7D0BE01C2E1380 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -144,11 +173,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		12B4F0206F38EAD20978EB36 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftMediator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D74C3B791A7D0BE01C2E1380 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		91911566238E526C00503645 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E239CF8223989B2800745924 /* TestVC.swift in Sources */,
 				91911583238E52BC00503645 /* SwiftMediator.swift in Sources */,
 				91911572238E526C00503645 /* ViewController.swift in Sources */,
 				9191156E238E526C00503645 /* AppDelegate.swift in Sources */,
@@ -294,6 +366,7 @@
 		};
 		9191157F238E526F00503645 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFD56C1FF839DD1FD453C775 /* Pods-SwiftMediator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -313,6 +386,7 @@
 		};
 		91911580238E526F00503645 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6C919F46FD9D933FC426A6F2 /* Pods-SwiftMediator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

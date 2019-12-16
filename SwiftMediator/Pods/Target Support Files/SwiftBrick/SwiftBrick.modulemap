@@ -1,0 +1,6 @@
+framework module SwiftBrick {
+  umbrella header "SwiftBrick-umbrella.h"
+
+  export *
+  module * { export * }
+}
