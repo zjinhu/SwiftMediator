@@ -11,26 +11,93 @@ import UIKit
 open class SwiftMediator {
     public static let shared = SwiftMediator()
 }
-
 //MARK:--路由跳转
 public extension SwiftMediator {
-    func openUrl(url: URL) {
-        if url.path.count > 0{
-            
+    
+    
+    /// URL路由跳转 跳转区分Push、present、fullScreen
+    /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
+    func openUrl(_ urlString: String?) {
+        guard let url = URL.init(string: urlString!) else {
+            return
+        }
+        if let scheme = url.scheme,
+            (scheme == "http" || scheme == "https") {
+            // Web View Controller
+        }else{
+            let path = url.path as String
+            let startIndex = path.index(path.startIndex, offsetBy: 1)
+            let pathArray = path.suffix(from: startIndex).components(separatedBy: "/")
+            guard pathArray.count == 2 else {
+                return
+            }
+            switch url.host {
+            case "present":
+                present(moduleName: pathArray.first!, toVC: pathArray.last!, paramsDic: url.queryDictionary)
+            case "fullScreen":
+                present(moduleName: pathArray.first!, toVC: pathArray.last!, paramsDic: url.queryDictionary, modelStyle: 1)
+            default:
+                push(moduleName: pathArray.first!, toVC: pathArray.last!, paramsDic: url.queryDictionary)
+            }
         }
     }
     
+    /// 原生路由Push
+    /// - Parameters:
+    ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
+    ///   - moduleName: 目标VC所在组件名称
+    ///   - toVC: 目标VC名称
+    ///   - paramsDic: 参数字典
+    func push(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil) {
+        guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
+        vc.hidesBottomBarWhenPushed = true
+        if fromVC != nil {
+            fromVC?.navigationController?.pushViewController(vc, animated: true)
+        }else{
+            currentNavigationController()?.pushViewController(vc, animated: true)
+        }
+    }
     
+    /// 原生路由present
+    /// - Parameters:
+    ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
+    ///   - moduleName: 目标VC所在组件名称
+    ///   - toVC: 目标VC名称
+    ///   - paramsDic: 参数字典
+    ///   - modelStyle: 0模态样式为默认，1是全屏模态。。。。。
+    func present(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil,modelStyle: Int = 0) {
+        guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
+
+        let nav = UINavigationController.init(rootViewController: vc)
+        nav.navigationBar.backgroundColor = .white
+        nav.navigationBar.barTintColor = .white
+        nav.navigationBar.isTranslucent = false
+        switch modelStyle {
+        case 1:
+            nav.modalPresentationStyle = .fullScreen
+        default:
+            if #available(iOS 13.0, *) {
+                nav.modalPresentationStyle = .automatic
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        if fromVC != nil {
+            fromVC?.present(nav, animated: true, completion: nil)
+        }else{
+            currentViewController()?.present(nav, animated: true, completion: nil)
+        }
+    }
 }
 
 //MARK:--获取最上层视图
 public extension SwiftMediator {
     
-    // 获取顶层控制器 根据window
+    /// 获取顶层Nav 根据window
     func currentNavigationController() -> (UINavigationController?) {
         return currentViewController()?.navigationController
     }
-    // 获取顶层控制器 根据window
+    /// 获取顶层VC 根据window
     func currentViewController() -> (UIViewController?) {
         var window = UIApplication.shared.keyWindow
         //是否为当前显示的window
@@ -47,13 +114,12 @@ public extension SwiftMediator {
         return getCurrentViewController(withCurrentVC: vc)
     }
     
-    ///根据控制器获取 顶层控制器
+    ///根据控制器获取 顶层控制器 递归
     private func getCurrentViewController(withCurrentVC VC :UIViewController?) -> UIViewController? {
         if VC == nil {
             print("🌶： 找不到顶层控制器")
             return nil
         }
-        
         if let presentVC = VC?.presentedViewController {
             //modal出来的 控制器
             return getCurrentViewController(withCurrentVC: presentVC)
@@ -73,16 +139,15 @@ public extension SwiftMediator {
             }else{
                 return VC
             }
-            
         }
         else if let naiVC = VC as? UINavigationController {
             // 控制器是 nav
             if naiVC.viewControllers.count > 0 {
-                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
+//                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
+                return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
             }else{
                 return VC
-            }
-            //            return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
+            } 
         }
         else {
             // 返回顶控制器
@@ -90,83 +155,78 @@ public extension SwiftMediator {
         }
     }
 }
-//MARK:--初始化对象
+//MARK:--初始化对象--Swift
 public extension SwiftMediator {
     
-    func initVC(vcName: String, dic: [String : Any]) -> UIViewController?{
-        guard let className = objc_getClass(vcName) as? UIViewController.Type else {
+    /// 反射VC初始化并且赋值
+    /// - Parameters:
+    ///   - moduleName: 组件boundle名称
+    ///   - vcName: VC名称
+    ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
+    func initVC(moduleName: String, vcName: String, dic: [String : Any]? = nil) -> UIViewController?{
+        let className = "\(moduleName).\(vcName)"
+        let cls: AnyClass? = NSClassFromString(className)
+        guard let vc = cls as? UIViewController.Type else {
             return nil
         }
-        return className.init()
+        let controller = vc.init()
+        setObjectParams(obj: controller, paramsDic: dic)
+        return controller
     }
     
-    //MARK:-- 获取本类所有 ‘属性‘ 的数组
-    func allProperties(cName: String) ->[String] {
-        // 这个类型可以使用CUnsignedInt,对应Swift中的UInt32
-        var count: UInt32 = 0
-        
-        let className = objc_getClass(cName) as! AnyClass.Type
-
-        let properties = class_copyPropertyList(className, &count)
-        
-        var propertyNames: [String] = []
-        
-        // Swift中类型是严格检查的，必须转换成同一类型
-        for index in 0...count-1 {
-            // UnsafeMutablePointer<objc_property_t>是
-            // 可变指针，因此properties就是类似数组一样，可以
-            // 通过下标获取
-            let property = properties![Int(index)]
-            let name = property_getName(property)
-            
-            // 这里还得转换成字符串
-            let strName = String.init(cString: name)
-            propertyNames.append(strName);
+    /// 判断属性是否存在
+    /// - Parameters:
+    ///   - name: 属性名称
+    ///   - obj: 目标对象
+    private func getTypeOfProperty (_ name: String, obj:AnyObject) -> Bool{
+        // 注意：obj是实例(对象)，如果是类，则无法获取其属性
+        let morror = Mirror.init(reflecting: obj)
+        let superMorror = Mirror.init(reflecting: obj).superclassMirror
+        for (key,_) in morror.children {
+            if key == name {
+               return  true
+            }
         }
-        
-        // 不要忘记释放内存，否则C语言的指针很容易成野指针的
-        free(properties)
-        
-        return propertyNames;
+        for (key,_) in superMorror!.children {
+            if key == name {
+               return  true
+            }
+        }
+        return false
     }
-    //MARK:-- 获取本类所有 ‘方法‘ 的数组
-    func allMethods(cName: String) ->[Selector]{
-        var count: UInt32 = 0
-        let className = objc_getClass(cName) as! AnyClass.Type
-        let methods = class_copyMethodList(className, &count)
-        var methodNames: [Selector] = []
-        for index in 0...count-1{
-            let method = methods![Int(index)]
-            let sel = method_getName(method)
-            methodNames.append(sel);
-            let methodName = sel_getName(sel)
-            let argument = method_getNumberOfArguments(method)
-            
-            print("name: \(methodName), arguemtns: \(argument)")
+    
+    /// KVC给属性赋值
+    /// - Parameters:
+    ///   - obj: 目标对象
+    ///   - paramsDic: 参数字典Key必须对应属性名
+    private func setObjectParams(obj: AnyObject, paramsDic:[String:Any]?) {
+        if let paramsDic = paramsDic {
+            for (key,value) in paramsDic {
+                if getTypeOfProperty(key, obj: obj){
+                    obj.setValue(value, forKey: key)
+                }
+            }
         }
-        free(methods)
-        return methodNames
-    }
-    //MARK:-- 获取本类所有 ‘成员变量‘ 的数组
-    func allMemberVariables(cName: String) ->[String] {
-        var count:UInt32 = 0
-        let className = objc_getClass(cName) as! AnyClass.Type
-        let ivars = class_copyIvarList(className, &count)
-        
-        var result: [String] = []
-        for index in 0...count-1{
-            let ivar = ivars![Int(index)]
-            
-            let name = ivar_getName(ivar)
-            
-            let varName = String.init(cString: name!)
-            result.append(varName)
-        }
-        free(ivars)
-        return result
     }
     
 }
+//MARK:--URL获取query字典
+extension URL {
+    var queryDictionary: [String: Any]? {
+        guard let query = self.query else { return nil}
 
+        var queryStrings = [String: String]()
+        for pair in query.components(separatedBy: "&") {
 
+            let key = pair.components(separatedBy: "=")[0]
 
+            let value = pair
+                .components(separatedBy:"=")[1]
+                .replacingOccurrences(of: "+", with: " ")
+                .removingPercentEncoding ?? ""
+
+            queryStrings[key] = value
+        }
+        return queryStrings
+    }
+}
