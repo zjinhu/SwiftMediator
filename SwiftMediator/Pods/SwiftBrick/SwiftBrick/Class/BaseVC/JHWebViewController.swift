@@ -71,9 +71,11 @@ open class JHWebViewController: JHViewController ,WKUIDelegate,WKNavigationDeleg
             self.request?.setValue(cookieStr, forHTTPHeaderField: "Cookie")
         }
     }
-    
+    @objc
     public var navTitle : String?
+    @objc
     public var url : String?
+    @objc
     public var agent : String? {
         didSet{
             let web = UIWebView.init()

@@ -1,0 +1,30 @@
+lane :SwiftMediator do |options|
+
+  target_version = options[:tag]
+ 
+  target_project = "SwiftMediator"
+  spec_path = "#{target_project}.podspec"
+  # git pull
+  git_pull 
+  # 确认是 master 分支
+  ensure_git_branch
+  # 修改 spec 为即将发布的版本
+  version_bump_podspec(path: spec_path, version_number: target_version)
+  # 提交代码到远程仓库
+  git_add(path: '.')
+  git_commit(path: '.', message: 'release')
+  push_to_git_remote
+  # 检查对于 tag 是否已经存在
+  if git_tag_exists(tag: target_version)
+      # 删除对应 tag
+      remove_git_tag(tag: target_version)
+  end
+  # 添加 tag
+  add_git_tag(tag: target_version)
+  # 提交 tag
+  push_git_tags
+  # 验证 spec 文件
+  pod_lib_lint(verbose: true,allow_warnings: true,use_libraries: true)
+  # pod trunk push 'spec_path'
+  pod_push(path: spec_path, allow_warnings: true ,verbose: true,use_libraries: true)
+end

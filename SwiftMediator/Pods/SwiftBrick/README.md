@@ -1,14 +1,17 @@
-# JHToolsModule
-工具类集合，包括类别，宏，工具视图，base视图，自用
+# SwiftBrick
+工具类集合，方便快速搭建UI各种视图
+包括：
+  * 1：需要继承的BaseVC，提供JHViewController，JHTableViewController，JHCollectionViewController，JHWebViewController，方便快速搭建
+  * 2：宏，UI固定数据，字体，log输出
+  * 3：工具视图，提供需要继承的JHTableViewCell，JHTableViewHeaderFooterView，JHCollectionViewCell，JHCollectionReusableView，内含注册以及复用方法，重写布局方法和传递Model方法即可
+  * 4：SnapKit工具类，方便快速创建平时开发所使用的各种控件，一行代码创建view并布局
 
-依赖  Masonry   LNRefresh  EasyShowView  SDWebImage
+依赖  SnapKit 
+
+代码示例请参考Demo
 
 ##  安装
-### 1.手动添加:<br>
-*   1.将 JHToolsModule 文件夹添加到工程目录中<br>
-*   2.导入 JHUITools.h
-
-### 2.CocoaPods:<br>
-*   1.在 Podfile 中添加 pod 'JHToolsModule'<br>
+### .CocoaPods:<br>
+*   1.在 Podfile 中添加 pod 'SwiftBrick'<br>
 *   2.执行 pod install 或 pod update<br>
-*   3.导入 JHUITools.h
+*   3.导入 #import SwiftBrick

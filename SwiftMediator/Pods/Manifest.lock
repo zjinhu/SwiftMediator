@@ -1,30 +1,30 @@
 PODS:
   - SnapKit (5.0.1)
-  - SwiftBrick (0.0.5):
-    - SwiftBrick/BaseVC (= 0.0.5)
-    - SwiftBrick/Extensions (= 0.0.5)
-    - SwiftBrick/SnapKit (= 0.0.5)
-    - SwiftBrick/Utility (= 0.0.5)
-  - SwiftBrick/BaseVC (0.0.5):
+  - SwiftBrick (0.0.7):
+    - SwiftBrick/BaseVC (= 0.0.7)
+    - SwiftBrick/Extensions (= 0.0.7)
+    - SwiftBrick/SnapKit (= 0.0.7)
+    - SwiftBrick/Utility (= 0.0.7)
+  - SwiftBrick/BaseVC (0.0.7):
     - SnapKit
     - SwiftBrick/Utility
-  - SwiftBrick/Extensions (0.0.5)
-  - SwiftBrick/SnapKit (0.0.5):
+  - SwiftBrick/Extensions (0.0.7)
+  - SwiftBrick/SnapKit (0.0.7):
     - SnapKit
-  - SwiftBrick/Utility (0.0.5)
+  - SwiftBrick/Utility (0.0.7)
 
 DEPENDENCIES:
   - SwiftBrick
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - SnapKit
     - SwiftBrick
 
 SPEC CHECKSUMS:
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
-  SwiftBrick: fc83f5d835e4a743c901cb2024d579d079c1e6fa
+  SwiftBrick: 6f2afb1bf04b7c01348a270b83c2f7bc913afaa2
 
-PODFILE CHECKSUM: e7670d4c4555db688f2a79d54d164e9e02d31511
+PODFILE CHECKSUM: 221ee8a16517a18f7fabfab098106e3c1a504071
 
 COCOAPODS: 1.8.4
