@@ -14,7 +14,6 @@ open class SwiftMediator {
 //MARK:--路由跳转
 public extension SwiftMediator {
     
-    
     /// URL路由跳转 跳转区分Push、present、fullScreen
     /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
     func openUrl(_ urlString: String?) {
@@ -67,7 +66,7 @@ public extension SwiftMediator {
     ///   - modelStyle: 0模态样式为默认，1是全屏模态。。。。。
     func present(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil,modelStyle: Int = 0) {
         guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
-
+        
         let nav = UINavigationController.init(rootViewController: vc)
         nav.navigationBar.backgroundColor = .white
         nav.navigationBar.barTintColor = .white
@@ -97,6 +96,7 @@ public extension SwiftMediator {
     func currentNavigationController() -> (UINavigationController?) {
         return currentViewController()?.navigationController
     }
+    
     /// 获取顶层VC 根据window
     func currentViewController() -> (UIViewController?) {
         var window = UIApplication.shared.keyWindow
@@ -143,7 +143,7 @@ public extension SwiftMediator {
         else if let naiVC = VC as? UINavigationController {
             // 控制器是 nav
             if naiVC.viewControllers.count > 0 {
-//                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
+                //                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
                 return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
             }else{
                 return VC
@@ -184,12 +184,12 @@ public extension SwiftMediator {
         let superMorror = Mirror.init(reflecting: obj).superclassMirror
         for (key,_) in morror.children {
             if key == name {
-               return  true
+                return  true
             }
         }
         for (key,_) in superMorror!.children {
             if key == name {
-               return  true
+                return  true
             }
         }
         return false
@@ -210,23 +210,50 @@ public extension SwiftMediator {
     }
     
 }
+
 //MARK:--URL获取query字典
 extension URL {
     var queryDictionary: [String: Any]? {
         guard let query = self.query else { return nil}
-
+        
         var queryStrings = [String: String]()
         for pair in query.components(separatedBy: "&") {
-
+            
             let key = pair.components(separatedBy: "=")[0]
-
+            
             let value = pair
                 .components(separatedBy:"=")[1]
                 .replacingOccurrences(of: "+", with: " ")
                 .removingPercentEncoding ?? ""
-
+            
             queryStrings[key] = value
         }
         return queryStrings
+    }
+}
+
+//MARK:--路由跳转
+public extension SwiftMediator {
+    
+    /// 路由调用类方法，仅支持单一参数或者无参数，样式：@objc class func qqqqq(_ name: String)
+    /// - Parameters:
+    ///   - moduleName: 组件名称
+    ///   - objName: 类名称
+    ///   - selName: 方法名
+    ///   - param: 参数
+    func callClassMethod(moduleName: String, objName: String, selName: String, param: Any? = nil ){
+        let className = "\(moduleName).\(objName)"
+        let cls: AnyClass? = NSClassFromString(className)
+
+        let sel = NSSelectorFromString(selName)
+        
+        guard let method = class_getClassMethod(cls, sel) else {
+            return
+        }
+        let imp = method_getImplementation(method)
+        
+        typealias Function = @convention(c) (AnyObject, Selector, Any?) -> Void
+        let function = unsafeBitCast(imp, to: Function.self)
+        return function(cls!, sel, param)
     }
 }

@@ -13,8 +13,9 @@ class ViewController: JHTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "路由示例"
-        self.mainDatas = ["present用法1","present用法2","push用法1","push用法2","push用法3","URL用法1","URL用法2","URL用法3","Test"]
+        self.mainDatas = ["present用法1","present用法2","push用法1","push用法2","push用法3","URL用法1","URL用法2","URL用法3","Test","method"]
     }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = JHTableViewCell.dequeueReusableCell(tableView: tableView)
         cell.textLabel?.text = self.mainDatas[indexPath.row] as? String
@@ -52,7 +53,8 @@ class ViewController: JHTableViewController {
             SwiftMediator.shared.openUrl("app://fullScreen/SwiftMediator/TestVC?str=123&titleName=456")
         case 8:
             SwiftMediator.shared.push(moduleName: "SwiftBrick", toVC: "JHWebViewController",paramsDic: ["navTitle":"123123","url":"https://www.qq.com"])
-
+        case 9:
+            SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
         default:
             print("")
         }

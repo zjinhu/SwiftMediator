@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81F7DBAE23C6D60C0025C5FD /* TestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7DBAD23C6D60C0025C5FD /* TestClass.swift */; };
 		8350FD8838654FA243BFF033 /* Pods_SwiftMediator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C62ADDA2547DD89604651D /* Pods_SwiftMediator.framework */; };
 		9191156E238E526C00503645 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9191156D238E526C00503645 /* AppDelegate.swift */; };
 		91911570238E526C00503645 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9191156F238E526C00503645 /* SceneDelegate.swift */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		6C919F46FD9D933FC426A6F2 /* Pods-SwiftMediator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftMediator.release.xcconfig"; path = "Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator.release.xcconfig"; sourceTree = "<group>"; };
+		81F7DBAD23C6D60C0025C5FD /* TestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClass.swift; sourceTree = "<group>"; };
 		9191156A238E526C00503645 /* SwiftMediator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMediator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9191156D238E526C00503645 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9191156F238E526C00503645 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				9191156F238E526C00503645 /* SceneDelegate.swift */,
 				91911571238E526C00503645 /* ViewController.swift */,
 				E239CF8123989B2800745924 /* TestVC.swift */,
+				81F7DBAD23C6D60C0025C5FD /* TestClass.swift */,
 				91911573238E526C00503645 /* Main.storyboard */,
 				91911576238E526F00503645 /* Assets.xcassets */,
 				91911578238E526F00503645 /* LaunchScreen.storyboard */,
@@ -224,6 +227,7 @@
 				91911583238E52BC00503645 /* SwiftMediator.swift in Sources */,
 				91911572238E526C00503645 /* ViewController.swift in Sources */,
 				9191156E238E526C00503645 /* AppDelegate.swift in Sources */,
+				81F7DBAE23C6D60C0025C5FD /* TestClass.swift in Sources */,
 				91911570238E526C00503645 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
