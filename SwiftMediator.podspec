@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftMediator'
-  s.version          = '0.0.1'
+  s.version          = '0.0.2'
   s.summary          = '路由.'
  
   s.description      = <<-DESC
