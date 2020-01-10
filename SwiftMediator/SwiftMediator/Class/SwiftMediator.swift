@@ -529,6 +529,16 @@ open class AppDelegateManager : AppDelegateMediator {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarFrame:oldStatusBarFrame)}
     }
     
+    @available(iOS 13.0, *)
+    public func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        delegates.forEach { _ = $0.application?(application, configurationForConnecting:connectingSceneSession,options:options)}
+        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
+    
+    @available(iOS 13.0, *)
+    public func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
+        delegates.forEach { _ = $0.application?(application, didDiscardSceneSessions:sceneSessions)}
+    }
     //MARK:--- 处理SiriKit意图 ----------
     /// 处理指定的SiriKit意图
     /*
