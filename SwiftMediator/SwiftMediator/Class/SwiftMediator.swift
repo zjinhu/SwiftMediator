@@ -234,30 +234,8 @@ extension URL {
 
 //MARK:--路由跳转
 public extension SwiftMediator {
-    
-//    /// 路由调用类方法，仅支持单一参数或者无参数，样式：@objc class func qqqqq(_ name: String)
-//    /// - Parameters:
-//    ///   - moduleName: 组件名称
-//    ///   - objName: 类名称
-//    ///   - selName: 方法名
-//    ///   - param: 参数
-//    func callClassMethod(moduleName: String, objName: String, selName: String, param: Any? = nil ){
-//        let className = "\(moduleName).\(objName)"
-//        let cls: AnyClass? = NSClassFromString(className)
-//
-//        let sel = NSSelectorFromString(selName)
-//
-//        guard let method = class_getClassMethod(cls, sel) else {
-//            return
-//        }
-//        let imp = method_getImplementation(method)
-//
-//        typealias Function = @convention(c) (AnyObject, Selector, Any?) -> Void
-//        let function = unsafeBitCast(imp, to: Function.self)
-//        return function(cls!, sel, param)
-//    }
-    
-    /// 路由调用实例对象方法 @objc class func qqqqq(_ name: String)
+
+    /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)
     /// - Parameters:
     ///   - objc: 初始化好的对象
     ///   - selName: 方法名
@@ -272,7 +250,7 @@ public extension SwiftMediator {
         return objc.perform(sel, with: param, with: otherParam)
     }
     
-    /// 路由调用类方法：@objc class func qqqqq(_ name: String)
+    /// 路由调用类方法：必须标记@objc  例子：@objc  func qqqqq(_ name: String)
     /// - Parameters:
     ///   - moduleName: 组件名称
     ///   - className: 类名称
@@ -282,7 +260,6 @@ public extension SwiftMediator {
     func callClassMethod(moduleName: String, className: String, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
         
         let className = "\(moduleName).\(className)"
-        
         guard let cls: AnyObject? = NSClassFromString(className) else {
             return nil
         }
@@ -294,6 +271,29 @@ public extension SwiftMediator {
 
         return cls?.perform(sel, with: param, with: otherParam)
     }
+    
+    //    /// 路由调用类方法，仅支持单一参数或者无参数，样式：@objc class func qqqqq(_ name: String)
+    //    /// - Parameters:
+    //    ///   - moduleName: 组件名称
+    //    ///   - objName: 类名称
+    //    ///   - selName: 方法名
+    //    ///   - param: 参数
+    //    func callClassMethod(moduleName: String, objName: String, selName: String, param: Any? = nil ){
+    //        let className = "\(moduleName).\(objName)"
+    //        let cls: AnyClass? = NSClassFromString(className)
+    //
+    //        let sel = NSSelectorFromString(selName)
+    //
+    //        guard let method = class_getClassMethod(cls, sel) else {
+    //            return
+    //        }
+    //        let imp = method_getImplementation(method)
+    //
+    //        typealias Function = @convention(c) (AnyObject, Selector, Any?) -> Void
+    //        let function = unsafeBitCast(imp, to: Function.self)
+    //        return function(cls!, sel, param)
+    //    }
+        
 }
 
 //以下解耦方案参考https://juejin.im/post/5bd0259d5188251a29719086#comment
