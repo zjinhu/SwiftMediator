@@ -1,5 +1,5 @@
 # SwiftMediator
-Swift 路由和模块通信解耦工具。 可以让模块间无耦合的调用服务、页面跳转。无需注册，不需要协议，只需要知道目标VC的类名和module名称。
+Swift 路由和模块通信解耦工具。 可以让模块间无耦合的调用服务、页面跳转。无需注册，不需要协议，只需要知道目标VC的类名和module名称。添加AppDelegate、SceneDelegate解耦工具，只需要在主工程留下钩子即可，用法详见Demo。
 ## 安装
 ```
 pod ‘SwiftMediator’
