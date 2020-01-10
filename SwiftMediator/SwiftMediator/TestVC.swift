@@ -32,8 +32,9 @@ class TestVC: JHViewController {
         
     }
     @objc
-    func pppppp() {
-        print("111111")
+    func pppppp(_ name: String) -> String{
+        print("\(name)")
+        return "back!!!!"
     }
     @objc
     class func qqqqq(){
