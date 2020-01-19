@@ -8,15 +8,15 @@
 
 import UIKit
 
-open class SwiftMediator {
+public class SwiftMediator {
     public static let shared = SwiftMediator()
 }
 //MARK:--路由跳转
-public extension SwiftMediator {
+extension SwiftMediator {
     
     /// URL路由跳转 跳转区分Push、present、fullScreen
     /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
-    func openUrl(_ urlString: String?) {
+    public func openUrl(_ urlString: String?) {
         guard let url = URL.init(string: urlString!) else {
             return
         }
@@ -47,7 +47,7 @@ public extension SwiftMediator {
     ///   - moduleName: 目标VC所在组件名称
     ///   - toVC: 目标VC名称
     ///   - paramsDic: 参数字典
-    func push(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil) {
+    public func push(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil) {
         guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
         vc.hidesBottomBarWhenPushed = true
         if fromVC != nil {
@@ -64,7 +64,7 @@ public extension SwiftMediator {
     ///   - toVC: 目标VC名称
     ///   - paramsDic: 参数字典
     ///   - modelStyle: 0模态样式为默认，1是全屏模态。。。。。
-    func present(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil,modelStyle: Int = 0) {
+    public func present(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil,modelStyle: Int = 0) {
         guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
         
         let nav = UINavigationController.init(rootViewController: vc)
@@ -90,15 +90,15 @@ public extension SwiftMediator {
 }
 
 //MARK:--获取最上层视图
-public extension SwiftMediator {
+extension SwiftMediator {
     
     /// 获取顶层Nav 根据window
-    func currentNavigationController() -> (UINavigationController?) {
+    public func currentNavigationController() -> (UINavigationController?) {
         return currentViewController()?.navigationController
     }
     
     /// 获取顶层VC 根据window
-    func currentViewController() -> (UIViewController?) {
+    public func currentViewController() -> (UIViewController?) {
         var window = UIApplication.shared.keyWindow
         //是否为当前显示的window
         if window?.windowLevel != UIWindow.Level.normal{
@@ -156,14 +156,14 @@ public extension SwiftMediator {
     }
 }
 //MARK:--初始化对象--Swift
-public extension SwiftMediator {
+extension SwiftMediator {
     
     /// 反射VC初始化并且赋值
     /// - Parameters:
     ///   - moduleName: 组件boundle名称
     ///   - vcName: VC名称
     ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
-    func initVC(moduleName: String, vcName: String, dic: [String : Any]? = nil) -> UIViewController?{
+    public func initVC(moduleName: String, vcName: String, dic: [String : Any]? = nil) -> UIViewController?{
         let className = "\(moduleName).\(vcName)"
         let cls: AnyClass? = NSClassFromString(className)
         guard let vc = cls as? UIViewController.Type else {
@@ -213,7 +213,7 @@ public extension SwiftMediator {
 
 //MARK:--URL获取query字典
 extension URL {
-    var queryDictionary: [String: Any]? {
+    public var queryDictionary: [String: Any]? {
         guard let query = self.query else { return nil}
         
         var queryStrings = [String: String]()
@@ -233,7 +233,7 @@ extension URL {
 }
 
 //MARK:--路由跳转
-public extension SwiftMediator {
+extension SwiftMediator {
 
     /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)
     /// - Parameters:
@@ -241,7 +241,7 @@ public extension SwiftMediator {
     ///   - selName: 方法名
     ///   - param: 参数1
     ///   - otherParam: 参数2
-    func callObjcMethod(objc: AnyObject, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
+    public func callObjcMethod(objc: AnyObject, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
         
         let sel = NSSelectorFromString(selName)
         guard let _ = class_getInstanceMethod(type(of: objc), sel) else {
@@ -257,7 +257,7 @@ public extension SwiftMediator {
     ///   - selName: 方法名
     ///   - param: 参数1
     ///   - otherParam: 参数2
-    func callClassMethod(moduleName: String, className: String, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
+    public func callClassMethod(moduleName: String, className: String, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
         
         let className = "\(moduleName).\(className)"
         guard let cls: AnyObject? = NSClassFromString(className) else {
@@ -300,7 +300,7 @@ public extension SwiftMediator {
 //MARK:--AppDelegate解耦
 public typealias AppDelegateMediator = UIResponder & UIApplicationDelegate
 
-open class AppDelegateManager : AppDelegateMediator {
+public class AppDelegateManager : AppDelegateMediator {
     
     private let delegates:[AppDelegateMediator]
     
@@ -561,7 +561,7 @@ open class AppDelegateManager : AppDelegateMediator {
 public typealias SceneDelegateMediator = UIResponder & UIWindowSceneDelegate
 
 @available(iOS 13.0, *)
-open class SceneDelegateManager : SceneDelegateMediator {
+public class SceneDelegateManager : SceneDelegateMediator {
     
     private let delegates : [SceneDelegateMediator]
     
