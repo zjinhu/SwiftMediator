@@ -17,9 +17,8 @@ extension SwiftMediator {
     /// URL路由跳转 跳转区分Push、present、fullScreen
     /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
     public func openUrl(_ urlString: String?) {
-        guard let url = URL.init(string: urlString!) else {
-            return
-        }
+        guard let str = urlString, let url = URL.init(string: str) else { return }
+        
         if let scheme = url.scheme,
             (scheme == "http" || scheme == "https") {
             // Web View Controller
@@ -27,16 +26,14 @@ extension SwiftMediator {
             let path = url.path as String
             let startIndex = path.index(path.startIndex, offsetBy: 1)
             let pathArray = path.suffix(from: startIndex).components(separatedBy: "/")
-            guard pathArray.count == 2 else {
-                return
-            }
+            guard pathArray.count == 2 , let first = pathArray.first , let last = pathArray.last else { return }
             switch url.host {
             case "present":
-                present(moduleName: pathArray.first!, toVC: pathArray.last!, paramsDic: url.queryDictionary)
+                present(moduleName: first, toVC: last, paramsDic: url.queryDictionary)
             case "fullScreen":
-                present(moduleName: pathArray.first!, toVC: pathArray.last!, paramsDic: url.queryDictionary, modelStyle: 1)
+                present(moduleName: first, toVC: last, paramsDic: url.queryDictionary, modelStyle: 1)
             default:
-                push(moduleName: pathArray.first!, toVC: pathArray.last!, paramsDic: url.queryDictionary)
+                push(moduleName: first, toVC: last, paramsDic: url.queryDictionary)
             }
         }
     }
@@ -50,11 +47,11 @@ extension SwiftMediator {
     public func push(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil) {
         guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
         vc.hidesBottomBarWhenPushed = true
-        if fromVC != nil {
-            fromVC?.navigationController?.pushViewController(vc, animated: true)
-        }else{
+        guard let from = fromVC else {
             currentNavigationController()?.pushViewController(vc, animated: true)
+            return
         }
+        from.navigationController?.pushViewController(vc, animated: true)
     }
     
     /// 原生路由present
@@ -81,11 +78,12 @@ extension SwiftMediator {
                 // Fallback on earlier versions
             }
         }
-        if fromVC != nil {
-            fromVC?.present(nav, animated: true, completion: nil)
-        }else{
+
+        guard let from = fromVC else {
             currentViewController()?.present(nav, animated: true, completion: nil)
+            return
         }
+        from.present(nav, animated: true, completion: nil)
     }
 }
 
@@ -182,12 +180,18 @@ extension SwiftMediator {
         // 注意：obj是实例(对象)，如果是类，则无法获取其属性
         let morror = Mirror.init(reflecting: obj)
         let superMorror = Mirror.init(reflecting: obj).superclassMirror
+        
         for (key,_) in morror.children {
             if key == name {
                 return  true
             }
         }
-        for (key,_) in superMorror!.children {
+        
+        guard let superM = superMorror else {
+            return false
+        }
+        
+        for (key,_) in superM.children {
             if key == name {
                 return  true
             }
