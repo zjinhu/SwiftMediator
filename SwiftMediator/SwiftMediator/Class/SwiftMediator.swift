@@ -29,11 +29,11 @@ extension SwiftMediator {
             guard pathArray.count == 2 , let first = pathArray.first , let last = pathArray.last else { return }
             switch url.host {
             case "present":
-                present(moduleName: first, toVC: last, paramsDic: url.queryDictionary)
+                present(last, moduleName: first, paramsDic: url.queryDictionary)
             case "fullScreen":
-                present(moduleName: first, toVC: last, paramsDic: url.queryDictionary, modelStyle: 1)
+                present(last, moduleName: first, paramsDic: url.queryDictionary, modelStyle: 1)
             default:
-                push(moduleName: first, toVC: last, paramsDic: url.queryDictionary)
+                push(last, moduleName: first, paramsDic: url.queryDictionary)
             }
         }
     }
@@ -42,10 +42,14 @@ extension SwiftMediator {
     /// - Parameters:
     ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
     ///   - moduleName: 目标VC所在组件名称
-    ///   - toVC: 目标VC名称
+    ///   - vcName: 目标VC名称
     ///   - paramsDic: 参数字典
-    public func push(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil) {
-        guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
+    public func push(_ vcName: String,
+                     moduleName: String? = nil,
+                     fromVC: UIViewController? = nil,
+                     paramsDic:[String:Any]? = nil) {
+        
+        guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
         vc.hidesBottomBarWhenPushed = true
         guard let from = fromVC else {
             currentNavigationController()?.pushViewController(vc, animated: true)
@@ -58,11 +62,15 @@ extension SwiftMediator {
     /// - Parameters:
     ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
     ///   - moduleName: 目标VC所在组件名称
-    ///   - toVC: 目标VC名称
+    ///   - vcName: 目标VC名称
     ///   - paramsDic: 参数字典
     ///   - modelStyle: 0模态样式为默认，1是全屏模态。。。。。
-    public func present(fromVC: UIViewController? = nil, moduleName: String, toVC: String, paramsDic:[String:Any]? = nil,modelStyle: Int = 0) {
-        guard let vc = initVC(moduleName: moduleName, vcName: toVC, dic: paramsDic) else { return }
+    public func present(_ vcName: String,
+                        moduleName: String? = nil,
+                        fromVC: UIViewController? = nil,
+                        paramsDic:[String:Any]? = nil,
+                        modelStyle: Int = 0) {
+        guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
         
         let nav = UINavigationController.init(rootViewController: vc)
         nav.navigationBar.backgroundColor = .white
@@ -161,8 +169,16 @@ extension SwiftMediator {
     ///   - moduleName: 组件boundle名称
     ///   - vcName: VC名称
     ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
-    public func initVC(moduleName: String, vcName: String, dic: [String : Any]? = nil) -> UIViewController?{
-        let className = "\(moduleName).\(vcName)"
+    public func initVC(_ vcName: String,
+                       moduleName: String? = nil,
+                       dic: [String : Any]? = nil) -> UIViewController?{
+        
+        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+        if let name = moduleName {
+            namespace = name
+        }
+        
+        let className = "\(namespace).\(vcName)"
         let cls: AnyClass? = NSClassFromString(className)
         guard let vc = cls as? UIViewController.Type else {
             return nil
@@ -245,7 +261,10 @@ extension SwiftMediator {
     ///   - selName: 方法名
     ///   - param: 参数1
     ///   - otherParam: 参数2
-    public func callObjcMethod(objc: AnyObject, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
+    public func callObjcMethod(objc: AnyObject,
+                               selName: String,
+                               param: Any? = nil,
+                               otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
         
         let sel = NSSelectorFromString(selName)
         guard let _ = class_getInstanceMethod(type(of: objc), sel) else {
@@ -261,9 +280,17 @@ extension SwiftMediator {
     ///   - selName: 方法名
     ///   - param: 参数1
     ///   - otherParam: 参数2
-    public func callClassMethod(moduleName: String, className: String, selName: String, param: Any? = nil , otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
+    public func callClassMethod(className: String,
+                                selName: String,
+                                moduleName: String? = nil,
+                                param: Any? = nil,
+                                otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
         
-        let className = "\(moduleName).\(className)"
+        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+        if let name = moduleName {
+            namespace = name
+        }
+        let className = "\(namespace).\(className)"
         guard let cls: AnyObject? = NSClassFromString(className) else {
             return nil
         }

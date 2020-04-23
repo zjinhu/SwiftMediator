@@ -26,21 +26,21 @@ class ViewController: JHTableViewController {
         switch indexPath.row {
         case 0:
             // MARK: - present用法-
-            SwiftMediator.shared.present(moduleName: "SwiftMediator", toVC: "TestVC",paramsDic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            SwiftMediator.shared.present("TestVC", paramsDic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
         case 1:
             // MARK: - present用法二
-            let avc = SwiftMediator.shared.initVC(moduleName: "SwiftMediator", vcName: "TestVC",dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
             SwiftMediator.shared.currentViewController()?.present(avc!, animated: true, completion: nil)
         case 2:
             // MARK: - push用法一
-            let avc = SwiftMediator.shared.initVC(moduleName: "SwiftMediator", vcName: "TestVC",dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
             SwiftMediator.shared.currentNavigationController()?.pushViewController(avc!, animated: true)
         case 3:
             // MARK: - push用法二
-            SwiftMediator.shared.push(moduleName: "SwiftMediator", toVC: "TestVC",paramsDic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            SwiftMediator.shared.push("TestVC", paramsDic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
         case 4:
             // MARK: - push用法三
-            let avc = SwiftMediator.shared.initVC(moduleName: "SwiftMediator", vcName: "TestVC",dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
             self.navigationController?.pushViewController(avc!, animated: true)
         case 5:
             // MARK: - URL用法1
@@ -52,13 +52,13 @@ class ViewController: JHTableViewController {
             // MARK: - URL用法3
             SwiftMediator.shared.openUrl("app://fullScreen/SwiftMediator/TestVC?str=123&titleName=456")
         case 8:
-            SwiftMediator.shared.push(moduleName: "SwiftBrick", toVC: "JHWebViewController",paramsDic: ["navTitle":"123123","url":"https://www.qq.com"])
+            SwiftMediator.shared.push("JHWebViewController", moduleName: "SwiftBrick", paramsDic: ["navTitle":"123123","url":"https://www.qq.com"])
         case 9:
 //            SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
-            let str = SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", className: "TestClass", selName: "qqqqq:", param: "123123123")?.takeUnretainedValue()
+            let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "qqqqq:", param: "123123123")?.takeUnretainedValue()
             print("\(String(describing: str))")
         case 10:
-            let avc = SwiftMediator.shared.initVC(moduleName: "SwiftMediator", vcName: "TestVC",dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
             let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "pppppp:", param: "123123123123")?.takeUnretainedValue()
             print("\(String(describing: str))")
 
