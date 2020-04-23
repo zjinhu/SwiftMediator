@@ -11,6 +11,77 @@ import UIKit
 public class SwiftMediator {
     public static let shared = SwiftMediator()
 }
+
+//MARK:--初始化对象--Swift
+extension SwiftMediator {
+    
+    /// 反射VC初始化并且赋值
+    /// - Parameters:
+    ///   - moduleName: 组件boundle名称，不传则为默认命名空间
+    ///   - vcName: VC名称
+    ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
+    public func initVC(_ vcName: String,
+                       moduleName: String? = nil,
+                       dic: [String : Any]? = nil) -> UIViewController?{
+        
+        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+        if let name = moduleName {
+            namespace = name
+        }
+        
+        let className = "\(namespace).\(vcName)"
+        let cls: AnyClass? = NSClassFromString(className)
+        guard let vc = cls as? UIViewController.Type else {
+            return nil
+        }
+        let controller = vc.init()
+        setObjectParams(obj: controller, paramsDic: dic)
+        return controller
+    }
+    
+    /// 判断属性是否存在
+    /// - Parameters:
+    ///   - name: 属性名称
+    ///   - obj: 目标对象
+    private func getTypeOfProperty (_ name: String, obj:AnyObject) -> Bool{
+        // 注意：obj是实例(对象)，如果是类，则无法获取其属性
+        let morror = Mirror.init(reflecting: obj)
+        let superMorror = Mirror.init(reflecting: obj).superclassMirror
+        
+        for (key,_) in morror.children {
+            if key == name {
+                return  true
+            }
+        }
+        
+        guard let superM = superMorror else {
+            return false
+        }
+        
+        for (key,_) in superM.children {
+            if key == name {
+                return  true
+            }
+        }
+        return false
+    }
+    
+    /// KVC给属性赋值
+    /// - Parameters:
+    ///   - obj: 目标对象
+    ///   - paramsDic: 参数字典Key必须对应属性名
+    private func setObjectParams(obj: AnyObject, paramsDic:[String:Any]?) {
+        if let paramsDic = paramsDic {
+            for (key,value) in paramsDic {
+                if getTypeOfProperty(key, obj: obj){
+                    obj.setValue(value, forKey: key)
+                }
+            }
+        }
+    }
+    
+}
+
 //MARK:--路由跳转
 extension SwiftMediator {
     
@@ -95,164 +166,7 @@ extension SwiftMediator {
     }
 }
 
-//MARK:--获取最上层视图
-extension SwiftMediator {
-    
-    /// 获取顶层Nav 根据window
-    public func currentNavigationController() -> (UINavigationController?) {
-        return currentViewController()?.navigationController
-    }
-    
-    /// 获取顶层VC 根据window
-    public func currentViewController() -> (UIViewController?) {
-        var window = UIApplication.shared.keyWindow
-        //是否为当前显示的window
-        if window?.windowLevel != UIWindow.Level.normal{
-            let windows = UIApplication.shared.windows
-            for  windowTemp in windows{
-                if windowTemp.windowLevel == UIWindow.Level.normal{
-                    window = windowTemp
-                    break
-                }
-            }
-        }
-        let vc = window?.rootViewController
-        return getCurrentViewController(withCurrentVC: vc)
-    }
-    
-    ///根据控制器获取 顶层控制器 递归
-    private func getCurrentViewController(withCurrentVC VC :UIViewController?) -> UIViewController? {
-        if VC == nil {
-            print("🌶： 找不到顶层控制器")
-            return nil
-        }
-        if let presentVC = VC?.presentedViewController {
-            //modal出来的 控制器
-            return getCurrentViewController(withCurrentVC: presentVC)
-        }
-        else if let splitVC = VC as? UISplitViewController {
-            // UISplitViewController 的跟控制器
-            if splitVC.viewControllers.count > 0 {
-                return getCurrentViewController(withCurrentVC: splitVC.viewControllers.last)
-            }else{
-                return VC
-            }
-        }
-        else if let tabVC = VC as? UITabBarController {
-            // tabBar 的跟控制器
-            if tabVC.viewControllers != nil {
-                return getCurrentViewController(withCurrentVC: tabVC.selectedViewController)
-            }else{
-                return VC
-            }
-        }
-        else if let naiVC = VC as? UINavigationController {
-            // 控制器是 nav
-            if naiVC.viewControllers.count > 0 {
-                //                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
-                return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
-            }else{
-                return VC
-            } 
-        }
-        else {
-            // 返回顶控制器
-            return VC
-        }
-    }
-}
-//MARK:--初始化对象--Swift
-extension SwiftMediator {
-    
-    /// 反射VC初始化并且赋值
-    /// - Parameters:
-    ///   - moduleName: 组件boundle名称
-    ///   - vcName: VC名称
-    ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
-    public func initVC(_ vcName: String,
-                       moduleName: String? = nil,
-                       dic: [String : Any]? = nil) -> UIViewController?{
-        
-        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-        if let name = moduleName {
-            namespace = name
-        }
-        
-        let className = "\(namespace).\(vcName)"
-        let cls: AnyClass? = NSClassFromString(className)
-        guard let vc = cls as? UIViewController.Type else {
-            return nil
-        }
-        let controller = vc.init()
-        setObjectParams(obj: controller, paramsDic: dic)
-        return controller
-    }
-    
-    /// 判断属性是否存在
-    /// - Parameters:
-    ///   - name: 属性名称
-    ///   - obj: 目标对象
-    private func getTypeOfProperty (_ name: String, obj:AnyObject) -> Bool{
-        // 注意：obj是实例(对象)，如果是类，则无法获取其属性
-        let morror = Mirror.init(reflecting: obj)
-        let superMorror = Mirror.init(reflecting: obj).superclassMirror
-        
-        for (key,_) in morror.children {
-            if key == name {
-                return  true
-            }
-        }
-        
-        guard let superM = superMorror else {
-            return false
-        }
-        
-        for (key,_) in superM.children {
-            if key == name {
-                return  true
-            }
-        }
-        return false
-    }
-    
-    /// KVC给属性赋值
-    /// - Parameters:
-    ///   - obj: 目标对象
-    ///   - paramsDic: 参数字典Key必须对应属性名
-    private func setObjectParams(obj: AnyObject, paramsDic:[String:Any]?) {
-        if let paramsDic = paramsDic {
-            for (key,value) in paramsDic {
-                if getTypeOfProperty(key, obj: obj){
-                    obj.setValue(value, forKey: key)
-                }
-            }
-        }
-    }
-    
-}
-
-//MARK:--URL获取query字典
-extension URL {
-    public var queryDictionary: [String: Any]? {
-        guard let query = self.query else { return nil}
-        
-        var queryStrings = [String: String]()
-        for pair in query.components(separatedBy: "&") {
-            
-            let key = pair.components(separatedBy: "=")[0]
-            
-            let value = pair
-                .components(separatedBy:"=")[1]
-                .replacingOccurrences(of: "+", with: " ")
-                .removingPercentEncoding ?? ""
-            
-            queryStrings[key] = value
-        }
-        return queryStrings
-    }
-}
-
-//MARK:--路由跳转
+//MARK:--路由执行方法
 extension SwiftMediator {
 
     /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)
@@ -325,6 +239,93 @@ extension SwiftMediator {
     //        return function(cls!, sel, param)
     //    }
         
+}
+//MARK:--获取最上层视图
+extension SwiftMediator {
+    
+    /// 获取顶层Nav 根据window
+    public func currentNavigationController() -> (UINavigationController?) {
+        return currentViewController()?.navigationController
+    }
+    
+    /// 获取顶层VC 根据window
+    public func currentViewController() -> (UIViewController?) {
+        var window = UIApplication.shared.keyWindow
+        //是否为当前显示的window
+        if window?.windowLevel != UIWindow.Level.normal{
+            let windows = UIApplication.shared.windows
+            for  windowTemp in windows{
+                if windowTemp.windowLevel == UIWindow.Level.normal{
+                    window = windowTemp
+                    break
+                }
+            }
+        }
+        let vc = window?.rootViewController
+        return getCurrentViewController(withCurrentVC: vc)
+    }
+    
+    ///根据控制器获取 顶层控制器 递归
+    private func getCurrentViewController(withCurrentVC VC :UIViewController?) -> UIViewController? {
+        if VC == nil {
+            print("🌶： 找不到顶层控制器")
+            return nil
+        }
+        if let presentVC = VC?.presentedViewController {
+            //modal出来的 控制器
+            return getCurrentViewController(withCurrentVC: presentVC)
+        }
+        else if let splitVC = VC as? UISplitViewController {
+            // UISplitViewController 的跟控制器
+            if splitVC.viewControllers.count > 0 {
+                return getCurrentViewController(withCurrentVC: splitVC.viewControllers.last)
+            }else{
+                return VC
+            }
+        }
+        else if let tabVC = VC as? UITabBarController {
+            // tabBar 的跟控制器
+            if tabVC.viewControllers != nil {
+                return getCurrentViewController(withCurrentVC: tabVC.selectedViewController)
+            }else{
+                return VC
+            }
+        }
+        else if let naiVC = VC as? UINavigationController {
+            // 控制器是 nav
+            if naiVC.viewControllers.count > 0 {
+                //                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
+                return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
+            }else{
+                return VC
+            } 
+        }
+        else {
+            // 返回顶控制器
+            return VC
+        }
+    }
+}
+
+//MARK:--URL获取query字典
+extension URL {
+    public var queryDictionary: [String: Any]? {
+        guard let query = self.query else { return nil}
+        
+        var queryStrings = [String: String]()
+        for pair in query.components(separatedBy: "&") {
+            
+            let key = pair.components(separatedBy: "=")[0]
+            
+            let value = pair
+                .components(separatedBy:"=")[1]
+                .replacingOccurrences(of: "+", with: " ")
+                .removingPercentEncoding ?? ""
+            
+            queryStrings[key] = value
+        }
+        return queryStrings
+    }
 }
 
 //以下解耦方案参考https://juejin.im/post/5bd0259d5188251a29719086#comment
