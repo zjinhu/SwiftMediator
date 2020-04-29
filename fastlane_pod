@@ -3,6 +3,7 @@
 # 计时
 SECONDS=0
 # 获取工程根目录
+
 fadir()  
 {  
     local this_dir=`pwd`  
@@ -14,18 +15,61 @@ CUR_DIR=$(cd `dirname $0` && pwd -P )
 echo "当前文件路径 $CUR_DIR"
 cd $CUR_DIR
 
-read -p " 
+echo "
 
-🚀 请输入版本号: " tag
+🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  
+
+"
+echo "请选择要发布的podspec序号:
+"
+echo "(0) 退出
+"
+#查找文件
+  a=1
+  list=`find . -type f -name "*.podspec"`
+  for i in $list  
+    do  
+    echo "($a) $i
+    "  
+    array[$a]=$i
+    a=$(($a+1)) 
+  done  
+echo "
+
+🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  
+
+"
+read input
+
+case $input in
+  
+    [1-9])
+# 处理文件名 
+	name1=${array[$input]} 
+   # echo "111$name1"
+# 截取掉/左边的
+	name2=${name1#*/}
+    # echo "222$name2"
+# 截取掉。后边的
+	podspec=${name2%.*}
+    # echo "333$podspec"
+
+    echo "
+🚀 已经选择仓库名称为：$podspec
+    "
+
+    read -p "🚀 请输入版本号: " user_tags
 
 echo "
 
-🚀 即将发布版本 : $tag
+🚀 即将发布 V$user_tags 版本的 $podspec
 
 "
+    fastlane $podspec tag:$user_tags;; 
 
-fastlane tag:$tag
- 
+    0)
+    exit;;
+esac
 echo "
 
 🚀 总用时: ${SECONDS}s
