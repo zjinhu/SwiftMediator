@@ -14,13 +14,9 @@ CUR_DIR=$(cd `dirname $0` && pwd -P )
 echo "当前文件路径 $CUR_DIR"
 cd $CUR_DIR
 
-echo "
+read -p " 
 
-🚀 请输入版本号 tag :
-
-"
-
-read tag
+🚀 请输入版本号: " tag
 
 echo "
 
