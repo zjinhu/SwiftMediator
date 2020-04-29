@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# 计时
+SECONDS=0
+# 获取工程根目录
+fadir()  
+{  
+    local this_dir=`pwd`  
+    local child_dir="$1" 
+    dirname "$child_dir" 
+    cd $this_dir  
+} 
+CUR_DIR=$(cd `dirname $0` && pwd -P ) 
+echo "当前文件路径 $CUR_DIR"
+cd $CUR_DIR
+
+echo "
+
+🚀 请输入版本号 tag :
+
+"
+
+read tag
+
+echo "
+
+🚀 即将发布版本 : $tag
+
+"
+
+fastlane tag:$tag
+ 
+echo "
+
+🚀 总用时: ${SECONDS}s
+
+"
+exit
+ 
+
