@@ -63,10 +63,12 @@ echo "
 🚀 即将发布 V$user_tags 版本的 $podspec
 
 "
-    fastlane $podspec tag:$user_tags;; 
+    fastlane $podspec tag:$user_tags
+    ;; 
 
     0)
-    exit;;
+    exit
+    ;;
 esac
 echo "
 
