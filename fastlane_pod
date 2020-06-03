@@ -58,18 +58,70 @@ case $input in
 
     read -p "🚀 请输入版本号: " user_tags
 
+
 echo "
 
-🚀 即将发布 V$user_tags 版本的 $podspec
+🚀 版本号: V$user_tags 
 
 "
-    fastlane $podspec tag:$user_tags
+
     ;; 
 
     0)
     exit
     ;;
 esac
+
+
+echo "🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉
+
+ "
+echo "是否发布pod到私有仓库？:
+"
+echo "(0) 不是
+"
+#查找文件
+  b=1
+  listRepo=`ls ~/.cocoapods/repos`
+  for i in $listRepo  
+    do  
+    echo "($b) $i
+    "  
+    arrayRepo[$b]=$i
+    b=$(($b+1)) 
+  done  
+echo "
+🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  
+"
+read input
+
+case $input in
+  
+    [1-99])
+
+     repo=${arrayRepo[$input]} 
+    echo "
+🚀 已经选择Repo名称为：$repo
+    "
+
+echo "
+
+🚀 即将发布 V$user_tags 版本的 $podspec 到 $repo 
+
+"
+    fastlane release_pod t:$user_tags p:$podspec r:$repo
+    ;; 
+
+    0)
+    echo "
+
+🚀 即将发布 V$user_tags 版本的 $podspec
+
+"
+    fastlane release_pod t:$user_tags p:$podspec 
+    ;;
+esac
+
 echo "
 
 🚀 总用时: ${SECONDS}s
