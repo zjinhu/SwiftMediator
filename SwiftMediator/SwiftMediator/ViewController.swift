@@ -14,6 +14,8 @@ class ViewController: JHTableViewController {
         super.viewDidLoad()
         self.title = "路由示例"
         self.mainDatas = ["present用法1","present用法2","push用法1","push用法2","push用法3","URL用法1","URL用法2","URL用法3","Test Push到其他POD","类方法调用","实例方法调用"]
+        
+        print("-------\(self.moduleName)")
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

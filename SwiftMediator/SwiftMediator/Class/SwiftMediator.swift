@@ -307,6 +307,19 @@ extension SwiftMediator {
     }
 }
 
+//MARK:--获取对象所在的命名空间
+public extension NSObject {
+    var moduleName:String{
+        get{
+            let name = type(of: self).description()
+            guard let module : String = name.components(separatedBy: ".").first else {
+                return Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+            }
+            return module
+        }
+    }
+}
+
 //MARK:--URL获取query字典
 extension URL {
     public var queryDictionary: [String: Any]? {
