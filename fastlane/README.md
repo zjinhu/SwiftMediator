@@ -15,9 +15,9 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
-### SwiftBrick
+### release_pod
 ```
-fastlane SwiftBrick
+fastlane release_pod
 ```
 
 
