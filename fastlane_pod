@@ -61,7 +61,7 @@ case $input in
 
 echo "
 
-🚀 版本号: V$user_tags 
+🚀 版本号: V $user_tags 
 
 "
 
@@ -106,7 +106,7 @@ case $input in
 
 echo "
 
-🚀 即将发布 V$user_tags 版本的 $podspec 到 $repo 
+🚀 即将发布 V $user_tags 版本的 $podspec 到 $repo 
 
 "
     fastlane release_pod t:$user_tags p:$podspec r:$repo
@@ -115,7 +115,7 @@ echo "
     0)
     echo "
 
-🚀 即将发布 V$user_tags 版本的 $podspec
+🚀 即将发布 V $user_tags 版本的 $podspec
 
 "
     fastlane release_pod t:$user_tags p:$podspec 
