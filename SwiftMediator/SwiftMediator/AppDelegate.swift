@@ -11,10 +11,15 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    var window: UIWindow?
 
+    lazy var manager: AppDelegateManager = {
+        return AppDelegateManager.init(delegates: [AppDe.init(window)])
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        manager.application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
     }
 

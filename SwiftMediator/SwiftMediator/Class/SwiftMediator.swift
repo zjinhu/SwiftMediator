@@ -345,9 +345,11 @@ public typealias AppDelegateMediator = UIResponder & UIApplicationDelegate
 
 public class AppDelegateManager : AppDelegateMediator {
     
-    private let delegates:[AppDelegateMediator]
+    private let delegates : [AppDelegateMediator]
     
-    public init(_ delegates:[AppDelegateMediator]) {
+    /// 钩子处需要初始化，采用数组的方式
+    /// - Parameter delegates: 钩子数组
+    public init(delegates:[AppDelegateMediator]) {
         self.delegates = delegates
     }
     //MARK:--- 启动 初始化 ----------
@@ -610,7 +612,7 @@ public class SceneDelegateManager : SceneDelegateMediator {
     
     /// 钩子处需要初始化，采用数组的方式
     /// - Parameter delegates: 钩子数组
-    public init(_ delegates:[SceneDelegateMediator]) {
+    public init(delegates:[SceneDelegateMediator]) {
         self.delegates = delegates
     }
     

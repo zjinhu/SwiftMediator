@@ -14,6 +14,21 @@ class SceneDe: SceneDelegateMediator{
         window = win
     }
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        print("UIScene在这启动")
         guard let _ = (scene as? UIWindowScene) else { return }
     }
+}
+
+
+class AppDe: AppDelegateMediator{
+    var window: UIWindow?
+    init(_ win : UIWindow?) {
+        window = win
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        print("UIApplication在这启动")
+        return true
+    }
+
 }
