@@ -20,6 +20,7 @@ extension SwiftMediator {
     ///   - moduleName: 组件boundle名称，不传则为默认命名空间
     ///   - vcName: VC名称
     ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
+    @discardableResult
     public func initVC(_ vcName: String,
                        moduleName: String? = nil,
                        dic: [String : Any]? = nil) -> UIViewController?{
@@ -45,6 +46,7 @@ extension SwiftMediator {
     ///   - moduleName: moduleName
     ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
     /// - Returns: objc
+    @discardableResult
     public func initObjc(_ objcName: String,
                        moduleName: String? = nil,
                        dic: [String : Any]? = nil) -> NSObject?{
@@ -200,6 +202,7 @@ extension SwiftMediator {
     ///   - selName: 方法名
     ///   - param: 参数1
     ///   - otherParam: 参数2
+    @discardableResult
     public func callObjcMethod(objc: AnyObject,
                                selName: String,
                                param: Any? = nil,
@@ -219,6 +222,7 @@ extension SwiftMediator {
     ///   - selName: 方法名
     ///   - param: 参数1
     ///   - otherParam: 参数2
+    @discardableResult
     public func callClassMethod(className: String,
                                 selName: String,
                                 moduleName: String? = nil,
