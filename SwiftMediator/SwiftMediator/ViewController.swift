@@ -61,7 +61,7 @@ class ViewController: JHTableViewController {
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
             let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "pppppp:", param: "123123123123")?.takeUnretainedValue()
             print("\(String(describing: str))")
-            case 11:
+        case 11:
                 let obj = SwiftMediator.shared.initObjc("TestObjc")
                 let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "ccccc:", param: "123123123123")?.takeUnretainedValue()
                 print("\(String(describing: str))")

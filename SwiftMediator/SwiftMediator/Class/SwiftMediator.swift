@@ -48,8 +48,8 @@ extension SwiftMediator {
     /// - Returns: objc
     @discardableResult
     public func initObjc(_ objcName: String,
-                       moduleName: String? = nil,
-                       dic: [String : Any]? = nil) -> NSObject?{
+                         moduleName: String? = nil,
+                         dic: [String : Any]? = nil) -> NSObject?{
         
         var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
         if let name = moduleName {
@@ -184,7 +184,7 @@ extension SwiftMediator {
                 // Fallback on earlier versions
             }
         }
-
+        
         guard let from = fromVC else {
             currentViewController()?.present(nav, animated: true, completion: nil)
             return
@@ -195,7 +195,7 @@ extension SwiftMediator {
 
 //MARK:--路由执行方法
 extension SwiftMediator {
-
+    
     /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)
     /// - Parameters:
     ///   - objc: 初始化好的对象
@@ -242,7 +242,7 @@ extension SwiftMediator {
         guard let _ = class_getClassMethod(cls as? AnyClass, sel) else {
             return nil
         }
-
+        
         return cls?.perform(sel, with: param, with: otherParam)
     }
     
@@ -267,7 +267,7 @@ extension SwiftMediator {
     //        let function = unsafeBitCast(imp, to: Function.self)
     //        return function(cls!, sel, param)
     //    }
-        
+    
 }
 //MARK:--获取最上层视图
 extension SwiftMediator {
@@ -385,13 +385,13 @@ public class AppDelegateManager : AppDelegateMediator {
     /// 即将启动
     @discardableResult
     public func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-               
+        
         for item in delegates {
-             if let bool = item.application?(application, willFinishLaunchingWithOptions: launchOptions), !bool {
-                 return false
-             }
-         }
-         return true
+            if let bool = item.application?(application, willFinishLaunchingWithOptions: launchOptions), !bool {
+                return false
+            }
+        }
+        return true
     }
     /// 启动完成
     @discardableResult
@@ -616,18 +616,18 @@ public class AppDelegateManager : AppDelegateMediator {
     //MARK:--- 处理SiriKit意图 ----------
     /// 处理指定的SiriKit意图
     /*
-    public func application(_ application: UIApplication,
-                            handle intent: INIntent,
-                            completionHandler: @escaping (INIntentResponse) -> Void) {
-        
-    }*/
+     public func application(_ application: UIApplication,
+     handle intent: INIntent,
+     completionHandler: @escaping (INIntentResponse) -> Void) {
+     
+     }*/
     
     //MARK:--- 处理CloudKit ----------
     /// App可以访问CloudKit中的共享信息
     /*
-    public func application(_ application: UIApplication, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
-        
-    }*/
+     public func application(_ application: UIApplication, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
+     
+     }*/
 }
 
 //MARK:--SceneDelegate解耦
@@ -685,25 +685,25 @@ public class SceneDelegateManager : SceneDelegateMediator {
     }
 }
 /**用例  AppDelegateMediator SceneDelegateMediator用法相同
-1、新建类继承协议SceneDelegateMediator
+ 1、新建类继承协议SceneDelegateMediator
  
-class SceneDe: SceneDelegateMediator{
-    var window: UIWindow?
-    init(_ win : UIWindow?) {
-        window = win
-    }
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
-    }
-}
+ class SceneDe: SceneDelegateMediator{
+ var window: UIWindow?
+ init(_ win : UIWindow?) {
+ window = win
+ }
+ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+ guard let _ = (scene as? UIWindowScene) else { return }
+ }
+ }
  
-2、SceneDelegate中添加
+ 2、SceneDelegate中添加
  
-lazy var manager: SceneDelegateManager = {
-    return SceneDelegateManager.init([SceneDe.init(window)])
-}()
+ lazy var manager: SceneDelegateManager = {
+ return SceneDelegateManager.init([SceneDe.init(window)])
+ }()
  
-3、相应代理方法中添加钩子
+ 3、相应代理方法中添加钩子
  
-_ = manager.scene(scene, willConnectTo: session, options: connectionOptions)
-*/
+ _ = manager.scene(scene, willConnectTo: session, options: connectionOptions)
+ */
