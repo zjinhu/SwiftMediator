@@ -13,7 +13,7 @@ class ViewController: JHTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "路由示例"
-        self.mainDatas = ["present用法1","present用法2","push用法1","push用法2","push用法3","URL用法1","URL用法2","URL用法3","Test Push到其他POD","类方法调用","实例方法调用"]
+        self.mainDatas = ["present用法1","present用法2","push用法1","push用法2","push用法3","URL用法1","URL用法2","URL用法3","Test Push到其他POD","类方法调用","实例方法调用","实例方法调用2 "]
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,7 +61,10 @@ class ViewController: JHTableViewController {
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
             let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "pppppp:", param: "123123123123")?.takeUnretainedValue()
             print("\(String(describing: str))")
-
+            case 11:
+                let obj = SwiftMediator.shared.initObjc("TestObjc")
+                let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "ccccc:", param: "123123123123")?.takeUnretainedValue()
+                print("\(String(describing: str))")
         default:
             print("")
         }

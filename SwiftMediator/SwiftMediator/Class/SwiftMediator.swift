@@ -39,6 +39,31 @@ extension SwiftMediator {
         return controller
     }
     
+    /// 反射objc初始化并且赋值 继承NSObject
+    /// - Parameters:
+    ///   - objcName: objcName
+    ///   - moduleName: moduleName
+    ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
+    /// - Returns: objc
+    public func initObjc(_ objcName: String,
+                       moduleName: String? = nil,
+                       dic: [String : Any]? = nil) -> NSObject?{
+        
+        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+        if let name = moduleName {
+            namespace = name
+        }
+        
+        let className = "\(namespace).\(objcName)"
+        let cls: AnyClass? = NSClassFromString(className)
+        guard let ob = cls as? NSObject.Type else {
+            return nil
+        }
+        let objc = ob.init()
+        setObjectParams(obj: objc, paramsDic: dic)
+        return objc
+    }
+    
     /// 判断属性是否存在
     /// - Parameters:
     ///   - name: 属性名称
