@@ -10,6 +10,9 @@ import UIKit
 import SnapKit
 
 open class JHCollectionViewController: JHViewController ,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+//    deinit {
+//        print("JHCollectionViewController out")
+//    }
     // MARK: - 参数变量
     public enum ScrollDirectionType {
         case ScrollVertical
@@ -20,77 +23,77 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
     public var mainDatas : Array<Any> = []
     public var scrollDirectionType : ScrollDirectionType = .ScrollVertical
     public var flowLayout : UICollectionViewFlowLayout?
+    
    // MARK: - 初始化
     public convenience init(scrollDirectionType: ScrollDirectionType = .ScrollVertical) {
         self.init()
         
-        self.configFlowLayout()
+        setupFlowLayout()
         switch scrollDirectionType {
         case .ScrollHorizontal:
-            self.flowLayout?.scrollDirection = UICollectionView.ScrollDirection.horizontal
+            flowLayout?.scrollDirection = UICollectionView.ScrollDirection.horizontal
             
         case .ScrollVertical:
-            self.flowLayout?.scrollDirection = UICollectionView.ScrollDirection.vertical
+            flowLayout?.scrollDirection = UICollectionView.ScrollDirection.vertical
          
         }
     }
     
-    public convenience init(flowLayout: UICollectionViewFlowLayout) {
+    public convenience init(flowLayout layout: UICollectionViewFlowLayout) {
          self.init()
         
-         self.flowLayout = flowLayout
+         flowLayout = layout
      }
     
-    func configFlowLayout() {
-        self.flowLayout = UICollectionViewFlowLayout.init()
-        self.flowLayout?.minimumLineSpacing = 0
-        self.flowLayout?.minimumInteritemSpacing = 0
-        self.flowLayout?.minimumLineSpacing = 0
+    open func setupFlowLayout() {
+        flowLayout = UICollectionViewFlowLayout.init()
+        flowLayout?.minimumLineSpacing = 0
+        flowLayout?.minimumInteritemSpacing = 0 
+        flowLayout?.scrollDirection = UICollectionView.ScrollDirection.vertical
     }
     
     // MARK: - 布局
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        if self.flowLayout == nil  {
-            self.configFlowLayout()
-            self.flowLayout?.scrollDirection = UICollectionView.ScrollDirection.vertical
+        if flowLayout == nil  {
+            setupFlowLayout()
         }
         
-        self.collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: self.flowLayout!)
-        self.collectionView?.backgroundColor = .clear
-        self.collectionView?.delegate = self
-        self.collectionView?.dataSource = self
+        collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: flowLayout!)
+        collectionView?.backgroundColor = .clear
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
         
-        self.collectionView?.delaysContentTouches = true
-        self.collectionView?.showsVerticalScrollIndicator = false
-        self.collectionView?.showsHorizontalScrollIndicator = false
+        collectionView?.delaysContentTouches = true
+        collectionView?.showsVerticalScrollIndicator = false
+        collectionView?.showsHorizontalScrollIndicator = false
         
-        self.view.addSubview(self.collectionView!)
-        self.collectionView?.snp.makeConstraints({ (make) in
-            make.top.equalTo(self.view.safeAreaInsets.top );
-            make.left.equalTo(self.view.safeAreaInsets.left);
-            make.right.equalTo(self.view.safeAreaInsets.right);
-            make.bottom.equalTo(self.view.safeAreaInsets.bottom);
-        })
+        view.addSubview(collectionView!)
+        collectionView?.snp.makeConstraints{ (make) in
+            make.top.equalTo(view.safeAreaInsets.top)
+            make.left.equalTo(view.safeAreaInsets.left)
+            make.right.equalTo(view.safeAreaInsets.right)
+            make.bottom.equalTo(view.safeAreaInsets.bottom)
+        }
         
-        self.extendedLayoutIncludesOpaqueBars = true
-        self.collectionView?.contentInsetAdjustmentBehavior = .automatic
+        extendedLayoutIncludesOpaqueBars = true
+        collectionView?.contentInsetAdjustmentBehavior = .automatic
         
         // Do any additional setup after loading the view.
-        let gestureArray : [UIGestureRecognizer] = (self.navigationController?.view.gestureRecognizers)!
-        for gesture in gestureArray {
+        let gestureArray : [UIGestureRecognizer]? = navigationController?.view.gestureRecognizers
+        gestureArray?.forEach({ (gesture) in
             if gesture.isEqual(UIScreenEdgePanGestureRecognizer.self) {
-                self.collectionView?.panGestureRecognizer.require(toFail: gesture)
+                collectionView?.panGestureRecognizer.require(toFail: gesture)
             }
-        }
-        
-        JHCollectionViewCell.registerCell(collectionView: self.collectionView!)
+        })
+        collectionView?.registerCell(JHCollectionViewCell.self)
     }
+    
     // MARK: - 数据源判断
     func isMultiDatas() -> Bool {
-        let data = self.mainDatas.first
-        if data is Array<Any> && self.mainDatas.count > 0{
+        let data = mainDatas.first
+        if data is Array<Any> && mainDatas.count > 0{
             return true
         }else{
             return false
@@ -99,20 +102,20 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
 
     // MARK: - UICollectionView
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.isMultiDatas() ? self.mainDatas.count : 1
+        return isMultiDatas() ? mainDatas.count : 1
     }
     
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if self.isMultiDatas() {
-            let data  = self.mainDatas[section] as! Array<Any>
+        if isMultiDatas() {
+            let data  = mainDatas[section] as! Array<Any>
             return data.count
         }else{
-            return self.mainDatas.count
+            return mainDatas.count
         }
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = JHCollectionViewCell.dequeueReusableCell(collectionView: collectionView, indexPath: indexPath)
+        let cell = collectionView.dequeueReusableCell(JHCollectionViewCell.self, indexPath: indexPath)
         return cell
     }
     

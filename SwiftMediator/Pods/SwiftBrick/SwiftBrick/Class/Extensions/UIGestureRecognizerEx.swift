@@ -13,8 +13,8 @@ public extension UIGestureRecognizer {
     private class GestureAction {
         var action: (UIGestureRecognizer) -> Void
         
-        init(action: @escaping (UIGestureRecognizer) -> Void) {
-            self.action = action
+        init(action closure: @escaping (UIGestureRecognizer) -> Void) {
+            action = closure
         }
     }
     

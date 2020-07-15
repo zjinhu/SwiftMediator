@@ -8,18 +8,37 @@
 
 import UIKit
 
+//@available(iOS 13.0, *)
+//extension UIResponder {
+//    @objc var coordinatingResponder: UIResponder? {
+//        return self.next
+//    }
+//}
+//
+//@available(iOS 13.0, *)
+//extension UIScene{
+//    override open var next: UIResponder? {
+//        SwizzleNavBar.swizzle
+//        return super.next
+//    }
+//}
+
 extension UIApplication {
-    private static let runOnce: Void = {
-        UIViewController.swizzleMethod()
-        UINavigationController.swizzle()
-    }()
     override open var next: UIResponder? {
-        UIApplication.runOnce
+        SwizzleNavBar.swizzle
         return super.next
     }
 }
 
+public class SwizzleNavBar {
+    public static let swizzle: Void = {
+        UIViewController.swizzleMethod()
+        UINavigationController.swizzle()
+    }()
+}
+
 public extension NSObject {
+
     static func swizzlingForClass(_ forClass: AnyClass, originalSelector: Selector, swizzledSelector: Selector) {
         guard let originalMethod = class_getInstanceMethod(forClass, originalSelector),
               let swizzledMethod = class_getInstanceMethod(forClass, swizzledSelector) else {
@@ -36,7 +55,7 @@ public extension NSObject {
 }
 
 public extension UIViewController {
-    
+ 
     private struct Associated {
         static var WillAppearInject: String = "WillAppearInject"
     }
@@ -63,10 +82,11 @@ public extension UIViewController {
     
 //    @_dynamicReplacement(for: viewWillAppear(_ : ))
     @objc func jh_viewWillAppear(_ animated: Bool) {
-        self.jh_viewWillAppear(animated)
-        if self.willAppearInjectBlock != nil {
-            self.willAppearInjectBlock!(self , animated)
+        jh_viewWillAppear(animated)
+        guard let block = willAppearInjectBlock else {
+            return
         }
+        block(self , animated)
     }
 
 }
@@ -96,12 +116,11 @@ public extension UINavigationController {
     
     var viewControllerBasedNavigationBarAppearanceEnabled: Bool? {
         get {
-            let number = objc_getAssociatedObject(self, &Associated.NavigationBarAppearanceEnabled) as? NSNumber
-            if number != nil {
-                return number?.boolValue
-            }
             self.viewControllerBasedNavigationBarAppearanceEnabled = true
-            return  true
+            guard let number = objc_getAssociatedObject(self, &Associated.NavigationBarAppearanceEnabled) as? NSNumber else {
+                return true
+            }
+            return  number.boolValue
         }
         set {
             if let value = newValue {
@@ -122,40 +141,36 @@ public extension UINavigationController {
     }
 
     @objc func jh_pushViewController(_ viewController: UIViewController, animated: Bool) {
-        self.setupViewControllerBasedNavigationBarAppearanceIfNeeded(appearingViewController: viewController)
-        self.jh_pushViewController(viewController, animated: animated)
+        setupViewControllerBasedNavigationBarAppearanceIfNeeded(appearingViewController: viewController)
+        jh_pushViewController(viewController, animated: animated)
     }
 //
 //    @_dynamicReplacement(for: setViewControllers(_: animated:))
     @objc func jh_setViewControllers(_ viewControllers: [UIViewController], animated: Bool) {
         for  vc in viewControllers {
-            self.setupViewControllerBasedNavigationBarAppearanceIfNeeded(appearingViewController: vc)
+            setupViewControllerBasedNavigationBarAppearanceIfNeeded(appearingViewController: vc)
         }
-        self.jh_setViewControllers(viewControllers, animated: animated)
+        jh_setViewControllers(viewControllers, animated: animated)
     }
     
     func setupViewControllerBasedNavigationBarAppearanceIfNeeded(appearingViewController: UIViewController){
-        if self.viewControllerBasedNavigationBarAppearanceEnabled == false {
+        if viewControllerBasedNavigationBarAppearanceEnabled == false {
             return
         }
-        
-        weak var weakself = self
-  
-        appearingViewController.willAppearInjectBlock = {(viewController: UIViewController, animated: Bool) in
-            weakself?.setNavigationBarHidden(viewController.prefersNavigationBarHidden ?? false, animated: animated)
+
+        appearingViewController.willAppearInjectBlock = { [weak self] (viewController: UIViewController, animated: Bool) in
+            guard let `self` = self else { return }
+            self.setNavigationBarHidden(viewController.prefersNavigationBarHidden ?? false, animated: animated)
         }
         
         // 因为不是所有的都是通过push的方式，把控制器压入stack中，也可能是"-setViewControllers:"的方式，所以需要对栈顶控制器做下判断并赋值。
-        let disappearingViewController = self.viewControllers.last
-        if disappearingViewController != nil && disappearingViewController?.willAppearInjectBlock == nil {
-            disappearingViewController?.willAppearInjectBlock = {(viewController: UIViewController, animated: Bool) in
-                weakself?.setNavigationBarHidden(viewController.prefersNavigationBarHidden ?? false, animated: animated)
-            }
+        guard let disappearingViewController = viewControllers.last, disappearingViewController.willAppearInjectBlock == nil else {
+            return
+        }
+        disappearingViewController.willAppearInjectBlock = { [weak self] (viewController: UIViewController, animated: Bool) in
+            guard let `self` = self else { return }
+            self.setNavigationBarHidden(viewController.prefersNavigationBarHidden ?? false, animated: animated)
         }
         
     }
-
-    
-    
-
 }

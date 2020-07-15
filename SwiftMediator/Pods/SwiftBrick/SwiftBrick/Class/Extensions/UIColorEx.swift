@@ -68,29 +68,33 @@ public extension UIColor {
     }
     //随机色
     
-    static var random: UIColor {
+    static var random: UIColor? {
         let red = Int.random(in: 0...255)
         let green = Int.random(in: 0...255)
         let blue = Int.random(in: 0...255)
-        return UIColor.init(red: red, green: green, blue: blue)!
+        return UIColor.init(red: red, green: green, blue: blue)
     }
     
     
-    struct FlatUI {
-
-        public static let turquoise             = UIColor.init(hex: 0x1abc9c)!
-
-        /// SwifterSwift: hex #16A085
-        public static let greenSea              = UIColor.init(hex: 0x16a085)!
-
-        /// SwifterSwift: hex #2ECC71
-        public static let emerald               = UIColor.init(hex: 0x2ecc71)!
-
-        /// SwifterSwift: hex #27AE60
-        public static let nephritis             = UIColor.init(hex: 0x27ae60)!
-
-        /// SwifterSwift: hex #3498DB
-        public static let peterRiver            = UIColor.init(hex: 0x3498db)!
-
+    /// 支持暗黑模式的颜色
+    struct BaseUI {
+        public static let baseBlue = L.color("baseBlue")
+        public static let baseGray = L.color("baseGray")
+        public static let baseGreen = L.color("baseGreen")
+        public static let baseIndigo = L.color("baseIndigo")
+        public static let baseOrange = L.color("baseOrange")
+        public static let basePink = L.color("basePink")
+        public static let basePurple = L.color("basePurple")
+        public static let baseRed = L.color("baseRed")
+        public static let baseTeal = L.color("baseTeal")
+        public static let baseYellow = L.color("baseYellow")
+        public static let baseBackground = L.color("bgColor")
+        
+        public static let baseLine = UIColor.init(hex: 0xe3e3e3)
+        
+        public static let textTitleColor = L.color("textTitleColor")
+        public static let textSecColor = L.color("textSecColor")
+        public static let textDesColor = L.color("textDesColor")
+        public static let textLinkColor = L.color("textLinkColor")
     }
 }
