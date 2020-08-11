@@ -57,7 +57,7 @@ public extension UITableViewCell {
                 make.top.equalToSuperview()
                 make.left.equalToSuperview().offset(headFootLeftMarign)
                 make.right.equalToSuperview().offset(-headFootRightMarign)
-                make.height.equalTo(line_height)
+                make.height.equalTo(LineHeight)
             })
         }
         
@@ -79,7 +79,7 @@ public extension UITableViewCell {
                 make.bottom.equalToSuperview()
                 make.left.equalToSuperview().offset(leftMarign)
                 make.right.equalToSuperview().offset(-rightMarign)
-                make.height.equalTo(line_height)
+                make.height.equalTo(LineHeight)
             })
         }
 
@@ -88,14 +88,14 @@ public extension UITableViewCell {
                 make.bottom.equalToSuperview()
                 make.left.equalToSuperview().offset(headFootLeftMarign)
                 make.right.equalToSuperview().offset(-headFootRightMarign)
-                make.height.equalTo(line_height)
+                make.height.equalTo(LineHeight)
             })
         }else{
             bottomLineView?.snp.remakeConstraints({ (make) in
                 make.bottom.equalToSuperview()
                 make.left.equalToSuperview().offset(leftMarign)
                 make.right.equalToSuperview().offset(-rightMarign)
-                make.height.equalTo(line_height)
+                make.height.equalTo(LineHeight)
             })
         }
     }
@@ -127,7 +127,7 @@ public extension UITableViewCell {
                 make.top.equalToSuperview()
                 make.left.equalToSuperview().offset(leftMarign)
                 make.right.equalToSuperview().offset(-rightMarign)
-                make.height.equalTo(line_height)
+                make.height.equalTo(LineHeight)
             })
         }
         
@@ -164,7 +164,7 @@ public extension UITableViewCell {
                 make.bottom.equalToSuperview()
                 make.right.equalToSuperview().offset(-rightMarign)
                 make.left.equalToSuperview().offset(leftMarign)
-                make.height.equalTo(line_height)
+                make.height.equalTo(LineHeight)
             })
         }
 

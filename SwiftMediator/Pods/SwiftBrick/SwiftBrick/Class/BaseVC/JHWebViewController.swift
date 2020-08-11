@@ -32,7 +32,7 @@ open class JHWebViewController: JHViewController ,WKUIDelegate,WKNavigationDeleg
     }()
     
     lazy var loadingProgressView : UIProgressView = {
-        let progressView = UIProgressView.init(frame: CGRect.init(x: 0, y: 0, width: screen_width, height: 4))
+        let progressView = UIProgressView.init(frame: CGRect.init(x: 0, y: 0, width: ScreenWidth, height: 4))
         progressView.trackTintColor = .clear
         progressView.tintColor = .red
         return progressView
@@ -97,7 +97,8 @@ open class JHWebViewController: JHViewController ,WKUIDelegate,WKNavigationDeleg
         }
     }
     
-    var request : URLRequest?
+    @objc
+    public var request : URLRequest?
     public var currentUrl : String?
     
     // MARK: - 初始化
