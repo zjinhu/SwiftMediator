@@ -17,7 +17,7 @@ class ViewController: JHTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = JHTableViewCell.dequeueReusableCell(tableView: tableView)
+        let cell = tableView.dequeueReusableCell(JHTableViewCell.self)
         cell.textLabel?.text = self.mainDatas[indexPath.row] as? String
         return cell
     }
@@ -30,7 +30,7 @@ class ViewController: JHTableViewController {
         case 1:
             // MARK: - present用法二
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
-            SwiftMediator.shared.currentViewController()?.present(avc!, animated: true, completion: nil)
+            SwiftMediator.shared.present(avc)
         case 2:
             // MARK: - push用法一
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
@@ -41,7 +41,8 @@ class ViewController: JHTableViewController {
         case 4:
             // MARK: - push用法三
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
-            self.navigationController?.pushViewController(avc!, animated: true)
+//            self.navigationController?.pushViewController(avc!, animated: true)
+            SwiftMediator.shared.push(avc)
         case 5:
             // MARK: - URL用法1
             SwiftMediator.shared.openUrl("app://push/SwiftMediator/TestVC?str=123&titleName=456")

@@ -136,7 +136,7 @@ extension SwiftMediator {
         }
     }
     
-    /// 原生路由Push
+    /// 路由Push
     /// - Parameters:
     ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
     ///   - moduleName: 目标VC所在组件名称
@@ -156,7 +156,22 @@ extension SwiftMediator {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    /// 原生路由present
+    /// 简单Push,提前初始化好VC
+    /// - Parameters:
+    ///   - vc: 已初始化好的VC对象
+    ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
+    public func push(_ vc: UIViewController?,
+                     fromVC: UIViewController? = nil) {
+        guard let vc = vc else { return }
+        vc.hidesBottomBarWhenPushed = true
+        guard let from = fromVC else {
+            currentNavigationController()?.pushViewController(vc, animated: true)
+            return
+        }
+        from.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    /// 路由present
     /// - Parameters:
     ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
     ///   - moduleName: 目标VC所在组件名称
@@ -170,6 +185,37 @@ extension SwiftMediator {
                         modelStyle: Int = 0) {
         guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
         
+        let nav = UINavigationController.init(rootViewController: vc)
+        nav.navigationBar.backgroundColor = .white
+        nav.navigationBar.barTintColor = .white
+        nav.navigationBar.isTranslucent = false
+        switch modelStyle {
+        case 1:
+            nav.modalPresentationStyle = .fullScreen
+        default:
+            if #available(iOS 13.0, *) {
+                nav.modalPresentationStyle = .automatic
+            } else {
+                // Fallback on earlier versions
+            }
+        }
+        
+        guard let from = fromVC else {
+            currentViewController()?.present(nav, animated: true, completion: nil)
+            return
+        }
+        from.present(nav, animated: true, completion: nil)
+    }
+    
+    /// 简单present,提前初始化好VC
+    /// - Parameters:
+    ///   - vc: 已初始化好的VC对象
+    ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
+    ///   - modelStyle: 模态样式  0模态样式为默认，1是全屏模态。。。。。
+    public func present(_ vc: UIViewController?,
+                        fromVC: UIViewController? = nil,
+                        modelStyle: Int = 0) {
+        guard let vc = vc else { return }
         let nav = UINavigationController.init(rootViewController: vc)
         nav.navigationBar.backgroundColor = .white
         nav.navigationBar.barTintColor = .white
