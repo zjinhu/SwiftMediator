@@ -19,12 +19,12 @@ class TestVC: JHViewController {
         
         self.title = titleName
         self.view.backgroundColor = .random
-        let _ = UILabel.snpLabel(supView: self.view, backColor: .yellow, text: "\(str!)--\(num)", textColor: UIColor.random!, snapKitMaker: { (make) in
+        let _ = UILabel.snpLabel(supView: self.view, backColor: .yellow, text: "\(str!)--\(num)", textColor: UIColor.random, snapKitMaker: { (make) in
             make.center.equalToSuperview()
             make.width.height.equalTo(100)
         })
         
-        let _ = UILabel.snpLabel(supView: self.view, backColor: .yellow, text: "\(String(describing: dic))--\(num)", textColor: UIColor.random!, snapKitMaker: { (make) in
+        let _ = UILabel.snpLabel(supView: self.view, backColor: .yellow, text: "\(String(describing: dic))--\(num)", textColor: UIColor.random, snapKitMaker: { (make) in
             make.centerX.equalToSuperview()
             make.width.height.equalTo(100)
             make.top.equalToSuperview().offset(100)
