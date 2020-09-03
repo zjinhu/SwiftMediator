@@ -7,6 +7,7 @@
 //
 
 import SnapKit
+import UIKit
 
 public extension Array {
     var snp: ConstraintArrayDSL {
@@ -58,11 +59,11 @@ public struct ConstraintArrayDSL {
     ///   - edgeInset: 修订边距
     public func distributeViewsForm(fixedItemWidth: CGFloat,
                                     fixedItemHeight: CGFloat,
-                                    fixedInteritemSpacing:CGFloat,
-                                    fixedLineSpacing:CGFloat,
+                                    fixedInteritemSpacing: CGFloat,
+                                    fixedLineSpacing: CGFloat,
                                     warpCount: Int,
                                     edgeInset: UIEdgeInsets = UIEdgeInsets.zero) {
-
+        
         guard self.array.count > 0, warpCount >= 1 else {
             return
         }
@@ -118,10 +119,10 @@ public struct ConstraintArrayDSL {
     ///   - fixedSpacing: 固定间距
     ///   - leadSpacing: 左边距(上边距)
     ///   - tailSpacing: 右边距(下边距)
-    public func distributeViewsAlong(axisType:NSLayoutConstraint.Axis,
-                                     fixedSpacing:CGFloat,
-                                     leadSpacing:CGFloat = 0,
-                                     tailSpacing:CGFloat = 0) {
+    public func distributeViewsAlong(axisType: NSLayoutConstraint.Axis,
+                                     fixedSpacing: CGFloat,
+                                     leadSpacing: CGFloat = 0,
+                                     tailSpacing: CGFloat = 0) {
         
         guard self.array.count > 1 else {
             return
@@ -168,10 +169,10 @@ public struct ConstraintArrayDSL {
     ///   - fixedItemLength: item对应方向的宽或者高 垂直时，是每个view的固定高度, 默认为 nil, 可不传，
     ///   - leadSpacing: 左边距(上边距)
     ///   - tailSpacing: 右边距(下边距)
-    public func distributeViewsAlong(axisType:NSLayoutConstraint.Axis,
-                                     fixedItemLength:CGFloat,
-                                     leadSpacing:CGFloat = 0,
-                                     tailSpacing:CGFloat = 0) {
+    public func distributeViewsAlong(axisType: NSLayoutConstraint.Axis,
+                                     fixedItemLength: CGFloat,
+                                     leadSpacing: CGFloat = 0,
+                                     tailSpacing: CGFloat = 0) {
         
         guard self.array.count > 1 else {
             return

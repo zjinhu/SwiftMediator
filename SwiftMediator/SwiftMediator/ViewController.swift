@@ -30,7 +30,7 @@ class ViewController: JHTableViewController {
         case 1:
             // MARK: - present用法二
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
-            SwiftMediator.shared.present(avc)
+            SwiftMediator.shared.present(avc, needNav: false, modelStyle: 1)
         case 2:
             // MARK: - push用法一
             let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
@@ -53,7 +53,7 @@ class ViewController: JHTableViewController {
             // MARK: - URL用法3
             SwiftMediator.shared.openUrl("app://fullScreen/SwiftMediator/TestVC?str=123&titleName=456")
         case 8:
-            SwiftMediator.shared.push("JHWebViewController", moduleName: "SwiftBrick", paramsDic: ["navTitle":"123123","url":"https://www.qq.com"])
+            SwiftMediator.shared.push("JHWebViewController", moduleName: "SwiftBrick", paramsDic: ["navTitle":"123123","urlString":"https://www.qq.com"])
         case 9:
 //            SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
             let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "qqqqq:", param: "123123123")?.takeUnretainedValue()

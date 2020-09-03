@@ -95,27 +95,26 @@ public extension UIColor {
     }
     
     /// 支持暗黑模式的颜色
-    struct BaseUI {
-        public static let baseBlue = L.color("baseBlue")
-        public static let baseGray = L.color("baseGray")
-        public static let baseGreen = L.color("baseGreen")
-        public static let baseIndigo = L.color("baseIndigo")
-        public static let baseOrange = L.color("baseOrange")
-        public static let basePink = L.color("basePink")
-        public static let basePurple = L.color("basePurple")
-        public static let baseRed = L.color("baseRed")
-        public static let baseTeal = L.color("baseTeal")
-        public static let baseYellow = L.color("baseYellow")
-        public static let baseBackground = L.color("bgColor")
-        public static let baseBGColor = L.color("backColor")
-        
-        public static let baseLine = UIColor.init(hex: 0xe3e3e3)
-        
-        public static let textTitleColor = L.color("textTitleColor")
-        public static let textSecColor = L.color("textSecColor")
-        public static let textDesColor = L.color("textDesColor")
-        public static let textLinkColor = L.color("textLinkColor")
-    }
+    static let baseBlue = L.color("baseBlue")
+    static let baseGray = L.color("baseGray")
+    static let baseGreen = L.color("baseGreen")
+    static let baseIndigo = L.color("baseIndigo")
+    static let baseOrange = L.color("baseOrange")
+    static let basePink = L.color("basePink")
+    static let basePurple = L.color("basePurple")
+    static let baseRed = L.color("baseRed")
+    static let baseTeal = L.color("baseTeal")
+    static let baseYellow = L.color("baseYellow")
+    static let baseBackground = L.color("bgColor")
+    static let baseBGColor = L.color("backColor")
+    
+    static let baseLine = UIColor.init(hex: 0xe3e3e3)
+    
+    static let textTitleColor = L.color("textTitleColor")
+    static let textSecColor = L.color("textSecColor")
+    static let textDesColor = L.color("textDesColor")
+    static let textLinkColor = L.color("textLinkColor")
+
 }
 
 public extension Array where Element : UIColor {
@@ -193,3 +192,4 @@ public extension UIColor {
   }
   
 }
+

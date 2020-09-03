@@ -36,7 +36,7 @@ public extension UITableViewCell {
             headFootRightMarign = rightMarign
         }
         
-        var color = UIColor.BaseUI.baseLine
+        var color: UIColor = .baseLine
         if lineColor != .clear{
             color = lineColor
         }
@@ -110,7 +110,7 @@ public extension UITableViewCell {
                      rightMarign : CGFloat = 0,
                      lineColor : UIColor = .clear){
         
-        var color = UIColor.BaseUI.baseLine
+        var color: UIColor = .baseLine
         if lineColor != .clear{
             color = lineColor
         }
@@ -147,7 +147,7 @@ public extension UITableViewCell {
                      rightMarign : CGFloat = 0,
                      lineColor : UIColor = .clear){
         
-        var color = UIColor.BaseUI.baseLine
+        var color: UIColor = .baseLine
         if lineColor != .clear{
             color = lineColor
         }

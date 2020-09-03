@@ -17,7 +17,8 @@ public class L{
     
     public static func image(_ named: String) -> UIImage {
         guard let image = UIImage(named: named, in: bundle, compatibleWith: nil) else {
-            return UIImage(named: named) ?? UIImage()
+            let image = UIImage(named: named)
+            return image ?? UIImage()
         }
         return image
     }

@@ -71,5 +71,15 @@ public extension CALayer {
         //设置边框圆角
         cornerRadius = corner
     }
+
+    
+    /// 设置部分圆角 需要View设置clipsToBounds = true
+    /// - Parameters:
+    ///   - radius: 圆角半径
+    ///   - corners: CACornerMask集合 layerMaxXMaxYCorner:右下 layerMaxXMinYCorner:右上 layerMinXMaxYCorner:左下 layerMinXMinYCorner: 左上
+    func setCorners(_ radius: CGFloat, corners: CACornerMask){
+        cornerRadius = radius
+        maskedCorners = corners
+    }
 }
 

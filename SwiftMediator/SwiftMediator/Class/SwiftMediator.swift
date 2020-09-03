@@ -211,31 +211,40 @@ extension SwiftMediator {
     /// - Parameters:
     ///   - vc: 已初始化好的VC对象
     ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
+    ///   - needNav: 是否需要导航栏
     ///   - modelStyle: 模态样式  0模态样式为默认，1是全屏模态。。。。。
     public func present(_ vc: UIViewController?,
                         fromVC: UIViewController? = nil,
+                        needNav: Bool = true,
                         modelStyle: Int = 0) {
         guard let vc = vc else { return }
-        let nav = UINavigationController.init(rootViewController: vc)
-        nav.navigationBar.backgroundColor = .white
-        nav.navigationBar.barTintColor = .white
-        nav.navigationBar.isTranslucent = false
+        
+        var container = vc
+        
+        if needNav {
+            let nav = UINavigationController.init(rootViewController: vc)
+            nav.navigationBar.backgroundColor = .white
+            nav.navigationBar.barTintColor = .white
+            nav.navigationBar.isTranslucent = false
+            container = nav
+        }
+        
         switch modelStyle {
         case 1:
-            nav.modalPresentationStyle = .fullScreen
+            container.modalPresentationStyle = .fullScreen
         default:
             if #available(iOS 13.0, *) {
-                nav.modalPresentationStyle = .automatic
+                container.modalPresentationStyle = .automatic
             } else {
                 // Fallback on earlier versions
             }
         }
         
         guard let from = fromVC else {
-            currentViewController()?.present(nav, animated: true, completion: nil)
+            currentViewController()?.present(container, animated: true, completion: nil)
             return
         }
-        from.present(nav, animated: true, completion: nil)
+        from.present(container, animated: true, completion: nil)
     }
 }
 

@@ -110,8 +110,8 @@ open class JHViewController: UIViewController {
     ///   - normalColor: normalColor
     ///   - highlightColor: highlightColor
     public func addLeftBarButton(text: String,
-                                 normalColor: UIColor? = UIColor.BaseUI.textTitleColor,
-                                 highlightColor: UIColor? = UIColor.BaseUI.textDesColor){
+                                 normalColor: UIColor? = .textTitleColor,
+                                 highlightColor: UIColor? = .textDesColor){
         
         comfigLeftBarButton(text: text, normalColor: normalColor, highlightColor: highlightColor)
         let btnItem = UIBarButtonItem.init(customView: leftBarButton)
@@ -137,8 +137,8 @@ open class JHViewController: UIViewController {
     ///   - normalColor: normalColor
     ///   - highlightColor: highlightColor
     public func addRightBarButton(text: String,
-                                  normalColor: UIColor? = UIColor.BaseUI.textTitleColor,
-                                  highlightColor: UIColor? = UIColor.BaseUI.textDesColor){
+                                  normalColor: UIColor? = .textTitleColor,
+                                  highlightColor: UIColor? = .textDesColor){
 
         comfigRightBarButton(text: text, normalColor: normalColor, highlightColor: highlightColor)
         let btnItem = UIBarButtonItem.init(customView: rightBarButton)
@@ -156,8 +156,8 @@ open class JHViewController: UIViewController {
     ///   - highLightImage: highLightImage
     public func comfigLeftBarButton(text: String? = nil,
                                     font: UIFont? = Font16,
-                                    normalColor: UIColor? = UIColor.BaseUI.textTitleColor,
-                                    highlightColor: UIColor? = UIColor.BaseUI.textDesColor,
+                                    normalColor: UIColor? = .textTitleColor,
+                                    highlightColor: UIColor? = .textDesColor,
                                     normalImage: UIImage? = nil,
                                     highLightImage: UIImage? = nil){
         
