@@ -17,6 +17,10 @@ class SceneDe: SceneDelegateMediator{
         print("UIScene在这启动")
         guard let _ = (scene as? UIWindowScene) else { return }
     }
+    
+    func sceneWillResignActive(_ scene: UIScene) {
+        print("UIScene在这将要进入后台")
+    }
 }
 
 
@@ -31,4 +35,7 @@ class AppDe: AppDelegateMediator{
         return true
     }
 
+    func applicationWillResignActive(_ application: UIApplication) {
+        print("UIApplication在这将要进入后台")
+    }
 }
