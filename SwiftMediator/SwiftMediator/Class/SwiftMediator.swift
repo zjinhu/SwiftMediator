@@ -177,7 +177,7 @@ extension SwiftMediator {
     ///   - moduleName: 目标VC所在组件名称
     ///   - vcName: 目标VC名称
     ///   - paramsDic: 参数字典
-    ///   - modelStyle: 0模态样式为默认，1是全屏模态。。。。。
+    ///   - modelStyle: 0:模态样式为默认，1:全屏模态,2:custom
     public func present(_ vcName: String,
                         moduleName: String? = nil,
                         fromVC: UIViewController? = nil,
@@ -192,11 +192,13 @@ extension SwiftMediator {
         switch modelStyle {
         case 1:
             nav.modalPresentationStyle = .fullScreen
+        case 2:
+            nav.modalPresentationStyle = .custom
         default:
             if #available(iOS 13.0, *) {
                 nav.modalPresentationStyle = .automatic
             } else {
-                // Fallback on earlier versions
+                nav.modalPresentationStyle = .fullScreen
             }
         }
         
@@ -212,7 +214,7 @@ extension SwiftMediator {
     ///   - vc: 已初始化好的VC对象
     ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
     ///   - needNav: 是否需要导航栏
-    ///   - modelStyle: 模态样式  0模态样式为默认，1是全屏模态。。。。。
+    ///   - modelStyle: 0:模态样式为默认，1:全屏模态,2:custom
     public func present(_ vc: UIViewController?,
                         fromVC: UIViewController? = nil,
                         needNav: Bool = true,
@@ -232,11 +234,13 @@ extension SwiftMediator {
         switch modelStyle {
         case 1:
             container.modalPresentationStyle = .fullScreen
+        case 2:
+            container.modalPresentationStyle = .custom
         default:
             if #available(iOS 13.0, *) {
                 container.modalPresentationStyle = .automatic
             } else {
-                // Fallback on earlier versions
+                container.modalPresentationStyle = .fullScreen
             }
         }
         
