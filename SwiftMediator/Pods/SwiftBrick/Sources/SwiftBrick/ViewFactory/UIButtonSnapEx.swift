@@ -46,7 +46,7 @@ public extension UIButton {
                          norImage : UIImage? = nil,
                          higImage : UIImage? = nil,
                          touchUp : buttonClosure? = nil,
-                         snapKitMaker : ((_ make: ConstraintMaker) -> Void)? = nil) -> UIButton {
+                         snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UIButton {
         
         let btn = UIButton.init(type: .custom)
         btn.backgroundColor = backColor

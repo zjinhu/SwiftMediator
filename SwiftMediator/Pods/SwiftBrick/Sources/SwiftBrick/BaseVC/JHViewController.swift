@@ -28,6 +28,11 @@ open class JHViewController: UIViewController {
         return rightBarButton
     }()
     
+    /// 移除左侧导航栏返回按钮默认的返回事件
+    public func removeLeftBarButtonTarget(){
+        leftBarButton.removeTarget(self, action: #selector(goBack), for: .touchUpInside)
+    }
+    
     // MARK: - 布局
     open override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +45,6 @@ open class JHViewController: UIViewController {
         if let viewControllers: [UIViewController] = navigationController?.viewControllers , viewControllers.count > 1{
             addDefaultBackBarButton()
         }
-        
-        // Do any additional setup after loading the view.
     }
     
     // MARK: - Navigation 关闭手势返回

@@ -20,6 +20,16 @@ open class JHWebViewController: JHViewController ,WKUIDelegate,WKNavigationDeleg
         webView.scrollView.delegate = self
         webView.scrollView.contentInsetAdjustmentBehavior = .never
         webView.allowsBackForwardNavigationGestures = true
+        webView.evaluateJavaScript("navigator.userAgent", completionHandler: { (obj: Any?, error: Error?) in
+            guard let ua = obj as? String else {
+                return
+            }
+            
+            guard let new = self.customUserAgent else {
+                return
+            }
+            webView.customUserAgent = "\(ua);\(new)"
+        })
         return webView
     }()
     
@@ -41,17 +51,29 @@ open class JHWebViewController: JHViewController ,WKUIDelegate,WKNavigationDeleg
     lazy var config : WKWebViewConfiguration = {
         let preferences = WKPreferences.init()
 //        preferences.minimumFontSize = 0.0
-        preferences.javaScriptEnabled = true
         preferences.javaScriptCanOpenWindowsAutomatically = true
         
         let processPool = WKProcessPool.init()
         
         let config = WKWebViewConfiguration.init()
+        if #available(iOS 13.0, *){
+            config.defaultWebpagePreferences.preferredContentMode = .mobile
+            
+        }
+        
+        if #available(iOS 14.0, *){
+            config.defaultWebpagePreferences.allowsContentJavaScript = true
+        }else{
+            preferences.javaScriptEnabled = true
+        }
+        
         config.userContentController = WKUserContentController.init()
         config.preferences = preferences
         config.processPool = processPool
         config.allowsInlineMediaPlayback = true
         config.allowsAirPlayForMediaPlayback = true
+
+
         return config
     }()
     
@@ -79,26 +101,15 @@ open class JHWebViewController: JHViewController ,WKUIDelegate,WKNavigationDeleg
         }
     }
     
-    @objc
-    public var navTitle : String?
-    @objc
-    public var urlString : String?
-    @objc
-    public var agent : String? {
-        didSet{
-            guard let new = agent else {
-                return
-            }
-            let web = UIWebView.init()
-            var oldAgent = web.stringByEvaluatingJavaScript(from: "navigator.userAgent")
-            oldAgent? += ";"
-            oldAgent? += new
-            webView.customUserAgent = oldAgent 
-        }
-    }
-    
-    @objc
-    public var request : URLRequest?
+    /// 设置导航栏标题
+    @objc public var navTitle : String?
+    /// 访问地址
+    @objc public var urlString : String?
+    /// 添加userAgent标记,会拼接;
+    @objc public var customUserAgent : String?
+    /// 自定义请求
+    @objc public var request : URLRequest?
+    /// 获取当前地址
     public var currentUrl : String?
     
     // MARK: - 初始化

@@ -24,7 +24,7 @@ public extension UICollectionView {
                                  scrollDirectionType: UICollectionView.ScrollDirection = .vertical,
                                  delegate: UICollectionViewDelegate? = nil,
                                  dataSource: UICollectionViewDataSource? = nil,
-                                 snapKitMaker : ((_ make: ConstraintMaker) -> Void)? = nil) -> UICollectionView{
+                                 snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UICollectionView{
         
         let flowLayout = UICollectionViewFlowLayout.init()
         flowLayout.minimumLineSpacing = 0

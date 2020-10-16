@@ -15,7 +15,7 @@ extension UIImage {
         guard let image = image else {
             return nil
         }
-        let name = image.md5
+        let name = image.sha256
         let imageName = "placeHolder_\(imageView.bounds.size.width)_\(imageView.bounds.size.height)_\(name).png"
         let fileManager = FileManager.default
         let path : String = NSHomeDirectory() + "/Documents/PlaceHolder/"
@@ -56,15 +56,26 @@ extension UIImage {
         return nil
     }
     
-    var md5: String {
+//    var md5: String {
+//        let data = Data(self.pngData()!)
+//        let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+//            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+//            CC_MD5(bytes.baseAddress, CC_LONG(data.count), &hash)
+//            return hash
+//        }
+//        return hash.map { String(format: "%02x", $0) }.joined()
+//    }
+    
+    var sha256: String {
         let data = Data(self.pngData()!)
         let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
             var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_MD5(bytes.baseAddress, CC_LONG(data.count), &hash)
+            CC_SHA256(bytes.baseAddress, CC_LONG(data.count), &hash)
             return hash
         }
-        return hash.map { String(format: "%02x", $0) }.joined()
+        return hash.reduce("") { $0 + String(format:"%02x", $1) }
     }
+
 }
 
 class CountedColor {

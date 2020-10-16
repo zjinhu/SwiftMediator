@@ -8,22 +8,8 @@
 
 import UIKit
 
-//@available(iOS 13.0, *)
-//extension UIResponder {
-//    @objc var coordinatingResponder: UIResponder? {
-//        return self.next
-//    }
-//}
-//
-//@available(iOS 13.0, *)
-//extension UIScene{
-//    override open var next: UIResponder? {
-//        SwizzleNavBar.swizzle
-//        return super.next
-//    }
-//}
-
 extension UIApplication {
+    ///ios13以上失效,需要手动调用SwizzleNavBar.swizzle
     override open var next: UIResponder? {
         SwizzleNavBar.swizzle
         return super.next

@@ -28,7 +28,7 @@ public extension UILabel {
                         text: String = "",
                         textColor: UIColor = .black,
                         textAlignment: NSTextAlignment = .left,
-                        snapKitMaker : ((_ make: ConstraintMaker) -> Void)? = nil) -> UILabel {
+                        snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UILabel {
         
         let label = UILabel.init()
         label.text = text

@@ -38,7 +38,6 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
     // MARK: - 布局
     open override func viewDidLoad() {
         super.viewDidLoad()
-//        UITableViewDiffableDataSource
         setupTableViewStyleType()
         
         switch tableViewStyleType {

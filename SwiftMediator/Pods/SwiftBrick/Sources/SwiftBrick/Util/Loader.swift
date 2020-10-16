@@ -8,11 +8,27 @@
 
 import UIKit
 
-public class L{
+extension Bundle {
+    
+    #if !ENABLE_SPM
+    private class _BundleClass { }
+    #endif
+    
+    static var current: Bundle {
+        #if ENABLE_SPM
+        return Bundle.module
+        #else
+        return Bundle(for: _BundleClass.self)
+        #endif
+    }
+}
+
+public struct L{
+    
     static var bundle: Bundle = {
-        let path = Bundle(for: L.self).path(forResource: "SwiftBrick", ofType: "bundle", inDirectory: nil)
+        let path = Bundle.current.path(forResource: "SwiftBrick", ofType: "bundle", inDirectory: nil)
         let bundle = Bundle(path: path ?? "")
-        return bundle ?? Bundle(for: L.self)
+        return bundle ?? Bundle.current
     }()
     
     public static func image(_ named: String) -> UIImage {
