@@ -19,5 +19,5 @@ Pod::Spec.new do |s|
 
   s.frameworks   =  "UIKit" #支持的框架
 
-  s.source_files = 'SwiftMediator/SwiftMediator/Class/**/*' 
+  s.source_files = 'Sources/SwiftMediator/**/*' 
 end

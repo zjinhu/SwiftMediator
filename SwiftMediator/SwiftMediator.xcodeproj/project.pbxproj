@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8116A40C2499B5EC00DACECC /* TestObjc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8116A40B2499B5EC00DACECC /* TestObjc.swift */; };
+		81BDE34A2546BE1E00F8130D /* SwiftMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BDE3492546BE1E00F8130D /* SwiftMediator.swift */; };
 		81F7DBAE23C6D60C0025C5FD /* TestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7DBAD23C6D60C0025C5FD /* TestClass.swift */; };
 		81F7DBB023C822820025C5FD /* DelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7DBAF23C822820025C5FD /* DelegateMediator.swift */; };
 		8350FD8838654FA243BFF033 /* Pods_SwiftMediator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99C62ADDA2547DD89604651D /* Pods_SwiftMediator.framework */; };
@@ -17,13 +18,13 @@
 		91911575238E526C00503645 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91911573238E526C00503645 /* Main.storyboard */; };
 		91911577238E526F00503645 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91911576238E526F00503645 /* Assets.xcassets */; };
 		9191157A238E526F00503645 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91911578238E526F00503645 /* LaunchScreen.storyboard */; };
-		91911583238E52BC00503645 /* SwiftMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91911582238E52BC00503645 /* SwiftMediator.swift */; };
 		E239CF8223989B2800745924 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E239CF8123989B2800745924 /* TestVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6C919F46FD9D933FC426A6F2 /* Pods-SwiftMediator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftMediator.release.xcconfig"; path = "Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator.release.xcconfig"; sourceTree = "<group>"; };
 		8116A40B2499B5EC00DACECC /* TestObjc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjc.swift; sourceTree = "<group>"; };
+		81BDE3492546BE1E00F8130D /* SwiftMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMediator.swift; sourceTree = "<group>"; };
 		81F7DBAD23C6D60C0025C5FD /* TestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClass.swift; sourceTree = "<group>"; };
 		81F7DBAF23C822820025C5FD /* DelegateMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateMediator.swift; sourceTree = "<group>"; };
 		9191156A238E526C00503645 /* SwiftMediator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftMediator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +35,6 @@
 		91911576238E526F00503645 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		91911579238E526F00503645 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9191157B238E526F00503645 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		91911582238E52BC00503645 /* SwiftMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftMediator.swift; sourceTree = "<group>"; };
 		99C62ADDA2547DD89604651D /* Pods_SwiftMediator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftMediator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E239CF8123989B2800745924 /* TestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		FFD56C1FF839DD1FD453C775 /* Pods-SwiftMediator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftMediator.debug.xcconfig"; path = "Target Support Files/Pods-SwiftMediator/Pods-SwiftMediator.debug.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +69,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		81BDE3482546BE1E00F8130D /* SwiftMediator */ = {
+			isa = PBXGroup;
+			children = (
+				81BDE3492546BE1E00F8130D /* SwiftMediator.swift */,
+			);
+			name = SwiftMediator;
+			path = ../../Sources/SwiftMediator;
+			sourceTree = "<group>";
+		};
 		91911561238E526C00503645 = {
 			isa = PBXGroup;
 			children = (
@@ -90,7 +99,7 @@
 		9191156C238E526C00503645 /* SwiftMediator */ = {
 			isa = PBXGroup;
 			children = (
-				91911581238E52A000503645 /* Class */,
+				81BDE3482546BE1E00F8130D /* SwiftMediator */,
 				9191156D238E526C00503645 /* AppDelegate.swift */,
 				9191156F238E526C00503645 /* SceneDelegate.swift */,
 				91911571238E526C00503645 /* ViewController.swift */,
@@ -104,14 +113,6 @@
 				9191157B238E526F00503645 /* Info.plist */,
 			);
 			path = SwiftMediator;
-			sourceTree = "<group>";
-		};
-		91911581238E52A000503645 /* Class */ = {
-			isa = PBXGroup;
-			children = (
-				91911582238E52BC00503645 /* SwiftMediator.swift */,
-			);
-			path = Class;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,8 +230,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81BDE34A2546BE1E00F8130D /* SwiftMediator.swift in Sources */,
 				E239CF8223989B2800745924 /* TestVC.swift in Sources */,
-				91911583238E52BC00503645 /* SwiftMediator.swift in Sources */,
 				91911572238E526C00503645 /* ViewController.swift in Sources */,
 				81F7DBB023C822820025C5FD /* DelegateMediator.swift in Sources */,
 				9191156E238E526C00503645 /* AppDelegate.swift in Sources */,
