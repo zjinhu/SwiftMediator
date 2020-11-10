@@ -186,9 +186,6 @@ extension SwiftMediator {
         guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
         
         let nav = UINavigationController.init(rootViewController: vc)
-        nav.navigationBar.backgroundColor = .white
-        nav.navigationBar.barTintColor = .white
-        nav.navigationBar.isTranslucent = false
         switch modelStyle {
         case 1:
             nav.modalPresentationStyle = .fullScreen
@@ -225,9 +222,6 @@ extension SwiftMediator {
         
         if needNav {
             let nav = UINavigationController.init(rootViewController: vc)
-            nav.navigationBar.backgroundColor = .white
-            nav.navigationBar.barTintColor = .white
-            nav.navigationBar.isTranslucent = false
             container = nav
         }
         

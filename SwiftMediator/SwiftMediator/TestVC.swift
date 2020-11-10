@@ -17,6 +17,10 @@ class TestVC: JHViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.setBackgroundColor(.baseBGColor)
+        navigationController?.navigationBar.setLineHidden(hidden: true)
+        navigationController?.navigationBar.isTranslucent = false
+        
         self.title = titleName
         self.view.backgroundColor = .random
         let _ = UILabel.snpLabel(supView: self.view, backColor: .yellow, text: "\(str!)--\(num)", textColor: UIColor.random, snapKitMaker: { (make) in
