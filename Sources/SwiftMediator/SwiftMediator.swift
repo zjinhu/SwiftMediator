@@ -72,8 +72,8 @@ extension SwiftMediator {
     ///   - obj: 目标对象
     private func getTypeOfProperty (_ name: String, obj:AnyObject) -> Bool{
         // 注意：obj是实例(对象)，如果是类，则无法获取其属性
-        let morror = Mirror.init(reflecting: obj)
-        let superMorror = Mirror.init(reflecting: obj).superclassMirror
+        let morror = Mirror(reflecting: obj)
+        let superMorror = Mirror(reflecting: obj).superclassMirror
         
         for (key,_) in morror.children {
             if key == name {
@@ -115,10 +115,10 @@ extension SwiftMediator {
     /// URL路由跳转 跳转区分Push、present、fullScreen
     /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
     public func openUrl(_ urlString: String?) {
-        guard let str = urlString, let url = URL.init(string: str) else { return }
+        guard let str = urlString, let url = URL(string: str) else { return }
         
         if let scheme = url.scheme,
-            (scheme == "http" || scheme == "https") {
+           (scheme == "http" || scheme == "https") {
             // Web View Controller
         }else{
             let path = url.path as String
@@ -142,33 +142,37 @@ extension SwiftMediator {
     ///   - moduleName: 目标VC所在组件名称
     ///   - vcName: 目标VC名称
     ///   - paramsDic: 参数字典
+    ///   - animated: 是否有动画
     public func push(_ vcName: String,
                      moduleName: String? = nil,
                      fromVC: UIViewController? = nil,
-                     paramsDic:[String:Any]? = nil) {
-        
+                     paramsDic:[String:Any]? = nil,
+                     animated: Bool = true) {
         guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
-        vc.hidesBottomBarWhenPushed = true
-        guard let from = fromVC else {
-            currentNavigationController()?.pushViewController(vc, animated: true)
-            return
-        }
-        from.navigationController?.pushViewController(vc, animated: true)
+        pushVC(animated: animated, vc: vc, fromVC: fromVC)
     }
     
     /// 简单Push,提前初始化好VC
     /// - Parameters:
     ///   - vc: 已初始化好的VC对象
     ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
+    ///   - animated: 是否有动画
     public func push(_ vc: UIViewController?,
-                     fromVC: UIViewController? = nil) {
+                     fromVC: UIViewController? = nil,
+                     animated: Bool = true) {
         guard let vc = vc else { return }
+        pushVC(animated: animated, vc: vc, fromVC: fromVC)
+    }
+    
+    fileprivate func pushVC(animated: Bool,
+                            vc: UIViewController,
+                            fromVC: UIViewController? = nil){
         vc.hidesBottomBarWhenPushed = true
         guard let from = fromVC else {
-            currentNavigationController()?.pushViewController(vc, animated: true)
+            currentNavigationController()?.pushViewController(vc, animated: animated)
             return
         }
-        from.navigationController?.pushViewController(vc, animated: true)
+        from.navigationController?.pushViewController(vc, animated: animated)
     }
     
     /// 路由present
@@ -178,32 +182,18 @@ extension SwiftMediator {
     ///   - vcName: 目标VC名称
     ///   - paramsDic: 参数字典
     ///   - modelStyle: 0:模态样式为默认，1:全屏模态,2:custom
+    ///   - needNav: 是否需要导航栏
+    ///   - animated: 是否有动画
     public func present(_ vcName: String,
                         moduleName: String? = nil,
-                        fromVC: UIViewController? = nil,
                         paramsDic:[String:Any]? = nil,
-                        modelStyle: Int = 0) {
+                        fromVC: UIViewController? = nil,
+                        needNav: Bool = true,
+                        modelStyle: Int = 0,
+                        animated: Bool = true) {
         guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
+        presentVC(needNav: needNav, animated: animated, modelStyle: modelStyle, vc: vc)
         
-        let nav = UINavigationController.init(rootViewController: vc)
-        switch modelStyle {
-        case 1:
-            nav.modalPresentationStyle = .fullScreen
-        case 2:
-            nav.modalPresentationStyle = .custom
-        default:
-            if #available(iOS 13.0, *) {
-                nav.modalPresentationStyle = .automatic
-            } else {
-                nav.modalPresentationStyle = .fullScreen
-            }
-        }
-        
-        guard let from = fromVC else {
-            currentViewController()?.present(nav, animated: true, completion: nil)
-            return
-        }
-        from.present(nav, animated: true, completion: nil)
     }
     
     /// 简单present,提前初始化好VC
@@ -212,16 +202,25 @@ extension SwiftMediator {
     ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
     ///   - needNav: 是否需要导航栏
     ///   - modelStyle: 0:模态样式为默认，1:全屏模态,2:custom
+    ///   - animated: 是否有动画
     public func present(_ vc: UIViewController?,
                         fromVC: UIViewController? = nil,
                         needNav: Bool = true,
-                        modelStyle: Int = 0) {
+                        modelStyle: Int = 0,
+                        animated: Bool = true) {
         guard let vc = vc else { return }
-        
+        presentVC(needNav: needNav, animated: animated, modelStyle: modelStyle, vc: vc)
+    }
+    
+    fileprivate func presentVC(needNav: Bool,
+                               animated: Bool,
+                               modelStyle: Int,
+                               vc: UIViewController,
+                               fromVC: UIViewController? = nil){
         var container = vc
         
         if needNav {
-            let nav = UINavigationController.init(rootViewController: vc)
+            let nav = UINavigationController(rootViewController: vc)
             container = nav
         }
         
@@ -239,10 +238,10 @@ extension SwiftMediator {
         }
         
         guard let from = fromVC else {
-            currentViewController()?.present(container, animated: true, completion: nil)
+            currentViewController()?.present(container, animated: animated, completion: nil)
             return
         }
-        from.present(container, animated: true, completion: nil)
+        from.present(container, animated: animated, completion: nil)
     }
 }
 
@@ -434,6 +433,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public init(delegates:[AppDelegateMediator]) {
         self.delegates = delegates
     }
+    
     //MARK:--- 启动 初始化 ----------
     /// 即将启动
     @discardableResult
@@ -446,6 +446,7 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
+    
     /// 启动完成
     @discardableResult
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -456,11 +457,13 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
+    
     //MARK:--- 程序状态更改和系统事件 ----------
     /// 即将过渡到前台
     public func applicationWillEnterForeground(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationWillEnterForeground?(application)}
     }
+    
     /// 过渡到活动状态
     public func applicationDidBecomeActive(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationDidBecomeActive?(application)}
@@ -471,6 +474,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public func applicationWillResignActive(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationWillResignActive?(application)}
     }
+    
     /// 已过渡到后台
     public func applicationDidEnterBackground(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationDidEnterBackground?(application)}
@@ -485,6 +489,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public func applicationWillTerminate(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationWillTerminate?(application)}
     }
+    
     /// 时间发生重大变化
     public func applicationSignificantTimeChange(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationSignificantTimeChange?(application)}
@@ -494,6 +499,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationProtectedDataDidBecomeAvailable?(application)}
     }
+    
     /// 受保护的文件即将变为不可用
     public func applicationProtectedDataWillBecomeUnavailable(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationProtectedDataWillBecomeUnavailable?(application)}
@@ -504,10 +510,12 @@ public class AppDelegateManager : AppDelegateMediator {
     public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         delegates.forEach { _ = $0.application?(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)}
     }
+    
     /// Apple推送通知服务无法成功完成注册过程时
     public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         delegates.forEach { _ = $0.application?(application, didFailToRegisterForRemoteNotificationsWithError: error)}
     }
+    
     /// 已到达远程通知，表明有数据要提取
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)}
@@ -530,6 +538,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, performFetchWithCompletionHandler: completionHandler)}
     }
+    
     /// 与URL会话相关的事件正在等待处理
     public func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         delegates.forEach { _ = $0.application?(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)}
@@ -545,6 +554,7 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
+    
     /// 是否应恢复App保存的状态信息
     public func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
         for item in delegates {
@@ -554,6 +564,7 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
+    
     /// 提供指定的视图控制器
     public func application(_ application: UIApplication, viewControllerWithRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
         for item in delegates {
@@ -563,10 +574,12 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return nil
     }
+    
     /// 在状态保存过程开始时保存任何高级状态信息
     public func application(_ application: UIApplication, willEncodeRestorableStateWith coder: NSCoder) {
         delegates.forEach { _ = $0.application?(application, willEncodeRestorableStateWith: coder)}
     }
+    
     /// 在状态恢复过程中恢复任何高级状态信息
     public func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
         delegates.forEach { _ = $0.application?(application, didDecodeRestorableStateWith: coder)}
@@ -582,6 +595,7 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
+    
     /// 可以使用继续活动的数据
     public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         for item in delegates {
@@ -591,14 +605,17 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
+    
     /// 活动已更新
     public func application(_ application: UIApplication, didUpdate userActivity: NSUserActivity) {
         delegates.forEach { _ = $0.application?(application, didUpdate: userActivity)}
     }
+    
     /// 活动无法继续
     public func application(_ application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: Error) {
         delegates.forEach { _ = $0.application?(application, didFailToContinueUserActivityWithType: userActivityType, error: error)}
     }
+    
     /// 当用户为您的应用选择主屏幕快速操作时调用，除非您在启动方法中截获了交互
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         delegates.forEach { _ = $0.application?(application, performActionFor: shortcutItem, completionHandler: completionHandler)}
@@ -639,18 +656,22 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return UIInterfaceOrientationMask()
     }
+    
     /// 当状态栏的界面方向即将更改时
     public func application(_ application: UIApplication, willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         delegates.forEach { _ = $0.application?(application, willChangeStatusBarOrientation:newStatusBarOrientation, duration: duration)}
     }
+    
     /// 当状态栏的界面方向发生变化时
     public func application(_ application: UIApplication, didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation) {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarOrientation:oldStatusBarOrientation)}
     }
+    
     /// 当状态栏的Frame即将更改时
     public func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
         delegates.forEach { _ = $0.application?(application, willChangeStatusBarFrame:newStatusBarFrame)}
     }
+    
     /// 当状态栏的Frame更改时
     public func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarFrame:oldStatusBarFrame)}
@@ -753,7 +774,7 @@ public class SceneDelegateManager : SceneDelegateMediator {
  2、SceneDelegate中添加
  
  lazy var manager: SceneDelegateManager = {
- return SceneDelegateManager.init([SceneDe.init(window)])
+ return SceneDelegateManager([SceneDe(window)])
  }()
  
  3、相应代理方法中添加钩子
