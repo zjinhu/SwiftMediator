@@ -24,15 +24,15 @@ public extension UICollectionView {
                                  scrollDirectionType: UICollectionView.ScrollDirection = .vertical,
                                  delegate: UICollectionViewDelegate? = nil,
                                  dataSource: UICollectionViewDataSource? = nil,
-                                 snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UICollectionView{
+                                 snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UICollectionView{
         
-        let flowLayout = UICollectionViewFlowLayout.init()
+        let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
         flowLayout.scrollDirection = scrollDirectionType
         
-        let collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
 
         if delegate != nil {
           collectionView.delegate = delegate

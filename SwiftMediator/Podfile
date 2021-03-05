@@ -8,5 +8,7 @@ target 'SwiftMediator' do
   use_frameworks!
 
   # Pods for SwiftMediator
-pod 'SwiftBrick'
+  pod 'SwiftBrick'
+  pod 'Swift_Form'
+  pod 'SwiftShow'
 end

@@ -71,9 +71,9 @@ public struct ConstraintArrayDSL {
         let topSpacing = edgeInset.top
         
         let columnCount = warpCount
-        let rowCount = self.array.count % warpCount == 0 ? self.array.count / warpCount : self.array.count / warpCount + 1;
+        let rowCount = self.array.count % warpCount == 0 ? self.array.count / warpCount: self.array.count / warpCount + 1;
         
-        var prev : ConstraintView?
+        var prev: ConstraintView?
         
         for (i,v) in self.array.enumerated() {
             
@@ -129,7 +129,7 @@ public struct ConstraintArrayDSL {
         }
         
         if axisType == .horizontal {
-            var prev : ConstraintView?
+            var prev: ConstraintView?
             for (i, v) in self.array.enumerated() {
                 v.snp.makeConstraints({ (make) in
                     if prev != nil {
@@ -145,7 +145,7 @@ public struct ConstraintArrayDSL {
                 prev = v;
             }
         }else {
-            var prev : ConstraintView?
+            var prev: ConstraintView?
             for (i, v) in self.array.enumerated() {
                 v.snp.makeConstraints({ (make) in
                     if prev != nil {
@@ -179,7 +179,7 @@ public struct ConstraintArrayDSL {
         }
         
         if axisType == .horizontal {
-            var prev : ConstraintView?
+            var prev: ConstraintView?
             for (i, v) in self.array.enumerated() {
                 v.snp.makeConstraints({ (make) in
                     make.width.equalTo(fixedItemLength)
@@ -203,7 +203,7 @@ public struct ConstraintArrayDSL {
                 prev = v;
             }
         }else {
-            var prev : ConstraintView?
+            var prev: ConstraintView?
             for (i, v) in self.array.enumerated() {
                 v.snp.makeConstraints({ (make) in
                     make.height.equalTo(fixedItemLength)
@@ -245,7 +245,7 @@ public struct ConstraintArrayDSL {
             return
         }
         
-        let rowCount = self.array.count % warpCount == 0 ? self.array.count / warpCount : self.array.count / warpCount + 1;
+        let rowCount = self.array.count % warpCount == 0 ? self.array.count / warpCount: self.array.count / warpCount + 1;
         let columnCount = warpCount
         
         for (i,v) in self.array.enumerated() {
@@ -305,9 +305,9 @@ public struct ConstraintArrayDSL {
         }
         
         let columnCount = warpCount
-        let rowCount = self.array.count % warpCount == 0 ? self.array.count / warpCount : self.array.count / warpCount + 1;
+        let rowCount = self.array.count % warpCount == 0 ? self.array.count / warpCount: self.array.count / warpCount + 1;
         
-        var prev : ConstraintView?
+        var prev: ConstraintView?
         
         for (i,v) in self.array.enumerated() {
             

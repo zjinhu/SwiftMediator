@@ -1,0 +1,6 @@
+framework module SwiftButton {
+  umbrella header "SwiftButton-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -34,9 +34,9 @@ public extension UITextField {
                             textColor: UIColor = .black,
                             textAlignment: NSTextAlignment = .left,
                             delegate: UITextFieldDelegate? = nil,
-                            snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UITextField {
+                            snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UITextField {
         
-        let field = UITextField.init()
+        let field = UITextField()
         
         field.borderStyle = .none
         field.autocorrectionType = .no
@@ -47,7 +47,7 @@ public extension UITextField {
           field.delegate = delegate
         }
         
-        field.attributedPlaceholder = NSAttributedString.init(string: holder, attributes: [NSAttributedString.Key.font : holderFont,NSAttributedString.Key.foregroundColor:holderColor])
+        field.attributedPlaceholder = NSAttributedString(string: holder, attributes: [NSAttributedString.Key.font: holderFont,NSAttributedString.Key.foregroundColor:holderColor])
         
         field.text = text
         field.font = font

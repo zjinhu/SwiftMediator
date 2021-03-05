@@ -1,5 +1,5 @@
 # UI工具组件--SwiftBrick
-UI工具类集合，方便快速搭建APP UI ，依赖SnapKit。涉及到的设计模式有：工厂，装饰，抽象等等
+UI工具类集合，方便快速搭建APP UI ，依赖SnapKit。涉及到的设计模式有：工厂，装饰，抽象等等，加快APP开发搭建进度
 ### 文件目录
 1. ViewFactory
 基于SnapKit封装常用UI控件，一个函数创建UI控件，比如UILabel

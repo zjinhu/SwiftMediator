@@ -10,13 +10,13 @@ import UIKit
 
 open class JHTableViewHeaderFooterView: UITableViewHeaderFooterView, Reusable{
 
-    public var backColor : UIColor? {
+    public var backColor: UIColor? {
         didSet{
             backgroundView?.backgroundColor = backColor
         }
     }
     
-    public override init(reuseIdentifier: String? = String.init(describing: self)) {
+    public override init(reuseIdentifier: String? = String(describing: self)) {
         super.init(reuseIdentifier: reuseIdentifier)
         backgroundView = UIView(frame: bounds)
         backgroundView?.backgroundColor = .clear

@@ -11,19 +11,19 @@ import UIKit
 public extension UITabBar {
     
     fileprivate struct AssociatedKeys {
-        static var kBadgeSize : String = "kBadgeSize"
-        static var kBadgeColor : String = "kBadgeColor"
-        static var kBadgeImage : String = "kBadgeImage"
-        static var kBadgePoint : String = "kBadgePoint"
-        static var kBadgeValue : String = "kBadgeValue"
+        static var kBadgeSize: String = "kBadgeSize"
+        static var kBadgeColor: String = "kBadgeColor"
+        static var kBadgeImage: String = "kBadgeImage"
+        static var kBadgePoint: String = "kBadgePoint"
+        static var kBadgeValue: String = "kBadgeValue"
     }
     
-    fileprivate var badgeTag : Int {
+    fileprivate var badgeTag: Int {
         return 1000
     }
     
     // 小红点size
-    var badgeSize : CGSize {
+    var badgeSize: CGSize {
         get{
             if let size = objc_getAssociatedObject(self, &AssociatedKeys.kBadgeSize) as? CGSize {
                 return size
@@ -37,7 +37,7 @@ public extension UITabBar {
     }
     
     // 小红点图片
-    var badgeImage : UIImage? {
+    var badgeImage: UIImage? {
         get{
             if let image = objc_getAssociatedObject(self, &AssociatedKeys.kBadgeImage) as? UIImage {
                 return image
@@ -51,7 +51,7 @@ public extension UITabBar {
     }
     
     // 小红点颜色
-    var badgeColor : UIColor {
+    var badgeColor: UIColor {
         get{
             if let color = objc_getAssociatedObject(self, &AssociatedKeys.kBadgeColor) as? UIColor {
                 return color
@@ -65,7 +65,7 @@ public extension UITabBar {
     }
     
     // 小红点的x、y值
-    var badgePoint : CGPoint {
+    var badgePoint: CGPoint {
         get{
             if let point = objc_getAssociatedObject(self, &AssociatedKeys.kBadgePoint) as? CGPoint {
                 return point
@@ -79,7 +79,7 @@ public extension UITabBar {
     }
     
     // 小红点的数字
-    var badgeValue : Int {
+    var badgeValue: Int {
         get{
             if let num = objc_getAssociatedObject(self, &AssociatedKeys.kBadgeValue) as? Int{
                 return num
@@ -137,7 +137,7 @@ public extension UITabBar {
         
         if badgeValue > 0 {
             let badgeLabel = UILabel(frame: badgeView.bounds)
-            badgeLabel.text = badgeValue <= 99 ? "\(badgeValue)" : "\(99)"
+            badgeLabel.text = badgeValue <= 99 ? "\(badgeValue)": "\(99)"
             badgeLabel.textAlignment = .center
             badgeLabel.adjustsFontSizeToFitWidth = true
             badgeLabel.minimumScaleFactor = 0.1

@@ -8,66 +8,235 @@
 
 import UIKit
 import SwiftBrick
+import Swift_Form
 class ViewController: JHTableViewController {
+    
+    lazy var former = Former(tableView: self.tableView!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "路由示例"
-        self.mainDatas = ["present用法1","present用法2","push用法1","push用法2","push用法3","URL用法1","URL用法2","URL用法3","Test Push到其他POD","类方法调用","实例方法调用","实例方法调用2 "]
+
+        let sectionFormer = SectionFormer(row1,
+                                          row2,
+                                          row3,
+                                          row4,
+                                          row5,
+                                          row6,
+                                          row7,
+                                          row8,
+                                          row9,
+                                          row10,
+                                          row11,
+                                          row12)
+        former.append(sectionFormer: sectionFormer)
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(JHTableViewCell.self)
-        cell.textLabel?.text = self.mainDatas[indexPath.row] as? String
-        return cell
-    }
+    lazy var row1 : LabelRow = {
+        let row = LabelRow()
+        row.title = "present页面"
+        row.subTitle = "用法1"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            SwiftMediator.shared.present("TestVC", paramsDic: ["str":"我是字符串",
+                                                               "titleName":"present页面1",
+                                                               "num":13,
+                                                               "dic":["a":12,
+                                                                      "b":"测试字符串"]
+            ])
+            
+        }
+        return row
+    }()
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
-            // MARK: - present用法-
-            SwiftMediator.shared.present("TestVC", paramsDic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
-        case 1:
-            // MARK: - present用法二
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+    lazy var row2 : LabelRow = {
+        let row = LabelRow()
+        row.title = "present页面"
+        row.subTitle = "用法2"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"我是字符串",
+                                                                  "titleName":"present页面2",
+                                                                  "num":13,
+                                                                  "dic":["a":12,"b":"hh100"]])
             SwiftMediator.shared.present(avc, needNav: false, modelStyle: 1)
-        case 2:
-            // MARK: - push用法一
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            
+        }
+        return row
+    }()
+    
+    lazy var row3 : LabelRow = {
+        let row = LabelRow()
+        row.title = "push页面"
+        row.subTitle = "用法1"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"解放军",
+                                                                  "titleName":"push页面1",
+                                                                  "num":13,
+                                                                  "dic":["a":12,"b":"kk100"]])
             SwiftMediator.shared.currentNavigationController()?.pushViewController(avc!, animated: true)
-        case 3:
-            // MARK: - push用法二
-            SwiftMediator.shared.push("TestVC", paramsDic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
-        case 4:
-            // MARK: - push用法三
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
+            
+        }
+        return row
+    }()
+    
+    lazy var row4 : LabelRow = {
+        let row = LabelRow()
+        row.title = "push页面"
+        row.subTitle = "用法2"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            SwiftMediator.shared.push("TestVC", paramsDic: ["str":"每年高考",
+                                                            "titleName":"push页面2",
+                                                            "num":13,
+                                                            "dic":["a":12,"b":"lkj"]])
+            
+        }
+        return row
+    }()
+    
+    lazy var row5 : LabelRow = {
+        let row = LabelRow()
+        row.title = "push页面"
+        row.subTitle = "用法3"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":";框架",
+                                                                  "titleName":"push页面3",
+                                                                  "num":13,
+                                                                  "dic":["a":12,"b":"jlj"]])
 //            self.navigationController?.pushViewController(avc!, animated: true)
             SwiftMediator.shared.push(avc)
-        case 5:
-            // MARK: - URL用法1
-            SwiftMediator.shared.openUrl("app://push/SwiftMediator/TestVC?str=123&titleName=456")
-        case 6:
-            // MARK: - URL用法2
-            SwiftMediator.shared.openUrl("app://present/SwiftMediator/TestVC?str=123&titleName=456&num=111")
-        case 7:
-            // MARK: - URL用法3
-            SwiftMediator.shared.openUrl("app://fullScreen/SwiftMediator/TestVC?str=123&titleName=456")
-        case 8:
-            SwiftMediator.shared.push("JHWebViewController", moduleName: "SwiftBrick", paramsDic: ["navTitle":"123123","urlString":"https://www.qq.com"])
-        case 9:
-//            SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
-            let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "qqqqq:", param: "123123123")?.takeUnretainedValue()
-            print("\(String(describing: str))")
-        case 10:
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"123123","titleName":"23452345","num":13,"dic":["a":12,"b":"100"]])
-            let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "pppppp:", param: "123123123123")?.takeUnretainedValue()
-            print("\(String(describing: str))")
-        case 11:
-                let obj = SwiftMediator.shared.initObjc("TestObjc")
-                let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "ccccc:", param: "123123123123")?.takeUnretainedValue()
-                print("\(String(describing: str))")
-        default:
-            print("")
+            
         }
-    }
+        return row
+    }()
+    
+    lazy var row6 : LabelRow = {
+        let row = LabelRow()
+        row.title = "URL跳转页面"
+        row.subTitle = "用法1"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            SwiftMediator.shared.openUrl("app://push/SwiftMediator/TestVC?str=asdf&titleName=zcxvzcv")
+            
+        }
+        return row
+    }()
+    
+    lazy var row7 : LabelRow = {
+        let row = LabelRow()
+        row.title = "URL跳转页面"
+        row.subTitle = "用法2"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            SwiftMediator.shared.openUrl("app://present/SwiftMediator/TestVC?str=fhfgdh&titleName=shdhdg&num=111")
+            
+        }
+        return row
+    }()
+    
+    lazy var row8 : LabelRow = {
+        let row = LabelRow()
+        row.title = "URL跳转页面"
+        row.subTitle = "用法3"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            SwiftMediator.shared.openUrl("app://fullScreen/SwiftMediator/TestVC?str=zfzvzcv&titleName=fghdfhdgh")
+            
+        }
+        return row
+    }()
+    
+    lazy var row9 : LabelRow = {
+        let row = LabelRow()
+        row.title = "打开其他Module的页面"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            SwiftMediator.shared.push("JHWebViewController",
+                                      moduleName: "SwiftBrick",
+                                      paramsDic: ["navTitle":"其他Module的页面","urlString":"https://www.qq.com"])
+            
+        }
+        return row
+    }()
+    
+    lazy var row10 : LabelRow = {
+        let row = LabelRow()
+        row.title = "类方法调用"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            //            SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
+            let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callClassM:", param: "参数:fhfh")?.takeUnretainedValue()
+            print("\(String(describing: str))")
+            
+        }
+        return row
+    }()
+    
+    lazy var row11 : LabelRow = {
+        let row = LabelRow()
+        row.title = "实例方法调用"
+        row.subTitle = "用法1"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"我是字符串","titleName":"我是标题","num":13,"dic":["a":12,"b":"sdfg"]])
+            let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "callObjcM:", param: "参数:sdf")?.takeUnretainedValue()
+            print("\(String(describing: str))")
+            
+        }
+        return row
+    }()
+
+    lazy var row12 : LabelRow = {
+        let row = LabelRow()
+        row.title = "实例方法调用"
+        row.subTitle = "用法2"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            
+            let obj = SwiftMediator.shared.initObjc("TestObjc")
+            let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callObjcM:", param: "参数:123")?.takeUnretainedValue()
+            print("\(String(describing: str))")
+            
+        }
+        return row
+    }()
+
 }

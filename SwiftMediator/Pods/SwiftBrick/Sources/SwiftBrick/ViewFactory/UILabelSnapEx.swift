@@ -28,9 +28,9 @@ public extension UILabel {
                         text: String = "",
                         textColor: UIColor = .black,
                         textAlignment: NSTextAlignment = .left,
-                        snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UILabel {
+                        snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UILabel {
         
-        let label = UILabel.init()
+        let label = UILabel()
         label.text = text
         label.font = font
         label.textAlignment = textAlignment

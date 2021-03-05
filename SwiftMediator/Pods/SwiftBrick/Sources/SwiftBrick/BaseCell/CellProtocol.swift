@@ -15,7 +15,7 @@ public protocol Reusable {
 }
 
 public extension Reusable {
-    static var reuseIdentifier: String { return String.init(describing: self) }
+    static var reuseIdentifier: String { return String(describing: self) }
 }
 
 public extension UITableView {
@@ -100,7 +100,7 @@ public extension UICollectionView {
     func registerHeaderFooterView<T: UICollectionReusableView>(_ headerFooterViewType: T.Type, kindType: ReusableViewKindType)
         where T: Reusable {
             
-            var kind : String
+            var kind: String
             switch kindType {
             case .sectionHeader:
                 kind = UICollectionView.elementKindSectionHeader
@@ -124,7 +124,7 @@ public extension UICollectionView {
         (_ headerFooterViewType: T.Type = T.self, kindType: ReusableViewKindType, indexPath: IndexPath) -> T
         where T: Reusable {
             
-            var kind : String
+            var kind: String
             switch kindType {
             case .sectionHeader:
                 kind = UICollectionView.elementKindSectionHeader

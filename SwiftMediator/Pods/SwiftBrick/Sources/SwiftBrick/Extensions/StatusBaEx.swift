@@ -28,8 +28,8 @@ extension UITabBarController {
     }
 }
 
-fileprivate var kHiddenStatusBar : Int = 0x2019_00
-fileprivate var kStyleStatusBar : Int = 0x2019_01
+fileprivate var kHiddenStatusBar: Int = 0x2019_00
+fileprivate var kStyleStatusBar: Int = 0x2019_01
 
 extension UIViewController {
     

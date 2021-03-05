@@ -20,9 +20,9 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
         case styleInsetGrouped
     }
     
-    public var tableView : UITableView?
-    public var mainDatas : Array<Any> = []
-    public var tableViewStyleType : TableViewStyleType = .stylePlain
+    public var tableView: UITableView?
+    public var mainDatas: Array<Any> = []
+    public var tableViewStyleType: TableViewStyleType = .stylePlain
 
     // MARK: - 初始化
     public convenience init(tableViewStyle: TableViewStyleType = .stylePlain) {
@@ -43,16 +43,16 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
         switch tableViewStyleType {
         case .styleInsetGrouped:
             if #available(iOS 13.0, *) {
-                tableView = UITableView.init(frame: .zero, style: .insetGrouped)
+                tableView = UITableView(frame: .zero, style: .insetGrouped)
             }else{
-                tableView = UITableView.init(frame: .zero, style: .grouped)
+                tableView = UITableView(frame: .zero, style: .grouped)
             }
             
         case .styleGrouped:
-            tableView = UITableView.init(frame: .zero, style: .grouped)
+            tableView = UITableView(frame: .zero, style: .grouped)
             
         case .stylePlain:
-            tableView = UITableView.init(frame: .zero, style: .plain)
+            tableView = UITableView(frame: .zero, style: .plain)
             
         }
 
@@ -86,7 +86,7 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
         
         tableView?.contentInsetAdjustmentBehavior = .automatic
 
-        let gestureArray : [UIGestureRecognizer]? = navigationController?.view.gestureRecognizers
+        let gestureArray: [UIGestureRecognizer]? = navigationController?.view.gestureRecognizers
         
         gestureArray?.forEach({ (gesture) in
             if gesture.isEqual(UIScreenEdgePanGestureRecognizer.self) {
@@ -108,7 +108,7 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
     
      // MARK: - tableView代理
     open func numberOfSections(in tableView: UITableView) -> Int {
-        return isMultiDatas() ? mainDatas.count : 1
+        return isMultiDatas() ? mainDatas.count: 1
     }
     
     open func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -120,11 +120,11 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
     }
     
     open func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView.init()
+        return UIView()
     }
     
     open func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        return UIView.init()
+        return UIView()
     }
     
     open func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -143,7 +143,7 @@ open class JHTableViewController: JHViewController ,UITableViewDelegate,UITableV
      
      open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(JHTableViewCell.self)
-        cell.textLabel?.text = String.init(describing: indexPath.row)
+        cell.textLabel?.text = String(describing: indexPath.row)
         return cell
      }
 }

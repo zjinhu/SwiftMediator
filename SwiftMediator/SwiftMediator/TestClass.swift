@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import SwiftShow
 class TestClass {
 
     @objc
-    class func qqqqq(_ name: String)->String{
-        print("\(name)")
-        return "back"
+    class func callClassM(_ name: String)->String{
+        print("类方法传递参数\(name)")
+        Show.showToast("类方法传递参数:\(name)")
+        return "类方法返回参数:laile"
     }
 
 }

@@ -37,7 +37,7 @@ public extension UIView {
                        tapGesture: tapGestureClosure? = nil,
                        snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UIView {
         
-        let view = UIView.init()
+        let view = UIView()
         view.backgroundColor = backColor
 
         guard let sv = supView, let maker = snapKitMaker else {
@@ -57,10 +57,10 @@ public extension UIView {
         return view
     }
     
-    @objc func snpAddTapGestureWithCallback(tapGesture closure : tapGestureClosure?){
+    @objc func snpAddTapGestureWithCallback(tapGesture closure: tapGestureClosure?){
         snpTapGesture = closure
         isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer.init(target: self, action: #selector(handleTapGesture))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
         addGestureRecognizer(tap)
     }
     

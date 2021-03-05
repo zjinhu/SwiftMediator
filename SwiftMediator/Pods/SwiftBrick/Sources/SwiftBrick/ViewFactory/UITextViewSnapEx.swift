@@ -9,11 +9,11 @@
 import UIKit
 import SnapKit
 
-fileprivate var kTextViewPlaceholderLabel : Int = 0x2019_00
-fileprivate var kTextViewPlaceholder      : Int = 0x2019_01
-fileprivate var kTextViewPlaceholderColor : Int = 0x2019_02
-fileprivate var kTextViewPlaceholderFont  : Int = 0x2019_03
-fileprivate var kTextViewPlaceholderKeys  : Int = 0x2019_04
+fileprivate var kTextViewPlaceholderLabel: Int = 0x2019_00
+fileprivate var kTextViewPlaceholder     : Int = 0x2019_01
+fileprivate var kTextViewPlaceholderColor: Int = 0x2019_02
+fileprivate var kTextViewPlaceholderFont : Int = 0x2019_03
+fileprivate var kTextViewPlaceholderKeys : Int = 0x2019_04
 
 
 public extension UITextView {
@@ -66,7 +66,7 @@ public extension UITextView {
     /// 占位符 标签
     var holderLabel: UILabel {
         get {
-            var _holderLabel = UILabel.init()
+            var _holderLabel = UILabel()
             _holderLabel.font = font ?? UIFont.systemFont(ofSize: 12)
             _holderLabel.textColor = .darkText
             _holderLabel.textAlignment = .left
@@ -119,7 +119,7 @@ public extension UITextView {
     @objc fileprivate func jh_textChange(noti: NSNotification) {
         let isEmpty = text.isEmpty
         print("text:\(String(describing: text))\nisEmpty:\(isEmpty)")
-        holderLabel.text = isEmpty ? placeholder : ""
+        holderLabel.text = isEmpty ? placeholder: ""
         holderLabel.isHidden = !isEmpty
     }
     
@@ -148,9 +148,9 @@ public extension UITextView {
                            textColor: UIColor = .black,
                            textAlignment: NSTextAlignment = .left,
                            delegate: UITextViewDelegate? = nil,
-                           snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UITextView {
+                           snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UITextView {
         
-        let textView = UITextView.init()
+        let textView = UITextView()
         textView.holderFont = holderFont
         textView.holderColor = holderColor
         textView.placeholder = holder

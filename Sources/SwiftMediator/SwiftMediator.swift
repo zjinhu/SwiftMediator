@@ -325,12 +325,12 @@ extension SwiftMediator {
 extension SwiftMediator {
     
     /// 获取顶层Nav 根据window
-    public func currentNavigationController() -> (UINavigationController?) {
+    public func currentNavigationController() -> UINavigationController? {
         return currentViewController()?.navigationController
     }
     
     /// 获取顶层VC 根据window
-    public func currentViewController() -> (UIViewController?) {
+    public func currentViewController() -> UIViewController? {
         var window = UIApplication.shared.keyWindow
         //是否为当前显示的window
         if window?.windowLevel != UIWindow.Level.normal{

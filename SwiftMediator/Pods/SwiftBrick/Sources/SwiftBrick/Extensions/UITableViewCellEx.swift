@@ -22,14 +22,14 @@ public extension UITableViewCell {
     ///   - rightMarign: 右间距
     ///   - isHeadFootMarign: 是否首尾分割线也需要间距
     ///   - lineColor: 选中颜色
-    func addAllLine(tableView : UITableView,
-                     indexPath : IndexPath,
-                     leftMarign : CGFloat = 0,
-                     rightMarign : CGFloat = 0,
-                     isHeadFootMarign : Bool = false,
-                     lineColor : UIColor = .clear){
-        var headFootLeftMarign : CGFloat = 0
-        var headFootRightMarign : CGFloat = 0
+    func addAllLine(tableView: UITableView,
+                     indexPath: IndexPath,
+                     leftMarign: CGFloat = 0,
+                     rightMarign: CGFloat = 0,
+                     isHeadFootMarign: Bool = false,
+                     lineColor: UIColor = .clear){
+        var headFootLeftMarign: CGFloat = 0
+        var headFootRightMarign: CGFloat = 0
         
         if isHeadFootMarign {
             headFootLeftMarign = leftMarign
@@ -48,7 +48,7 @@ public extension UITableViewCell {
         var topLineView  = viewWithTag(TopLineTag)
         
         if topLineView == nil {
-            topLineView = UIView.init()
+            topLineView = UIView()
             topLineView?.backgroundColor = color
             topLineView?.tag = TopLineTag
             addSubview(topLineView!)
@@ -70,7 +70,7 @@ public extension UITableViewCell {
         var bottomLineView  = viewWithTag(BottomLineTag)
         
         if bottomLineView == nil {
-            bottomLineView = UIView.init()
+            bottomLineView = UIView()
             bottomLineView?.backgroundColor = color
             bottomLineView?.tag = BottomLineTag
             addSubview(bottomLineView!)
@@ -105,10 +105,10 @@ public extension UITableViewCell {
     ///   - indexPath: indexPath
     ///   - leftMarign: 左间距
     ///   - rightMarign: 右间距
-    func addMiddleLine(indexPath : IndexPath,
-                     leftMarign : CGFloat = 0,
-                     rightMarign : CGFloat = 0,
-                     lineColor : UIColor = .clear){
+    func addMiddleLine(indexPath: IndexPath,
+                     leftMarign: CGFloat = 0,
+                     rightMarign: CGFloat = 0,
+                     lineColor: UIColor = .clear){
         
         var color: UIColor = .baseLine
         if lineColor != .clear{
@@ -118,7 +118,7 @@ public extension UITableViewCell {
         var lineView  = viewWithTag(TopLineTag)
         
         if lineView == nil {
-            lineView = UIView.init()
+            lineView = UIView()
             lineView?.backgroundColor = color
             lineView?.tag = TopLineTag
             addSubview(lineView!)
@@ -143,9 +143,9 @@ public extension UITableViewCell {
     ///   - leftMarign: 左侧间距
     ///   - rightMarign: 右间距
     ///   - lineColor: 选中颜色，默认为灰色线
-    func addDownLine(leftMarign : CGFloat = 0,
-                     rightMarign : CGFloat = 0,
-                     lineColor : UIColor = .clear){
+    func addDownLine(leftMarign: CGFloat = 0,
+                     rightMarign: CGFloat = 0,
+                     lineColor: UIColor = .clear){
         
         var color: UIColor = .baseLine
         if lineColor != .clear{
@@ -155,7 +155,7 @@ public extension UITableViewCell {
         var lineView  = viewWithTag(BottomLineTag)
         
         if lineView == nil {
-            lineView = UIView.init()
+            lineView = UIView()
             lineView?.backgroundColor = color
             lineView?.tag = BottomLineTag
             addSubview(lineView!)

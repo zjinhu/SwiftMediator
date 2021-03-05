@@ -64,7 +64,7 @@ public extension UIColor {
     }
     
     ///简化RGB颜色写法
-    class func RGBA(_ r : UInt, g : UInt, b : UInt, a : CGFloat) -> UIColor {
+    class func RGBA(_ r: UInt, g: UInt, b: UInt, a: CGFloat) -> UIColor {
         let redFloat = CGFloat(r) / 255.0
         let green = CGFloat(g) / 255.0
         let blue = CGFloat(b) / 255.0
@@ -76,7 +76,7 @@ public extension UIColor {
         let red = Int.random(in: 0...255)
         let green = Int.random(in: 0...255)
         let blue = Int.random(in: 0...255)
-        return UIColor.init(red: red, green: green, blue: blue)
+        return UIColor(red: red, green: green, blue: blue)
     }
     
     ///最小饱和度值
@@ -86,7 +86,7 @@ public extension UIColor {
       
       return saturation < minSaturation
         ? UIColor(hue: hue, saturation: minSaturation, brightness: brightness, alpha: alpha)
-        : self
+       : self
     }
     
     ///调整alpha
@@ -108,7 +108,7 @@ public extension UIColor {
     static let baseBackground = L.color("bgColor")
     static let baseBGColor = L.color("backColor")
     
-    static let baseLine = UIColor.init(hex: 0xe3e3e3)
+    static let baseLine = L.color("baseLine")
     
     static let textTitleColor = L.color("textTitleColor")
     static let textSecColor = L.color("textSecColor")
@@ -117,7 +117,7 @@ public extension UIColor {
 
 }
 
-public extension Array where Element : UIColor {
+public extension Array where Element: UIColor {
   ///通过颜色数组生成渐变色
   func gradient(_ transform: ((_ gradient: inout CAGradientLayer) -> CAGradientLayer)? = nil) -> CAGradientLayer {
     var gradient = CAGradientLayer()
@@ -186,7 +186,7 @@ public extension UIColor {
     let fgLum = 0.2126 * fg[0] + 0.7152 * fg[1] + 0.0722 * fg[2]
     let contrast = bgLum > fgLum
       ? (bgLum + 0.05) / (fgLum + 0.05)
-      : (fgLum + 0.05) / (bgLum + 0.05)
+     : (fgLum + 0.05) / (bgLum + 0.05)
     
     return 1.6 < contrast
   }

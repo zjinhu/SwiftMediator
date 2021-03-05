@@ -27,8 +27,8 @@ public extension UIButton{
         let imageHeight = imageV.frame.size.height
         
         guard
-        let labelWidth = titleL.text?.size(withAttributes: [NSAttributedString.Key.font : titleL.font as UIFont]).width,
-        let labelHeight = titleL.text?.size(withAttributes: [NSAttributedString.Key.font : titleL.font as UIFont]).height
+        let labelWidth = titleL.text?.size(withAttributes: [NSAttributedString.Key.font: titleL.font as UIFont]).width,
+        let labelHeight = titleL.text?.size(withAttributes: [NSAttributedString.Key.font: titleL.font as UIFont]).height
         else {
             return
         }
@@ -70,11 +70,45 @@ public extension UIButton{
         
         guard
         let imageWidth = imageView?.image?.size.width,
-            let labelWidth = titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font : titleLabel?.font ?? UIFont.systemFont(ofSize: 13)]).width
+            let labelWidth = titleLabel?.text?.size(withAttributes: [NSAttributedString.Key.font: titleLabel?.font ?? UIFont.systemFont(ofSize: 13)]).width
         else {
             return
         }
         let space = bounds.size.width - imageWidth - labelWidth - 2 * margin
         layoutButton(postion, space: space)
+    }
+}
+
+public typealias ButtonClosure = (_ sender: UIButton) -> Void
+
+public extension UIButton {
+    
+    struct AssociatedKeys {
+        static var buttonTouchUpKey: String = "ButtonTouchUpKey"
+    }
+
+    @objc internal var actionClosure: ButtonClosure? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.buttonTouchUpKey) as? ButtonClosure
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.buttonTouchUpKey, newValue, .OBJC_ASSOCIATION_COPY)
+        }
+    }
+    
+    func addTouchUpInSideBtnAction(touchUp: ButtonClosure?){
+        
+        removeTarget(self, action: #selector(touchUpInSideBtnAction), for: .touchUpInside)
+        guard let ges = touchUp else {
+            return
+        }
+        actionClosure = ges
+        addTarget(self, action: #selector(touchUpInSideBtnAction), for: .touchUpInside)
+    }
+    
+    @objc func touchUpInSideBtnAction() {
+        if let action = actionClosure  {
+            action(self)
+        }
     }
 }

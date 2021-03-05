@@ -41,7 +41,7 @@ public struct L{
     
     public static func color(_ named: String) -> UIColor {
         guard let color = UIColor(named: named, in: bundle, compatibleWith: nil) else {
-            return UIColor.init(named: named) ?? UIColor.clear
+            return UIColor(named: named) ?? UIColor.clear
         }
         return color
     }

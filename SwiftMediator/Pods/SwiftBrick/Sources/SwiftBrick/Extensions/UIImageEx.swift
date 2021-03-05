@@ -9,8 +9,21 @@
 import UIKit
 import CommonCrypto
 
+extension Data {
+    
+    public var sha256: String {
+        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+            CC_SHA256(bytes.baseAddress, CC_LONG(count), &hash)
+            return hash
+        }
+        return hash.reduce("") { $0 + String(format:"%02x", $1) }
+    }
+}
+
 extension UIImage {
-    static func createPlaceHolderImage(image : UIImage?, imageView : UIImageView) -> UIImage?{
+    
+    public static func createPlaceHolderImage(image: UIImage?, imageView: UIImageView) -> UIImage?{
         imageView.layoutIfNeeded()
         guard let image = image else {
             return nil
@@ -18,12 +31,12 @@ extension UIImage {
         let name = image.sha256
         let imageName = "placeHolder_\(imageView.bounds.size.width)_\(imageView.bounds.size.height)_\(name).png"
         let fileManager = FileManager.default
-        let path : String = NSHomeDirectory() + "/Documents/PlaceHolder/"
+        let path: String = NSHomeDirectory() + "/Documents/PlaceHolder/"
         let filePath = path + imageName
         if fileManager.fileExists(atPath: filePath) {
-            guard let data = try? Data.init(contentsOf: URL.init(fileURLWithPath: filePath))
+            guard let data = try? Data(contentsOf: URL(fileURLWithPath: filePath))
                 else { return nil }
-            let image = UIImage.init(data: data)
+            let image = UIImage(data: data)
             return image
         }
         
@@ -48,7 +61,7 @@ extension UIImage {
         
         if let placeHolder = UIGraphicsGetImageFromCurrentImageContext() {
             UIGraphicsEndImageContext()
-            try? fileManager.createDirectory(at: URL.init(fileURLWithPath: path), withIntermediateDirectories: true, attributes: nil)
+            try? fileManager.createDirectory(at: URL(fileURLWithPath: path), withIntermediateDirectories: true, attributes: nil)
             fileManager.createFile(atPath: filePath, contents: placeHolder.pngData(), attributes: nil)
             return placeHolder
         }
@@ -66,7 +79,7 @@ extension UIImage {
 //        return hash.map { String(format: "%02x", $0) }.joined()
 //    }
     
-    var sha256: String {
+    public var sha256: String {
         let data = Data(self.pngData()!)
         let hash = data.withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
             var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
@@ -220,9 +233,9 @@ extension UIImage {
     
     return (
       imageBackgroundColor,
-      primaryColor   ?? (isDarkBackgound ? whiteColor : blackColor),
-      secondaryColor ?? (isDarkBackgound ? whiteColor : blackColor),
-      detailColor    ?? (isDarkBackgound ? whiteColor : blackColor))
+      primaryColor   ?? (isDarkBackgound ? whiteColor: blackColor),
+      secondaryColor ?? (isDarkBackgound ? whiteColor: blackColor),
+      detailColor    ?? (isDarkBackgound ? whiteColor: blackColor))
   }
   ///取图片上一点颜色
   public func color(at point: CGPoint, completion: @escaping (UIColor?) -> Void) {

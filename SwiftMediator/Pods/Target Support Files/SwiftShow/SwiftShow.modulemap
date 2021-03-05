@@ -1,0 +1,6 @@
+framework module SwiftShow {
+  umbrella header "SwiftShow-umbrella.h"
+
+  export *
+  module * { export * }
+}

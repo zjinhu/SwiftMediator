@@ -9,21 +9,7 @@
 import UIKit
 import SnapKit
 public extension UIButton {
-    
-    struct AssociatedKeys {
-        static var buttonTouchUpKey: String = "ButtonTouchUpKey"
-    }
- 
-    typealias buttonClosure = (_ sender: UIButton) -> Void
-    
-    @objc internal var snpAction: buttonClosure? {
-        get {
-            return objc_getAssociatedObject(self, &AssociatedKeys.buttonTouchUpKey) as? buttonClosure
-        }
-        set {
-            objc_setAssociatedObject(self, &AssociatedKeys.buttonTouchUpKey, newValue, .OBJC_ASSOCIATION_COPY)
-        }
-    }
+
     /// 快速初始化UIButton 包含默认参数,初始化过程可以删除部分默认参数简化方法
     /// - Parameters:
     ///   - supView:  被添加的位置 有默认参数
@@ -37,18 +23,18 @@ public extension UIButton {
     ///   - touchUp: 点击Block 有默认参数
     ///   - backColor: 背景色
     @discardableResult
-    class func snpButton(supView : UIView? = nil,
+    class func snpButton(supView: UIView? = nil,
                          backColor: UIColor? = .clear,
-                         title : String? = nil,
-                         font : UIFont? = nil,
-                         titleNorColor : UIColor? = nil,
-                         titleHigColor : UIColor? = nil,
-                         norImage : UIImage? = nil,
-                         higImage : UIImage? = nil,
-                         touchUp : buttonClosure? = nil,
-                         snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UIButton {
+                         title: String? = nil,
+                         font: UIFont? = nil,
+                         titleNorColor: UIColor? = nil,
+                         titleHigColor: UIColor? = nil,
+                         norImage: UIImage? = nil,
+                         higImage: UIImage? = nil,
+                         touchUp: ButtonClosure? = nil,
+                         snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UIButton {
         
-        let btn = UIButton.init(type: .custom)
+        let btn = UIButton(type: .custom)
         btn.backgroundColor = backColor
         
         if title != nil {
@@ -89,24 +75,9 @@ public extension UIButton {
         guard let ges = touchUp else {
             return btn
         }
-        btn.snpAddTouchUpInSideBtnAction(touchUp: ges)
+        btn.addTouchUpInSideBtnAction(touchUp: ges)
 
         return btn
     }
-    
-    @objc func snpAddTouchUpInSideBtnAction(touchUp : buttonClosure?){
-        
-        removeTarget(self, action: #selector(touchUpInSideBtnAction), for: .touchUpInside)
-        guard let ges = touchUp else {
-            return
-        }
-        snpAction = ges
-        addTarget(self, action: #selector(touchUpInSideBtnAction), for: .touchUpInside)
-    }
-    
-    @objc func touchUpInSideBtnAction() {
-        if let action = snpAction  {
-            action(self)
-        }
-    }
+
 }

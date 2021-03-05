@@ -19,10 +19,10 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
         case ScrollHorizontal
     }
     
-    public var collectionView : UICollectionView?
-    public var mainDatas : Array<Any> = []
-    public var scrollDirectionType : ScrollDirectionType = .ScrollVertical
-    public var flowLayout : UICollectionViewFlowLayout?
+    public var collectionView: UICollectionView?
+    public var mainDatas: Array<Any> = []
+    public var scrollDirectionType: ScrollDirectionType = .ScrollVertical
+    public var flowLayout: UICollectionViewFlowLayout?
     
    // MARK: - 初始化
     public convenience init(scrollDirectionType: ScrollDirectionType = .ScrollVertical) {
@@ -46,7 +46,7 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
      }
     
     open func setupFlowLayout() -> UICollectionViewFlowLayout {
-        let flowLayout = UICollectionViewFlowLayout.init()
+        let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.scrollDirection = UICollectionView.ScrollDirection.vertical
@@ -61,7 +61,7 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
             flowLayout = setupFlowLayout()
         }
         
-        collectionView = UICollectionView.init(frame: .zero, collectionViewLayout: flowLayout!)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout!)
         collectionView?.backgroundColor = .clear
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -82,7 +82,7 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
         collectionView?.contentInsetAdjustmentBehavior = .automatic
         
         // Do any additional setup after loading the view.
-        let gestureArray : [UIGestureRecognizer]? = navigationController?.view.gestureRecognizers
+        let gestureArray: [UIGestureRecognizer]? = navigationController?.view.gestureRecognizers
         gestureArray?.forEach({ (gesture) in
             if gesture.isEqual(UIScreenEdgePanGestureRecognizer.self) {
                 collectionView?.panGestureRecognizer.require(toFail: gesture)
@@ -103,7 +103,7 @@ open class JHCollectionViewController: JHViewController ,UICollectionViewDelegat
 
     // MARK: - UICollectionView
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return isMultiDatas() ? mainDatas.count : 1
+        return isMultiDatas() ? mainDatas.count: 1
     }
     
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

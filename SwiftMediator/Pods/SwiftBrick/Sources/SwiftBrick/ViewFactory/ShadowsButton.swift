@@ -296,16 +296,16 @@ public class ShadowsButton: UIButton {
         
         var reverse: CGFloat = 1.0
         if(Params.shadowReverse[tmpAddress] != nil){
-            reverse = (Params.shadowReverse[tmpAddress]!) ? -1.0 : 1.0
+            reverse = (Params.shadowReverse[tmpAddress]!) ? -1.0: 1.0
         }else{
             reverse = 1.0
         }
         
-        let darkOffsetX: CGFloat = (Params.shadowNormalOffsetX[tmpAddress] != nil) ? Params.shadowNormalOffsetX[tmpAddress]! : 2.0
-        let darkOffsetY: CGFloat = (Params.shadowNormalOffsetY[tmpAddress] != nil) ? Params.shadowNormalOffsetY[tmpAddress]! : 2.0
+        let darkOffsetX: CGFloat = (Params.shadowNormalOffsetX[tmpAddress] != nil) ? Params.shadowNormalOffsetX[tmpAddress]!: 2.0
+        let darkOffsetY: CGFloat = (Params.shadowNormalOffsetY[tmpAddress] != nil) ? Params.shadowNormalOffsetY[tmpAddress]!: 2.0
         shadowLayerDark.shadowOffset = CGSize( width: reverse*darkOffsetX, height: reverse*darkOffsetY)
         if(self.isEnabled){
-            shadowLayerDark.shadowColor = (Params.shadowNormalColor[tmpAddress] != nil) ? Params.shadowNormalColor[tmpAddress]?.cgColor : UIColor(red: 8/255, green: 8/255, blue: 33/255, alpha: 0.12).cgColor
+            shadowLayerDark.shadowColor = (Params.shadowNormalColor[tmpAddress] != nil) ? Params.shadowNormalColor[tmpAddress]?.cgColor: UIColor(red: 8/255, green: 8/255, blue: 33/255, alpha: 0.12).cgColor
         }else{
             shadowLayerDark.shadowColor = UIColor.clear.cgColor
         }
@@ -325,11 +325,11 @@ public class ShadowsButton: UIButton {
         shadowLayerLight.shadowRadius = 4
         shadowLayerLight.shadowOpacity = 1
         
-        let lightOffsetX:CGFloat = (Params.shadowHighlightedOffsetX[tmpAddress] != nil) ? Params.shadowHighlightedOffsetX[tmpAddress]! : 2.0
-        let lightOffsetY:CGFloat = (Params.shadowHighlightedOffsetY[tmpAddress] != nil) ? Params.shadowHighlightedOffsetY[tmpAddress]! : 2.0
+        let lightOffsetX:CGFloat = (Params.shadowHighlightedOffsetX[tmpAddress] != nil) ? Params.shadowHighlightedOffsetX[tmpAddress]!: 2.0
+        let lightOffsetY:CGFloat = (Params.shadowHighlightedOffsetY[tmpAddress] != nil) ? Params.shadowHighlightedOffsetY[tmpAddress]!: 2.0
         shadowLayerLight.shadowOffset = CGSize( width: reverse*lightOffsetX, height: reverse*lightOffsetY)
         if(self.isEnabled){
-            shadowLayerLight.shadowColor = (Params.shadowHighlightedShadowColor[tmpAddress] != nil) ? Params.shadowHighlightedShadowColor[tmpAddress]?.cgColor : UIColor.black.withAlphaComponent(0.5).cgColor
+            shadowLayerLight.shadowColor = (Params.shadowHighlightedShadowColor[tmpAddress] != nil) ? Params.shadowHighlightedShadowColor[tmpAddress]?.cgColor: UIColor.black.withAlphaComponent(0.5).cgColor
         }else{
             shadowLayerLight.shadowColor = UIColor.clear.cgColor
         }
@@ -339,7 +339,7 @@ public class ShadowsButton: UIButton {
     override open func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let tmpAddress = String(format: "%p", unsafeBitCast(self, to: Int.self))
         if(Params.shadowActive[tmpAddress] == true){
-            Params.shadowReverse[tmpAddress] = (Params.shadowReverse[tmpAddress] != nil) ? !Params.shadowReverse[tmpAddress]! : true
+            Params.shadowReverse[tmpAddress] = (Params.shadowReverse[tmpAddress] != nil) ? !Params.shadowReverse[tmpAddress]!: true
             setupShadows()
         }
         
@@ -355,7 +355,7 @@ public class ShadowsButton: UIButton {
         
         var isToggle = false
         if(Params.isToggle[tmpAddress] != nil){
-            isToggle = (Params.isToggle[tmpAddress] != nil) ? Params.isToggle[tmpAddress]! : false
+            isToggle = (Params.isToggle[tmpAddress] != nil) ? Params.isToggle[tmpAddress]!: false
         }
         
         if(isToggle){
@@ -395,12 +395,12 @@ public class ShadowsButton: UIButton {
         
         var isToggle = false
         if(Params.isToggle[tmpAddress] != nil){
-            isToggle = (Params.isToggle[tmpAddress] != nil) ? Params.isToggle[tmpAddress]! : false
+            isToggle = (Params.isToggle[tmpAddress] != nil) ? Params.isToggle[tmpAddress]!: false
         }
         
         if(Params.shadowActive[tmpAddress] == true){
             if(!isToggle){
-                Params.shadowReverse[tmpAddress] = (Params.shadowReverse[tmpAddress] != nil) ? !Params.shadowReverse[tmpAddress]! : false
+                Params.shadowReverse[tmpAddress] = (Params.shadowReverse[tmpAddress] != nil) ? !Params.shadowReverse[tmpAddress]!: false
                 setupShadows()
             }
         }
@@ -413,12 +413,12 @@ public class ShadowsButton: UIButton {
         
         var isToggle = false
         if(Params.isToggle[tmpAddress] != nil){
-            isToggle = (Params.isToggle[tmpAddress] != nil) ? Params.isToggle[tmpAddress]! : false
+            isToggle = (Params.isToggle[tmpAddress] != nil) ? Params.isToggle[tmpAddress]!: false
         }
         
         if(Params.shadowActive[tmpAddress] == true){
             if(!isToggle){
-                Params.shadowReverse[tmpAddress] = (Params.shadowReverse[tmpAddress] != nil) ? !Params.shadowReverse[tmpAddress]! : false
+                Params.shadowReverse[tmpAddress] = (Params.shadowReverse[tmpAddress] != nil) ? !Params.shadowReverse[tmpAddress]!: false
                 setupShadows()
             }
         }

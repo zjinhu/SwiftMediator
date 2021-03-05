@@ -177,10 +177,16 @@ code_sign_if_enabled() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftBrick/SwiftBrick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftButton/SwiftButton.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftShow/SwiftShow.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Swift_Form/Swift_Form.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftBrick/SwiftBrick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftButton/SwiftButton.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftShow/SwiftShow.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Swift_Form/Swift_Form.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

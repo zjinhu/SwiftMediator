@@ -19,14 +19,14 @@ public extension UIImageView {
     ///   - snpTapGesture: 点击Block 有默认参数
     ///   - backColor: 背景色
     @discardableResult
-    class func snpImageView(supView : UIView? = nil,
+    class func snpImageView(supView: UIView? = nil,
                             backColor: UIColor? = .clear,
-                            image : UIImage? = nil,
-                            contentMode : UIView.ContentMode  = .scaleAspectFill,
-                            snpTapGesture : tapGestureClosure? = nil,
-                            snapKitMaker : ((ConstraintMaker) -> Void)? = nil) -> UIImageView {
+                            image: UIImage? = nil,
+                            contentMode: UIView.ContentMode  = .scaleAspectFill,
+                            snpTapGesture: tapGestureClosure? = nil,
+                            snapKitMaker: ((ConstraintMaker) -> Void)? = nil) -> UIImageView {
         
-        let imageView = UIImageView.init()
+        let imageView = UIImageView()
         imageView.backgroundColor = backColor
         imageView.contentMode = contentMode
         
