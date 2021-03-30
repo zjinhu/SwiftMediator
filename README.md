@@ -1,4 +1,15 @@
-# SwiftMediator
+
+
+![](Image/logo.png)
+
+[![Version](https://img.shields.io/cocoapods/v/SwiftMediator.svg?style=flat)](http://cocoapods.org/pods/SwiftMediator)
+[![Language](https://img.shields.io/badge/language-swift-red.svg?style=flat)]()
+[![SPM](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager/)
+[![Support](https://img.shields.io/badge/support-iOS%2011%2B%20-brightgreen.svg?style=flat)](https://www.apple.com/nl/ios/)
+![Xcode 9.0+](https://img.shields.io/badge/Xcode-11.0%2B-blue.svg)
+![iOS 8.0+](https://img.shields.io/badge/iOS-11.0%2B-blue.svg)
+![Swift 4.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg)
+
 Swift 路由和模块通信解耦工具。
 
 使用类名反射创建对象，并且通过Mirror反射属性赋值，达到通过字符串的方式解耦并且支持跳转页面、方法调用。
@@ -10,6 +21,30 @@ AppDelegate、SceneDelegate解耦工具，只需要在主工程留下钩子即�
 | ![](Image/1.png) | ![](Image/2.png) |
 | ---------------- | ---------------- |
 |                  |                  |
+
+
+
+## 安装
+
+### cocoapods
+
+1.在 Podfile 中添加 `pod ‘SwiftMediator’`
+
+2.执行 `pod install 或 pod update`
+
+3.导入 `import SwiftMediator`
+
+### Swift Package Manager
+
+从 Xcode 11 开始，集成了 Swift Package Manager，使用起来非常方便。SwiftMediator 也支持通过 Swift Package Manager 集成。
+
+在 Xcode 的菜单栏中选择 `File > Swift Packages > Add Pacakage Dependency`，然后在搜索栏输入
+
+`https://github.com/jackiehu/SwiftMediator`，即可完成集成
+
+### 手动集成
+
+SwiftMediator 也支持手动集成，只需把Sources文件夹中的SwiftMediator文件夹拖进需要集成的项目即可
 
 
 
@@ -28,7 +63,10 @@ SwiftMediator.shared.push(moduleName: “SwiftMediator”, toVC: “TestVC”,pa
 SwiftMediator.shared.openUrl(“app://present/SwiftMediator/TestVC?str=123&titleName=456&num=111")
 ```
 
+
+
 ## API
+
 ### URL跳转
 
 URL路由跳转 跳转区分Push、present、fullScreen，根据拆分URL的scheme，host，path，query拿到所用的参数
@@ -262,18 +300,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 ```
 
+## 更多砖块工具加速APP开发
 
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftBrick&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftBrick)
 
-详细用法参见Demo **ViewController**   **DelegateMediator**
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftShow&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftShow)
 
-### 安装支持
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftLog&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftLog)
 
-#### cocoapods导入
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftyForm&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftyForm)
 
-`pod 'SwiftMediator'`
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftEmptyData&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftEmptyData)
 
-#### SPM导入
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftPageView&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftPageView)
 
-`https://github.com/jackiehu/SwiftMediator`
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=JHTabBarController&theme=radical&locale=cn)](https://github.com/jackiehu/JHTabBarController)
 
-#### 手动导入
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftMesh&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftMesh)
+
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftNotification&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftNotification)
+
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftNetSwitch&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftNetSwitch)
+
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftButton&theme=radical&locale=cn)](https://github.com/jackiehu/SwiftButton)
+
+[![ReadMe Card](https://github-readme-stats.vercel.app/api/pin/?username=jackiehu&repo=SwiftDatePicker&theme=radical&locale=cn)](
