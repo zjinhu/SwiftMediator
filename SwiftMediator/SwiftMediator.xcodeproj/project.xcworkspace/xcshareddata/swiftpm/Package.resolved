@@ -1,0 +1,52 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SnapKit",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit",
+        "state": {
+          "branch": null,
+          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
+          "version": "5.0.1"
+        }
+      },
+      {
+        "package": "SwiftBrick",
+        "repositoryURL": "https://github.com/jackiehu/SwiftBrick",
+        "state": {
+          "branch": null,
+          "revision": "f14a983dcd90c3b1892c3406dffd79e590ab2619",
+          "version": "1.9.0"
+        }
+      },
+      {
+        "package": "SwiftButton",
+        "repositoryURL": "https://github.com/jackiehu/SwiftButton",
+        "state": {
+          "branch": null,
+          "revision": "f187fb608de39da4365d4c4d97564f01818844d8",
+          "version": "1.1.0"
+        }
+      },
+      {
+        "package": "SwiftShow",
+        "repositoryURL": "https://github.com/jackiehu/SwiftShow",
+        "state": {
+          "branch": null,
+          "revision": "453f78e1b9760fff41481b2d2e9125c0a4500bf0",
+          "version": "0.7.0"
+        }
+      },
+      {
+        "package": "SwiftyForm",
+        "repositoryURL": "https://github.com/jackiehu/SwiftyForm",
+        "state": {
+          "branch": null,
+          "revision": "72bfed7c6ebbcfa673d81852c33c077b531c96dd",
+          "version": "1.0.7"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

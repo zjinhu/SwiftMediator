@@ -1,6 +1,0 @@
-framework module Pods_SwiftMediator {
-  umbrella header "Pods-SwiftMediator-umbrella.h"
-
-  export *
-  module * { export * }
-}

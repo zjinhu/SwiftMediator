@@ -7,35 +7,53 @@ lane :release_pod do |options|
   target_repo  = options[:r]
 
   spec_path = "#{target_project}.podspec"
+  
   # git pull
   git_pull 
+  
   # 确认是 master 分支
   ensure_git_branch
+  
   # 修改 spec 为即将发布的版本
   version_bump_podspec(path: spec_path, version_number: target_version)
-  # 提交代码到远程仓库
+  
+  # 将本地代码加入本地仓库里
   git_add(path: '.')
+  
+  # 提交修改到本地仓库
   git_commit(path: '.', message: 'release')
+  
+  # 在push之前, 查看spec是否配置有问题，验证 spec 文件
+  pod_lib_lint(verbose: true, allow_warnings: true)
+  
+  # 推送master分支的代码到名称为origin的远程仓库
   push_to_git_remote
+  
   # 检查对于 tag 是否已经存在
   if git_tag_exists(tag: target_version)
       # 删除对应 tag
       remove_git_tag(tag: target_version)
   end
+  
   # 添加 tag
   add_git_tag(tag: target_version)
+  
   # 提交 tag
   push_git_tags
-  # 验证 spec 文件
-  pod_lib_lint(verbose: true, allow_warnings: true)
+  
+ 
   # # pod trunk push 'spec_path'
   # pod_push(path: spec_path, allow_warnings: true,verbose: true)
     # 检查是否传了 repo 参数
   if target_repo
     # pod repo push 'target_repo' 'spec_path'
+
     pod_push(path: spec_path, repo: target_repo, allow_warnings: true, verbose: true)
+
   else
     # pod trunk push 'spec_path'
+
     pod_push(path: spec_path, allow_warnings: true, verbose: true)
+
   end
 end

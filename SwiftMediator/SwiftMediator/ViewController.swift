@@ -8,13 +8,14 @@
 
 import UIKit
 import SwiftBrick
-import Swift_Form
+import SwiftyForm
 class ViewController: JHTableViewController {
     
     lazy var former = Former(tableView: self.tableView!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.title = "路由示例"
 
         let sectionFormer = SectionFormer(row1,
@@ -25,6 +26,7 @@ class ViewController: JHTableViewController {
                                           row6,
                                           row7,
                                           row8,
+                                          row13,
                                           row9,
                                           row10,
                                           row11,
@@ -168,6 +170,21 @@ class ViewController: JHTableViewController {
         row.onSelected { (row) in
             
             SwiftMediator.shared.openUrl("app://fullScreen/SwiftMediator/TestVC?str=zfzvzcv&titleName=fghdfhdgh")
+            
+        }
+        return row
+    }()
+    
+    lazy var row13 : LabelRow = {
+        let row = LabelRow()
+        row.title = "URL跳转页面"
+        row.subTitle = "用法4"
+        row.cell.addDownLine()
+        row.cell.backgroundColor = .baseBGColor
+        row.cell.accessoryType = .disclosureIndicator
+        row.onSelected { (row) in
+            ////此处注意编进URL的字符串不能出现特殊字符,要进行URL编码
+            SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/JHWebViewController?navTitle=\("打开网页".urlEncoded())&urlString=https://www.qq.com/")
             
         }
         return row

@@ -1,6 +1,0 @@
-framework module Swift_Form {
-  umbrella header "Swift_Form-umbrella.h"
-
-  export *
-  module * { export * }
-}
