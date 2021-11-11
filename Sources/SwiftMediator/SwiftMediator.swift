@@ -245,7 +245,7 @@ extension SwiftMediator {
     }
 }
 
-//MARK:--路由执行方法
+//MARK:--路由执行方法///Swift反射执行函数功能有限,OC方式可以传递block参数(OC方式的路由中间件参见https://github.com/jackiehu/JHMediator)
 extension SwiftMediator {
     /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)
     /// - Parameters:
