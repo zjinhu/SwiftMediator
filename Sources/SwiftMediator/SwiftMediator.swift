@@ -10,6 +10,8 @@ import UIKit
 //MARK:--单例--Swift
 public class SwiftMediator {
     public static let shared = SwiftMediator()
+    ///保证单例调用
+    private init(){ }
 }
 
 //MARK:--初始化对象--Swift
@@ -400,8 +402,8 @@ public extension NSObject {
 }
 
 //MARK:--URL获取query字典
-extension URL {
-    public var queryDictionary: [String: Any]? {
+public extension URL {
+    var queryDictionary: [String: Any]? {
         guard let query = self.query else { return nil}
         
         var queryStrings = [String: String]()
@@ -420,14 +422,14 @@ extension URL {
     }
 }
 //MARK:--URL编解码
-extension String {
+public extension String {
     //将原始的url编码为合法的url
     func urlEncoded() -> String {
         let encodeUrlString = self.addingPercentEncoding(withAllowedCharacters:
-            .urlQueryAllowed)
+                                                                .urlQueryAllowed)
         return encodeUrlString ?? ""
     }
-     
+    
     //将编码后的url转换回原始的url
     func urlDecoded() -> String {
         return self.removingPercentEncoding ?? ""
