@@ -328,7 +328,7 @@ extension SwiftMediator {
     
     /// 获取顶层Nav 根据window
     public func currentNavigationController() -> UINavigationController? {
-        return currentViewController()?.navigationController
+        currentViewController()?.navigationController
     }
     
     /// 获取顶层VC 根据window
@@ -425,13 +425,11 @@ public extension URL {
 public extension String {
     //将原始的url编码为合法的url
     func urlEncoded() -> String {
-        let encodeUrlString = self.addingPercentEncoding(withAllowedCharacters:
-                                                                .urlQueryAllowed)
-        return encodeUrlString ?? ""
+        self.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed) ?? ""
     }
     
     //将编码后的url转换回原始的url
     func urlDecoded() -> String {
-        return self.removingPercentEncoding ?? ""
+        self.removingPercentEncoding ?? ""
     }
 }
