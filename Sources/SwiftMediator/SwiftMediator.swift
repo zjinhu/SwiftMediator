@@ -333,9 +333,9 @@ extension SwiftMediator {
     
     /// 获取顶层VC 根据window
     public func currentViewController() -> UIViewController? {
-        var window = UIApplication.shared.keyWindow
+        var window = UIApplication.shared.windows[0]
         //是否为当前显示的window
-        if window?.windowLevel != UIWindow.Level.normal{
+        if window.windowLevel != UIWindow.Level.normal{
             let windows = UIApplication.shared.windows
             for  windowTemp in windows{
                 if windowTemp.windowLevel == UIWindow.Level.normal{
@@ -344,7 +344,7 @@ extension SwiftMediator {
                 }
             }
         }
-        let vc = window?.rootViewController
+        let vc = window.rootViewController
         return getCurrentViewController(withCurrentVC: vc)
     }
     
