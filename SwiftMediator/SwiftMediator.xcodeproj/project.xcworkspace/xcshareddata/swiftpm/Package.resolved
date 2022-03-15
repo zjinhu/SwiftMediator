@@ -1,52 +1,50 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "SnapKit",
-        "repositoryURL": "https://github.com/SnapKit/SnapKit",
-        "state": {
-          "branch": null,
-          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
-          "version": "5.0.1"
-        }
-      },
-      {
-        "package": "SwiftBrick",
-        "repositoryURL": "https://github.com/jackiehu/SwiftBrick",
-        "state": {
-          "branch": null,
-          "revision": "f14a983dcd90c3b1892c3406dffd79e590ab2619",
-          "version": "1.9.0"
-        }
-      },
-      {
-        "package": "SwiftButton",
-        "repositoryURL": "https://github.com/jackiehu/SwiftButton",
-        "state": {
-          "branch": null,
-          "revision": "f187fb608de39da4365d4c4d97564f01818844d8",
-          "version": "1.1.0"
-        }
-      },
-      {
-        "package": "SwiftShow",
-        "repositoryURL": "https://github.com/jackiehu/SwiftShow",
-        "state": {
-          "branch": null,
-          "revision": "453f78e1b9760fff41481b2d2e9125c0a4500bf0",
-          "version": "0.7.0"
-        }
-      },
-      {
-        "package": "SwiftyForm",
-        "repositoryURL": "https://github.com/jackiehu/SwiftyForm",
-        "state": {
-          "branch": null,
-          "revision": "72bfed7c6ebbcfa673d81852c33c077b531c96dd",
-          "version": "1.0.7"
-        }
+  "pins" : [
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit",
+      "state" : {
+        "revision" : "d458564516e5676af9c70b4f4b2a9178294f1bc6",
+        "version" : "5.0.1"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftbrick",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jackiehu/SwiftBrick",
+      "state" : {
+        "revision" : "6493a51fcc327b53d60b3da2aa48c3542373bccc",
+        "version" : "1.9.2"
+      }
+    },
+    {
+      "identity" : "swiftbutton",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jackiehu/SwiftButton",
+      "state" : {
+        "revision" : "dbedce849e79ea250bdb8f7c12cad1578dfaf3c2",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "swiftshow",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jackiehu/SwiftShow",
+      "state" : {
+        "revision" : "a3382ae6748da23718b590e69b0f40e35d5cb48e",
+        "version" : "0.7.1"
+      }
+    },
+    {
+      "identity" : "swiftyform",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jackiehu/SwiftyForm",
+      "state" : {
+        "revision" : "9e6fd363f1935ce2954564156ae029080eefc40f",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 2
 }

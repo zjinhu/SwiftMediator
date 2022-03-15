@@ -192,6 +192,23 @@ extension SwiftMediator {
         presentVC(needNav: needNav, animated: animated, modelStyle: modelStyle, vc: vc)
     }
     
+    
+    /// 简单present,提前初始化好VC,也可以传入自定义NV
+    /// - Parameters:
+    ///   - vc: vc 或 NAV
+    ///   - fromVC: from VC
+    ///   - animated: 是否动画
+    public func presentVC(_ vc: UIViewController?,
+                        fromVC: UIViewController? = nil,
+                        animated: Bool = true) {
+        guard let vc = vc else { return }
+        guard let from = fromVC else {
+            currentViewController()?.present(vc, animated: animated, completion: nil)
+            return
+        }
+        from.present(vc, animated: animated, completion: nil)
+    }
+    
     fileprivate func presentVC(needNav: Bool,
                                animated: Bool,
                                modelStyle: Int,
@@ -223,6 +240,7 @@ extension SwiftMediator {
         }
         from.present(container, animated: animated, completion: nil)
     }
+    
 }
 
 //MARK:--URL路由跳转--Swift
