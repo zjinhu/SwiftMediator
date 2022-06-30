@@ -326,6 +326,16 @@ extension SwiftMediator {
 
 //MARK:--获取最上层视图
 extension SwiftMediator {
+    /// 获取UIWindowScene
+    @available(iOS 13.0, *)
+    public func currentWindowSence() -> UIWindowScene?  {
+        for scene in UIApplication.shared.connectedScenes{
+            if scene.activationState == .foregroundActive{
+                return scene as? UIWindowScene
+            }
+        }
+        return nil
+    }
     
     /// 获取顶层Nav 根据window
     public func currentNavigationController() -> UINavigationController? {
