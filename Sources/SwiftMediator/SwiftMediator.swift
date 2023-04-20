@@ -224,6 +224,19 @@ extension SwiftMediator {
         from.present(container, animated: animated, completion: nil)
     }
     
+    public func dismissVC() {
+        let current = currentViewController()
+        if let viewControllers: [UIViewController] = current?.navigationController?.viewControllers {
+            guard viewControllers.count <= 1 else {
+                current?.navigationController?.popViewController(animated: true)
+                return
+            }
+        }
+        
+        if let _ = current?.presentingViewController {
+            current?.dismiss(animated: true, completion: nil)
+        }
+    }
 }
 
 //MARK:--URL路由跳转--Swift
