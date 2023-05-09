@@ -8,7 +8,20 @@
 
 import Foundation
 import UIKit
-//以下解耦方案参考https://juejin.im/post/5bd0259d5188251a29719086#comment
+import CloudKit
+/**用例  AppDelegateMediator用法
+ 1、AppDelegate中添加
+ 
+ lazy var manager: AppDelegateManager = {
+     return AppDelegateManager.init(delegates: [AppDe.init(window)])
+ }()
+ 
+ 2、相应代理方法中添加钩子
+ func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+     manager.application(application, didFinishLaunchingWithOptions: launchOptions)
+ }
+ */
+
 //MARK:--AppDelegate解耦
 public typealias AppDelegateMediator = UIResponder & UIApplicationDelegate
 
@@ -108,7 +121,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)}
     }
-    
+
     /// 打开URL指定的资源
     @discardableResult
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -247,125 +260,82 @@ public class AppDelegateManager : AppDelegateMediator {
     
     /// 当状态栏的界面方向即将更改时
     public func application(_ application: UIApplication, willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation, duration: TimeInterval) {
-        delegates.forEach { _ = $0.application?(application, willChangeStatusBarOrientation:newStatusBarOrientation, duration: duration)}
+        delegates.forEach { _ = $0.application?(application, willChangeStatusBarOrientation: newStatusBarOrientation, duration: duration)}
     }
     
     /// 当状态栏的界面方向发生变化时
     public func application(_ application: UIApplication, didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation) {
-        delegates.forEach { _ = $0.application?(application, didChangeStatusBarOrientation:oldStatusBarOrientation)}
+        delegates.forEach { _ = $0.application?(application, didChangeStatusBarOrientation: oldStatusBarOrientation)}
     }
     
     /// 当状态栏的Frame即将更改时
     public func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
-        delegates.forEach { _ = $0.application?(application, willChangeStatusBarFrame:newStatusBarFrame)}
+        delegates.forEach { _ = $0.application?(application, willChangeStatusBarFrame: newStatusBarFrame)}
     }
     
     /// 当状态栏的Frame更改时
     public func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
-        delegates.forEach { _ = $0.application?(application, didChangeStatusBarFrame:oldStatusBarFrame)}
+        delegates.forEach { _ = $0.application?(application, didChangeStatusBarFrame: oldStatusBarFrame)}
     }
     
     @available(iOS 13.0, *)
     public func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        delegates.forEach { _ = $0.application?(application, configurationForConnecting:connectingSceneSession,options:options)}
+        delegates.forEach { _ = $0.application?(application, configurationForConnecting: connectingSceneSession,options: options)}
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
     @available(iOS 13.0, *)
     public func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        delegates.forEach { _ = $0.application?(application, didDiscardSceneSessions:sceneSessions)}
+        delegates.forEach { _ = $0.application?(application, didDiscardSceneSessions: sceneSessions)}
+    }
+    
+    @available(iOS 13.2, *)
+    public func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool{
+        for item in delegates {
+            if let bool = item.application?(application, shouldSaveSecureApplicationState: coder), !bool {
+                return false
+            }
+        }
+        return true
+    }
+    
+    @available(iOS 13.2, *)
+    public func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool{
+        for item in delegates {
+            if let bool = item.application?(application, shouldRestoreSecureApplicationState: coder), !bool {
+                return false
+            }
+        }
+        return true
     }
     //MARK:--- 处理SiriKit意图 ----------
     /// 处理指定的SiriKit意图
-    /*
-     public func application(_ application: UIApplication,
-     handle intent: INIntent,
-     completionHandler: @escaping (INIntentResponse) -> Void) {
-     
-     }*/
+//    @available(iOS 14.0, *)
+//    public func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any?{
+//
+//        for item in delegates {
+//            if let any = item.application?(application, intent:intent){
+//                return any
+//            }
+//        }
+//        return nil
+//    }
+    
+    @available(iOS 15.0, *)
+    public func applicationShouldAutomaticallyLocalizeKeyCommands(_ application: UIApplication) -> Bool{
+        for item in delegates {
+            if let bool = item.applicationShouldAutomaticallyLocalizeKeyCommands?(application), !bool {
+                return false
+            }
+        }
+        return true
+    }
     
     //MARK:--- 处理CloudKit ----------
     /// App可以访问CloudKit中的共享信息
-    /*
      public func application(_ application: UIApplication, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
-     
-     }*/
+         delegates.forEach { _ = $0.application?(application, userDidAcceptCloudKitShareWith: cloudKitShareMetadata)}
+     }
 }
 
-//MARK:--SceneDelegate解耦
-@available(iOS 13.0, *)
-public typealias SceneDelegateMediator = UIResponder & UIWindowSceneDelegate
-
-@available(iOS 13.0, *)
-public class SceneDelegateManager : SceneDelegateMediator {
-    
-    private let delegates : [SceneDelegateMediator]
-    
-    /// 钩子处需要初始化，采用数组的方式
-    /// - Parameter delegates: 钩子数组
-    public init(delegates:[SceneDelegateMediator]) {
-        self.delegates = delegates
-    }
-    
-    /// 用法同didFinishLaunchingWithOptions
-    /// - Parameters:
-    ///   - scene: scene
-    ///   - session: session
-    ///   - connectionOptions: connectionOptions
-    public func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        delegates.forEach {_ = $0.scene?(scene, willConnectTo: session, options: connectionOptions) }
-    }
-    
-    /// 当场景与app断开连接是调用（注意，以后它可能被重新连接
-    /// - Parameter scene: scene
-    public func sceneDidDisconnect(_ scene: UIScene) {
-        delegates.forEach {_ = $0.sceneDidDisconnect?(scene)}
-    }
-    
-    /// 当用户开始与场景进行交互（例如从应用切换器中选择场景）时，会调用
-    /// - Parameter scene: scene
-    public func sceneDidBecomeActive(_ scene: UIScene) {
-        delegates.forEach {_ = $0.sceneDidBecomeActive?(scene)}
-    }
-    
-    /// 当用户停止与场景交互（例如通过切换器切换到另一个场景）时调用
-    /// - Parameter scene: scene
-    public func sceneWillResignActive(_ scene: UIScene) {
-        delegates.forEach {_ = $0.sceneWillResignActive?(scene)}
-    }
-    
-    /// 当场景进入后台时调用，即该应用已最小化但仍存活在后台中
-    /// - Parameter scene: scene
-    public func sceneDidEnterBackground(_ scene: UIScene) {
-        delegates.forEach {_ = $0.sceneDidEnterBackground?(scene)}
-    }
-    
-    /// 当场景变成活动窗口时调用，即从后台状态变成开始或恢复状态
-    /// - Parameter scene: scene
-    public func sceneWillEnterForeground(_ scene: UIScene) {
-        delegates.forEach {_ = $0.sceneWillEnterForeground?(scene)}
-    }
-}
-/**用例  AppDelegateMediator SceneDelegateMediator用法相同
- 1、新建类继承协议SceneDelegateMediator
- 
- class SceneDe: SceneDelegateMediator{
- var window: UIWindow?
- init(_ win : UIWindow?) {
- window = win
- }
- func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
- guard let _ = (scene as? UIWindowScene) else { return }
- }
- }
- 
- 2、SceneDelegate中添加
- 
- lazy var manager: SceneDelegateManager = {
- return SceneDelegateManager([SceneDe(window)])
- }()
- 
- 3、相应代理方法中添加钩子
- 
- _ = manager.scene(scene, willConnectTo: session, options: connectionOptions)
- */
+//解耦方案参考https://juejin.im/post/5bd0259d5188251a29719086#comment

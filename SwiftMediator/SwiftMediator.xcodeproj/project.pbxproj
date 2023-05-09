@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		8116A40C2499B5EC00DACECC /* TestObjc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8116A40B2499B5EC00DACECC /* TestObjc.swift */; };
-		815E1C88273B7DD7009E81CF /* AppDelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815E1C87273B7DD7009E81CF /* AppDelegateMediator.swift */; };
 		815E1C8B273B7FDC009E81CF /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 815E1C8A273B7FDC009E81CF /* SnapKit */; };
 		815E1C8E273B8007009E81CF /* SwiftyForm in Frameworks */ = {isa = PBXBuildFile; productRef = 815E1C8D273B8007009E81CF /* SwiftyForm */; };
 		815E1C91273B8027009E81CF /* SwiftBrick in Frameworks */ = {isa = PBXBuildFile; productRef = 815E1C90273B8027009E81CF /* SwiftBrick */; };
 		815E1C94273B8048009E81CF /* SwiftButton in Frameworks */ = {isa = PBXBuildFile; productRef = 815E1C93273B8048009E81CF /* SwiftButton */; };
 		815E1C97273B80DC009E81CF /* SwiftShow in Frameworks */ = {isa = PBXBuildFile; productRef = 815E1C96273B80DC009E81CF /* SwiftShow */; };
+		816953742A0A4DC400A4BF9B /* AppDelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816953732A0A4DC400A4BF9B /* AppDelegateMediator.swift */; };
+		816953762A0A4DC900A4BF9B /* SceneDelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816953752A0A4DC900A4BF9B /* SceneDelegateMediator.swift */; };
 		81BDE34A2546BE1E00F8130D /* SwiftMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BDE3492546BE1E00F8130D /* SwiftMediator.swift */; };
 		81F7DBAE23C6D60C0025C5FD /* TestClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7DBAD23C6D60C0025C5FD /* TestClass.swift */; };
 		81F7DBB023C822820025C5FD /* DelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F7DBAF23C822820025C5FD /* DelegateMediator.swift */; };
@@ -28,7 +29,8 @@
 
 /* Begin PBXFileReference section */
 		8116A40B2499B5EC00DACECC /* TestObjc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestObjc.swift; sourceTree = "<group>"; };
-		815E1C87273B7DD7009E81CF /* AppDelegateMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateMediator.swift; sourceTree = "<group>"; };
+		816953732A0A4DC400A4BF9B /* AppDelegateMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateMediator.swift; sourceTree = "<group>"; };
+		816953752A0A4DC900A4BF9B /* SceneDelegateMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegateMediator.swift; sourceTree = "<group>"; };
 		81BDE3492546BE1E00F8130D /* SwiftMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftMediator.swift; sourceTree = "<group>"; };
 		81F7DBAD23C6D60C0025C5FD /* TestClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestClass.swift; sourceTree = "<group>"; };
 		81F7DBAF23C822820025C5FD /* DelegateMediator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateMediator.swift; sourceTree = "<group>"; };
@@ -63,7 +65,8 @@
 			isa = PBXGroup;
 			children = (
 				81BDE3492546BE1E00F8130D /* SwiftMediator.swift */,
-				815E1C87273B7DD7009E81CF /* AppDelegateMediator.swift */,
+				816953732A0A4DC400A4BF9B /* AppDelegateMediator.swift */,
+				816953752A0A4DC900A4BF9B /* SceneDelegateMediator.swift */,
 			);
 			name = SwiftMediator;
 			path = ../../Sources/SwiftMediator;
@@ -189,7 +192,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				815E1C88273B7DD7009E81CF /* AppDelegateMediator.swift in Sources */,
+				816953742A0A4DC400A4BF9B /* AppDelegateMediator.swift in Sources */,
 				81BDE34A2546BE1E00F8130D /* SwiftMediator.swift in Sources */,
 				E239CF8223989B2800745924 /* TestVC.swift in Sources */,
 				91911572238E526C00503645 /* ViewController.swift in Sources */,
@@ -197,6 +200,7 @@
 				9191156E238E526C00503645 /* AppDelegate.swift in Sources */,
 				81F7DBAE23C6D60C0025C5FD /* TestClass.swift in Sources */,
 				91911570238E526C00503645 /* SceneDelegate.swift in Sources */,
+				816953762A0A4DC900A4BF9B /* SceneDelegateMediator.swift in Sources */,
 				8116A40C2499B5EC00DACECC /* TestObjc.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
