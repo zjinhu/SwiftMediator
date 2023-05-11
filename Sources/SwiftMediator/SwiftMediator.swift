@@ -128,6 +128,7 @@ extension SwiftMediator {
                      fromVC: UIViewController? = nil,
                      paramsDic:[String:Any]? = nil,
                      animated: Bool = true) {
+        
         guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
         pushVC(animated: animated, vc: vc, fromVC: fromVC)
     }
@@ -147,6 +148,7 @@ extension SwiftMediator {
     fileprivate func pushVC(animated: Bool,
                             vc: UIViewController,
                             fromVC: UIViewController? = nil){
+        
         vc.hidesBottomBarWhenPushed = true
         guard let from = fromVC else {
             currentNavigationController()?.pushViewController(vc, animated: animated)
@@ -171,6 +173,7 @@ extension SwiftMediator {
                         needNav: Bool = false,
                         modelStyle: Int = 0,
                         animated: Bool = true) {
+        
         guard let vc = initVC(vcName, moduleName: moduleName, dic: paramsDic) else { return }
         presentVC(needNav: needNav, animated: animated, modelStyle: modelStyle, vc: vc)
         
@@ -245,11 +248,13 @@ extension SwiftMediator {
     /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
     /// - 此处注意编进URL的字符串不能出现特殊字符,要进行URL编码,不支持quereyParams参数有url然后url里还有querey(如果非要URL带token这种情况拦截一下使用路由代码跳转)
     public func openUrl(_ urlString: String?) {
+        
         guard let str = urlString, let url = URL(string: str) else { return }
         let path = url.path as String
         let startIndex = path.index(path.startIndex, offsetBy: 1)
         let pathArray = path.suffix(from: startIndex).components(separatedBy: "/")
         guard pathArray.count == 2 , let first = pathArray.first , let last = pathArray.last else { return }
+        
         switch url.host {
         case "present":
             present(last, moduleName: first, paramsDic: url.queryDictionary)
@@ -357,9 +362,10 @@ extension SwiftMediator {
     
     /// 获取顶层VC 根据window
     public func currentViewController() -> UIViewController? {
-        var window = UIApplication.shared.windows[0]
+        
+        var window = UIApplication.shared.windows.first
         //是否为当前显示的window
-        if window.windowLevel != UIWindow.Level.normal{
+        if window?.windowLevel != UIWindow.Level.normal{
             let windows = UIApplication.shared.windows
             for  windowTemp in windows{
                 if windowTemp.windowLevel == UIWindow.Level.normal{
@@ -368,46 +374,45 @@ extension SwiftMediator {
                 }
             }
         }
-        let vc = window.rootViewController
+        let vc = window?.rootViewController
         return getCurrentViewController(withCurrentVC: vc)
     }
     
     ///根据控制器获取 顶层控制器 递归
-    private func getCurrentViewController(withCurrentVC VC :UIViewController?) -> UIViewController? {
+    private func getCurrentViewController(withCurrentVC VC : UIViewController?) -> UIViewController? {
+        
         if VC == nil {
-            print("🌶： 找不到顶层控制器")
+            debugPrint("🌶： 找不到顶层控制器")
             return nil
         }
+        
         if let presentVC = VC?.presentedViewController {
             //modal出来的 控制器
             return getCurrentViewController(withCurrentVC: presentVC)
-        }
-        else if let splitVC = VC as? UISplitViewController {
+            
+        } else if let splitVC = VC as? UISplitViewController {
             // UISplitViewController 的跟控制器
-            if splitVC.viewControllers.count > 0 {
-                return getCurrentViewController(withCurrentVC: splitVC.viewControllers.last)
-            }else{
+            if splitVC.viewControllers.isEmpty {
                 return VC
+            }else{
+                return getCurrentViewController(withCurrentVC: splitVC.viewControllers.last)
             }
-        }
-        else if let tabVC = VC as? UITabBarController {
+        } else if let tabVC = VC as? UITabBarController {
             // tabBar 的跟控制器
-            if tabVC.viewControllers != nil {
+            if let _ = tabVC.viewControllers {
                 return getCurrentViewController(withCurrentVC: tabVC.selectedViewController)
             }else{
                 return VC
             }
-        }
-        else if let naiVC = VC as? UINavigationController {
+        } else if let naiVC = VC as? UINavigationController {
             // 控制器是 nav
-            if naiVC.viewControllers.count > 0 {
-                //                return getCurrentViewController(withCurrentVC: naiVC.topViewController)
-                return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
-            }else{
+            if naiVC.viewControllers.isEmpty {
                 return VC
+            }else{
+                //return getCurrentViewController(withCurrentVC: naiVC.topViewController)
+                return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
             }
-        }
-        else {
+        } else {
             // 返回顶控制器
             return VC
         }
@@ -416,6 +421,7 @@ extension SwiftMediator {
 
 //MARK:--获取对象所在的命名空间
 public extension NSObject {
+    
     func getModuleName() -> String{
         let name = type(of: self).description()
         guard let module : String = name.components(separatedBy: ".").first else {
@@ -427,6 +433,7 @@ public extension NSObject {
 
 //MARK:--URL获取query字典
 public extension URL {
+    
     var queryDictionary: [String: Any]? {
         guard let query = self.query else { return nil}
         
