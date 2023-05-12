@@ -279,7 +279,7 @@ extension SwiftMediator {
                                selName: String,
                                param: Any? = nil,
                                otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
-        
+
         let sel = NSSelectorFromString(selName)
         guard let _ = class_getInstanceMethod(type(of: objc), sel) else {
             return nil

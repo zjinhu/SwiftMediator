@@ -136,6 +136,7 @@ public class AppDelegateManager : AppDelegateMediator {
     
     //MARK:--- 在后台下载数据 ----------
     /// 如果有数据要下载，它可以开始获取操作
+    @available(iOS, introduced: 7.0, deprecated: 13.0, message: "Use a BGAppRefreshTask in the BackgroundTasks framework instead")
     public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, performFetchWithCompletionHandler: completionHandler)}
     }
@@ -259,21 +260,25 @@ public class AppDelegateManager : AppDelegateMediator {
     }
     
     /// 当状态栏的界面方向即将更改时
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         delegates.forEach { _ = $0.application?(application, willChangeStatusBarOrientation: newStatusBarOrientation, duration: duration)}
     }
     
     /// 当状态栏的界面方向发生变化时
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation) {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarOrientation: oldStatusBarOrientation)}
     }
     
     /// 当状态栏的Frame即将更改时
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
         delegates.forEach { _ = $0.application?(application, willChangeStatusBarFrame: newStatusBarFrame)}
     }
     
     /// 当状态栏的Frame更改时
+    @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarFrame: oldStatusBarFrame)}
     }
