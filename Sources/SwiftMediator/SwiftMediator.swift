@@ -419,6 +419,17 @@ extension SwiftMediator {
     }
 }
 
+
+@available(iOS 13.0, *)
+public extension UIApplication {
+   var keyWindow: UIWindow? {
+       connectedScenes
+           .compactMap {  $0 as? UIWindowScene }
+           .flatMap { $0.windows }
+           .first { $0.isKeyWindow }
+   }
+}
+
 //MARK:--获取对象所在的命名空间
 public extension NSObject {
     
