@@ -10,7 +10,8 @@ import UIKit
 import SwiftShow
 class TestObjc: NSObject {
 
-    @objc func callObjcM(_ name: String)->String{
+    @objc
+    func callObjcM(_ name: String)->String{
         print("实例方法传递参数\(name)")
         Show.toast("实例方法传递参数:\(name)")
         return "实例方法返回参数:back"
