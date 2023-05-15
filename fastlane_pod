@@ -16,14 +16,14 @@ echo "当前文件路径 $CUR_DIR"
 cd $CUR_DIR
 
 echo "
+🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  "
+echo "
+请选择要发布的podspec序号:"
 
-🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  
+echo "
+(0) 退出
+"
 
-"
-echo "请选择要发布的podspec序号:
-"
-echo "(0) 退出
-"
 #查找文件
   a=1
   list=`find . -type f -name "*.podspec"`
@@ -35,8 +35,7 @@ echo "(0) 退出
     a=$(($a+1)) 
   done  
 echo "
-🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  
-"
+🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  "
 read input
 
 case $input in
@@ -52,33 +51,36 @@ case $input in
 	podspec=${name2%.*}
     # echo "333$podspec"
 
-    echo "
-🚀 已经选择仓库名称为：$podspec
-    "
-
-    read -p "🚀 请输入版本号: " user_tags
-
-
 echo "
+🚀 已经选择仓库名称为：$podspec"
 
-🚀 版本号: V $user_tags 
+    read -p "
+    🚀 请输入版本号: " user_tags
 
-"
+    echo "
+    🚀 版本号: V $user_tags "
+
+
+    read -p "
+    🚀 请输入更新内容（注意不要用空格）: " update_message
+
+    echo "
+    🚀 更新内容: $update_message "
 
     ;; 
-
     0)
-    exit
-    ;;
+    exit 
 esac
 
 
-echo "🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉
+echo "
+🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉"
 
- "
-echo "是否发布pod到私有仓库？:
-"
-echo "(0) 不是
+echo "
+是否发布pod到私有仓库？:"
+
+echo "
+(0) 不是
 "
 #查找文件
   b=1
@@ -90,9 +92,8 @@ echo "(0) 不是
     arrayRepo[$b]=$i
     b=$(($b+1)) 
   done  
-echo "
-🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  
-"
+echo "🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉 
+ "
 read input
 
 case $input in
@@ -100,33 +101,26 @@ case $input in
     [1-99])
 
      repo=${arrayRepo[$input]} 
-    echo "
+echo "
 🚀 已经选择Repo名称为：$repo
-    "
+"
 
 echo "
-
-🚀 即将发布 V $user_tags 版本的 $podspec 到 $repo 
-
+🚀 即将发布 V $user_tags 版本的 $podspec 到 $repo, 更新: $update_message 
 "
-    fastlane release_pod t:$user_tags p:$podspec r:$repo
+    fastlane release_pod t:$user_tags p:$podspec r:$repo m:$update_message
     ;; 
 
     0)
-    echo "
 
-🚀 即将发布 V $user_tags 版本的 $podspec
-
+echo "
+🚀 即将发布 V $user_tags 版本的 $podspec, 更新: $update_message 
 "
-    fastlane release_pod t:$user_tags p:$podspec 
+    fastlane release_pod t:$user_tags p:$podspec m:$update_message
     ;;
 esac
 
-echo "
-
-🚀 总用时: ${SECONDS}s
-
-"
+echo "🚀 总用时: ${SECONDS}s"
 exit
  
 

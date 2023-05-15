@@ -1,0 +1,12 @@
+use_frameworks!
+
+platform :ios, '11.0'
+
+target 'Example' do
+  pod 'SwiftMediator', :path => '../'
+  pod 'SnapKit'
+  pod 'Swift_Form'
+  pod 'SwiftBrick'
+  pod 'SwiftShow'
+  pod 'SwiftButton'
+end

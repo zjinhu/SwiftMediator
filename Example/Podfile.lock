@@ -1,0 +1,67 @@
+PODS:
+  - SnapKit (5.6.0)
+  - Swift_Form (1.1.0):
+    - SnapKit
+  - SwiftBrick (2.1.3):
+    - SnapKit
+    - SwiftBrick/BaseCell (= 2.1.3)
+    - SwiftBrick/BaseVC (= 2.1.3)
+    - SwiftBrick/Extensions (= 2.1.3)
+    - SwiftBrick/Util (= 2.1.3)
+    - SwiftBrick/ViewFactory (= 2.1.3)
+  - SwiftBrick/BaseCell (2.1.3):
+    - SnapKit
+    - SwiftBrick/Extensions
+  - SwiftBrick/BaseVC (2.1.3):
+    - SnapKit
+    - SwiftBrick/BaseCell
+    - SwiftBrick/Extensions
+    - SwiftBrick/Util
+  - SwiftBrick/Extensions (2.1.3):
+    - SnapKit
+    - SwiftBrick/Util
+  - SwiftBrick/Util (2.1.3):
+    - SnapKit
+  - SwiftBrick/ViewFactory (2.1.3):
+    - SnapKit
+    - SwiftBrick/Extensions
+    - SwiftBrick/Util
+  - SwiftButton (1.1.1):
+    - SnapKit
+  - SwiftMediator (1.1.7)
+  - SwiftShow (0.7.6):
+    - SwiftShow/Class (= 0.7.6)
+  - SwiftShow/Class (0.7.6):
+    - SnapKit
+
+DEPENDENCIES:
+  - SnapKit
+  - Swift_Form
+  - SwiftBrick
+  - SwiftButton
+  - SwiftMediator (from `../`)
+  - SwiftShow
+
+SPEC REPOS:
+  trunk:
+    - SnapKit
+    - Swift_Form
+    - SwiftBrick
+    - SwiftButton
+    - SwiftShow
+
+EXTERNAL SOURCES:
+  SwiftMediator:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  Swift_Form: 2d4a3318f33540707a1173ee857233cd39acd961
+  SwiftBrick: 8bc088166367bac5f54a732ee5c6ddba00668e2d
+  SwiftButton: 3f6c23719b4668ed0c092dbac9e0d7df48d83127
+  SwiftMediator: e33fb325c72afc1d3a389f31c9c80e2c5dac98d2
+  SwiftShow: 5cd3fa366dd87d330ab2a7c0cfee167ccc924a3b
+
+PODFILE CHECKSUM: 2a88fd30f75210c939987b4a8bf862b8b43d50bf
+
+COCOAPODS: 1.12.1

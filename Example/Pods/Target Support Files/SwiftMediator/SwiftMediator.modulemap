@@ -1,0 +1,6 @@
+framework module SwiftMediator {
+  umbrella header "SwiftMediator-umbrella.h"
+
+  export *
+  module * { export * }
+}

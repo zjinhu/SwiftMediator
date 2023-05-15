@@ -1,0 +1,21 @@
+#!/bin/bash 
+
+# 获取工程根目录
+fadir()  
+{  
+    local this_dir=`pwd`  
+    local child_dir="$1" 
+    dirname "$child_dir" 
+    cd $this_dir  
+} 
+CUR_DIR=$(cd `dirname $0` && pwd -P )
+  
+cd $CUR_DIR
+
+echo "当前文件路径 $CUR_DIR"
+
+pod update --verbose --no-repo-update
+
+
+
+

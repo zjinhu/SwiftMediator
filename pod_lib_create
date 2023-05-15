@@ -1,0 +1,30 @@
+#!/bin/bash 
+
+# 获取工程根目录
+fadir()  
+{  
+    local this_dir=`pwd`  
+    local child_dir="$1" 
+    dirname "$child_dir" 
+    cd $this_dir  
+} 
+CUR_DIR=$(cd `dirname $0` && pwd -P )
+  
+cd $CUR_DIR
+
+    echo "当前文件路径 $CUR_DIR"
+
+    read -p "
+    🚀 请输入工程名称: " proj_name
+
+        echo "
+    🚀 更新内容: $proj_name
+    "
+
+    pod lib create $proj_name --template-url="https://gitee.com/jackiehu1122/pod-template"
+
+
+
+
+
+
