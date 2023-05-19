@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CloudKit
+import Intents
 /**用例  AppDelegateMediator用法
  1、AppDelegate中添加
  
@@ -148,6 +149,7 @@ public class AppDelegateManager : AppDelegateMediator {
     
     //MARK:--- 管理App状态恢复 ----------
     /// 是否应该保留App的状态。
+    @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldSaveSecureApplicationState: instead")
     public func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
         for item in delegates {
             if let bool = item.application?(application, shouldSaveApplicationState: coder), !bool {
@@ -158,6 +160,7 @@ public class AppDelegateManager : AppDelegateMediator {
     }
     
     /// 是否应恢复App保存的状态信息
+    @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldRestoreSecureApplicationState: instead")
     public func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
         for item in delegates {
             if let bool = item.application?(application, shouldRestoreApplicationState: coder), !bool {
@@ -315,16 +318,16 @@ public class AppDelegateManager : AppDelegateMediator {
     }
     //MARK:--- 处理SiriKit意图 ----------
     /// 处理指定的SiriKit意图
-//    @available(iOS 14.0, *)
-//    public func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any?{
-//
-//        for item in delegates {
-//            if let any = item.application?(application, intent:intent){
-//                return any
-//            }
-//        }
-//        return nil
-//    }
+    @available(iOS 14.0, *)
+    public func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any?{
+
+        for item in delegates {
+            if let any = item.application?(application, handlerFor: intent){
+                return any
+            }
+        }
+        return nil
+    }
     
     @available(iOS 15.0, *)
     public func applicationShouldAutomaticallyLocalizeKeyCommands(_ application: UIApplication) -> Bool{

@@ -122,3 +122,51 @@ public extension UIView {
         return view
     }
 }
+
+public extension UIView {
+    
+    struct AssociatedKeys {
+        static var tapGestureKey: String = "TapGestureKey"
+    }
+    
+    typealias tapGestureClosure = (_ view: UIView) -> Void
+    
+    @objc internal var tapGesture: tapGestureClosure? {
+        get {
+            return objc_getAssociatedObject(self, &AssociatedKeys.tapGestureKey) as? tapGestureClosure
+        }
+        set {
+            objc_setAssociatedObject(self, &AssociatedKeys.tapGestureKey, newValue, .OBJC_ASSOCIATION_COPY)
+        }
+    }
+    
+    @objc func addTapGestureWithCallback(tapGesture closure: tapGestureClosure?){
+        tapGesture = closure
+        isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture))
+        addGestureRecognizer(tap)
+    }
+    
+    
+    @objc func handleTapGesture() {
+        if let closure = tapGesture{
+            closure(self)
+        }
+        
+    }
+    
+}
+
+@propertyWrapper
+public struct UsesAutoLayout<T: UIView> {
+    public var wrappedValue: T {
+        didSet {
+            wrappedValue.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+
+    public init(wrappedValue: T) {
+        self.wrappedValue = wrappedValue
+        wrappedValue.translatesAutoresizingMaskIntoConstraints = false
+    }
+}

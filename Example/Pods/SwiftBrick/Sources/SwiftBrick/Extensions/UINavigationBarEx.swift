@@ -34,7 +34,7 @@ public extension UINavigationBar {
         
         if overlay == nil {
             setBackgroundImage(UIImage(), for: .default)
-            overlay = UIView(frame: CGRect(x: 0, y: -StatusBarHeight(), width: self.bounds.width, height: self.bounds.height + StatusBarHeight() ))
+            overlay = UIView(frame: CGRect(x: 0, y: -SwiftBrick.Define.statusBarHeight(), width: self.bounds.width, height: self.bounds.height + SwiftBrick.Define.statusBarHeight() ))
             overlay?.isUserInteractionEnabled = false
             overlay?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             overlay?.layer.zPosition = -9999

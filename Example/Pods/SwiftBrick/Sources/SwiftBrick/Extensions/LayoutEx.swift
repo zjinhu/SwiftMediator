@@ -14,14 +14,14 @@ public extension CGFloat {
     /// - Parameter size: origin width
     /// - Returns: 比例缩放后的 width 没有除以2.0
     func scaleWidth() -> CGFloat {
-        return ScreenWidth / 375 * self
+        return SwiftBrick.Define.screenWidth / 375 * self
     }
     /// 比例缩放 height
     ///
     /// - Parameter size: origin height
     /// - Returns: 比例缩放后的 height 没有除以2.0
     func scaleHeight() -> CGFloat {
-        return ScreenHeight / 667 * self
+        return SwiftBrick.Define.screenHeight / 667 * self
     }
 }
 ///方便自适应布局进行等比例宽高 等同于 FitWidth FitHight
@@ -31,13 +31,13 @@ public extension Int {
     /// - Parameter size: origin width
     /// - Returns: 比例缩放后的 width 没有除以2.0
     func scaleWidth() -> CGFloat {
-        return ScreenWidth / 375 * CGFloat(self)
+        return SwiftBrick.Define.screenWidth / 375 * CGFloat(self)
     }
     /// 比例缩放 height
     ///
     /// - Parameter size: origin height
     /// - Returns: 比例缩放后的 height 没有除以2.0
     func scaleHeight() -> CGFloat {
-        return ScreenHeight / 667 * CGFloat(self)
+        return SwiftBrick.Define.screenHeight / 667 * CGFloat(self)
     }
 }

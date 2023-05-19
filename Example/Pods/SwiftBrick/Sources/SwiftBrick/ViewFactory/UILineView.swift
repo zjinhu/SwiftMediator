@@ -10,7 +10,7 @@ import UIKit
 // MARK: ===================================工厂类:虚线 实线=========================================
 public class UILineView: UIView {
     ///线宽度
-    public var lineWidth: CGFloat = LineHeight{
+    public var lineWidth: CGFloat = SwiftBrick.Define.lineHeight{
         didSet{
             setNeedsDisplay()
         }
@@ -131,7 +131,7 @@ public class UILineView: UIView {
     ///   - dashWidth: 虚线长
     ///   - dashSpace: 虚线间隔
     public convenience init(horizontal: Bool = true,
-                            width: CGFloat = LineHeight,
+                            width: CGFloat = SwiftBrick.Define.lineHeight,
                             color: UIColor = .baseLine,
                             dash: Bool = false,
                             dashWidth: CGFloat = 1,

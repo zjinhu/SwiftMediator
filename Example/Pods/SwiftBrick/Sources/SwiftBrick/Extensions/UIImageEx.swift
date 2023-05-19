@@ -7,22 +7,45 @@
 //
 
 import UIKit
-import CommonCrypto
 // MARK: ===================================扩展: UIImage=========================================
-extension Data {
-    
-    public var sha256: String {
-        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
-            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
-            CC_SHA256(bytes.baseAddress, CC_LONG(count), &hash)
-            return hash
+
+extension UIImage {
+ 
+    public static let icon_back: UIImage = {
+        if #available(iOS 13.0, *){
+            return UIImage.symbol("chevron.backward", color: .textTitleColor) ?? UIImage()
+        }else{
+            return L.image("nav_ic_back")
         }
-        return hash.reduce("") { $0 + String(format:"%02x", $1) }
-    }
+    }()
+ 
+    public static let icon_close: UIImage = {
+        if #available(iOS 13.0, *){
+            return UIImage.symbol("xmark", color: .textTitleColor) ?? UIImage()
+        }else{
+            return L.image("nav_ic_close")
+        }
+    }()
 }
 
 extension UIImage {
     
+    @available(iOS 13.0, *)
+    public static func symbol(_ systemName:String, size: CGFloat = 24, color: UIColor = .white) -> UIImage?{
+        let config = UIImage.SymbolConfiguration(pointSize: size)
+        return UIImage(systemName: systemName, withConfiguration: config)?.withTintColor(color, renderingMode: .alwaysOriginal)
+    }
+  
+    @available(iOS 13.0, *)
+    public static func symbol(_ systemName: String, size: CGFloat = 24) -> UIImage?{
+        let config = UIImage.SymbolConfiguration(pointSize: size)
+        return UIImage(systemName: systemName, withConfiguration: config)
+    }
+}
+
+
+extension UIImage {
+ 
     /// 生成占位图
     /// - Parameters:
     ///   - image: 小图
@@ -94,6 +117,20 @@ extension UIImage {
         return hash.reduce("") { $0 + String(format:"%02x", $1) }
     }
     
+}
+
+import CommonCrypto
+
+extension Data {
+
+    public var sha256: String {
+        let hash = withUnsafeBytes { (bytes: UnsafeRawBufferPointer) -> [UInt8] in
+            var hash = [UInt8](repeating: 0, count: Int(CC_MD5_DIGEST_LENGTH))
+            CC_SHA256(bytes.baseAddress, CC_LONG(count), &hash)
+            return hash
+        }
+        return hash.reduce("") { $0 + String(format:"%02x", $1) }
+    }
 }
 
 class CountedColor {
@@ -271,12 +308,5 @@ extension UIImage {
             }
         }
     }
-    
-    @available(iOS 13.0, *)
-    public static func symbol(_ systemName:String, size: CGFloat = 12, color: UIColor = .white) -> UIImage?{
-        let config = UIImage.SymbolConfiguration(pointSize: size)
-        return UIImage(systemName: systemName, withConfiguration: config)?.withTintColor(color, renderingMode: .alwaysOriginal)
-    }
 
 }
-

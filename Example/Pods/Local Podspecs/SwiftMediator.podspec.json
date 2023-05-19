@@ -1,6 +1,6 @@
 {
   "name": "SwiftMediator",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "summary": "路由.",
   "description": "工具.",
   "homepage": "https://github.com/jackiehu/",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/jackiehu/SwiftMediator.git",
-    "tag": "1.1.7"
+    "tag": "1.1.8"
   },
   "platforms": {
     "ios": "11.0"

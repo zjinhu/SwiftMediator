@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import SnapKit
 // MARK: ===================================扩展: UITableViewCell添加分割线=========================================
 let TopLineTag         = 19003
 let BottomLineTag      = 19004
@@ -52,14 +51,19 @@ public extension UITableViewCell {
             topLineView = UIView()
             topLineView?.backgroundColor = color
             topLineView?.tag = TopLineTag
-            addSubview(topLineView!)
-            bringSubviewToFront(topLineView!)
-            topLineView?.snp.makeConstraints({ (make) in
-                make.top.equalToSuperview()
-                make.left.equalToSuperview().offset(headFootLeftMarign)
-                make.right.equalToSuperview().offset(-headFootRightMarign)
-                make.height.equalTo(LineHeight)
-            })
+            topLineView?.translatesAutoresizingMaskIntoConstraints = false
+
+            if let topLineView = topLineView{
+                addSubview(topLineView)
+                bringSubviewToFront(topLineView)
+                let constraints = [
+                    topLineView.topAnchor.constraint(equalTo: topAnchor),
+                    topLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: headFootLeftMarign),
+                    topLineView.heightAnchor.constraint(equalToConstant: SwiftBrick.Define.lineHeight),
+                    topLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -headFootRightMarign)
+                ]
+                NSLayoutConstraint.activate(constraints)
+            }
         }
         
         if indexPath.row == 0 {
@@ -69,35 +73,30 @@ public extension UITableViewCell {
         }
         
         var bottomLineView  = viewWithTag(BottomLineTag)
-        
+ 
         if bottomLineView == nil {
             bottomLineView = UIView()
             bottomLineView?.backgroundColor = color
             bottomLineView?.tag = BottomLineTag
-            addSubview(bottomLineView!)
-            bringSubviewToFront(bottomLineView!)
-            bottomLineView?.snp.makeConstraints({ (make) in
-                make.bottom.equalToSuperview()
-                make.left.equalToSuperview().offset(leftMarign)
-                make.right.equalToSuperview().offset(-rightMarign)
-                make.height.equalTo(LineHeight)
-            })
+            bottomLineView?.translatesAutoresizingMaskIntoConstraints = false
+
+            if let bottomLineView = bottomLineView{
+                addSubview(bottomLineView)
+                bringSubviewToFront(bottomLineView)
+ 
+                bottomLineView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+                bottomLineView.heightAnchor.constraint(equalToConstant: SwiftBrick.Define.lineHeight).isActive = true
+                bottomLineView.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMarign).isActive = true
+                bottomLineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -leftMarign).isActive = true
+            }
         }
 
         if indexPath.row == count - 1{
-            bottomLineView?.snp.remakeConstraints({ (make) in
-                make.bottom.equalToSuperview()
-                make.left.equalToSuperview().offset(headFootLeftMarign)
-                make.right.equalToSuperview().offset(-headFootRightMarign)
-                make.height.equalTo(LineHeight)
-            })
+            bottomLineView?.leftAnchor.constraint(equalTo: leftAnchor, constant: headFootLeftMarign).isActive = true
+            bottomLineView?.rightAnchor.constraint(equalTo: rightAnchor, constant: -headFootRightMarign).isActive = true
         }else{
-            bottomLineView?.snp.remakeConstraints({ (make) in
-                make.bottom.equalToSuperview()
-                make.left.equalToSuperview().offset(leftMarign)
-                make.right.equalToSuperview().offset(-rightMarign)
-                make.height.equalTo(LineHeight)
-            })
+            bottomLineView?.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMarign).isActive = true
+            bottomLineView?.rightAnchor.constraint(equalTo: rightAnchor, constant: -leftMarign).isActive = true
         }
     }
 
@@ -124,12 +123,18 @@ public extension UITableViewCell {
             lineView?.tag = TopLineTag
             addSubview(lineView!)
             bringSubviewToFront(lineView!)
-            lineView?.snp.makeConstraints({ (make) in
-                make.top.equalToSuperview()
-                make.left.equalToSuperview().offset(leftMarign)
-                make.right.equalToSuperview().offset(-rightMarign)
-                make.height.equalTo(LineHeight)
-            })
+ 
+            if let lineView = lineView{
+                addSubview(lineView)
+                bringSubviewToFront(lineView)
+                let constraints = [
+                    lineView.topAnchor.constraint(equalTo: topAnchor),
+                    lineView.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMarign),
+                    lineView.heightAnchor.constraint(equalToConstant: SwiftBrick.Define.lineHeight),
+                    lineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -rightMarign)
+                ]
+                NSLayoutConstraint.activate(constraints)
+            }
         }
         
         if indexPath.row == 0 {
@@ -159,14 +164,19 @@ public extension UITableViewCell {
             lineView = UIView()
             lineView?.backgroundColor = color
             lineView?.tag = BottomLineTag
-            addSubview(lineView!)
-            bringSubviewToFront(lineView!)
-            lineView?.snp.makeConstraints({ (make) in
-                make.bottom.equalToSuperview()
-                make.right.equalToSuperview().offset(-rightMarign)
-                make.left.equalToSuperview().offset(leftMarign)
-                make.height.equalTo(LineHeight)
-            })
+ 
+            if let lineView = lineView{
+                addSubview(lineView)
+                bringSubviewToFront(lineView)
+                let constraints = [
+                    lineView.bottomAnchor.constraint(equalTo: bottomAnchor),
+                    lineView.leftAnchor.constraint(equalTo: leftAnchor, constant: leftMarign),
+                    lineView.heightAnchor.constraint(equalToConstant: SwiftBrick.Define.lineHeight),
+                    lineView.rightAnchor.constraint(equalTo: rightAnchor, constant: -rightMarign)
+                ]
+                NSLayoutConstraint.activate(constraints)
+            }
+
         }
 
     }

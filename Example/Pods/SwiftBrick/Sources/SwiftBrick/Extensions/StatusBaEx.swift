@@ -64,7 +64,7 @@ extension UIViewController {
     
     /// 隐藏|显示状态栏,请在隐藏了导航栏的VC中使用,如果使用了Nav会失效
     /// - Parameter hidden: 隐藏|显示状态栏
-    func hideOrShowStatusBar(hidden: Bool = false) {
+    public func hideOrShowStatusBar(hidden: Bool = false) {
         
         setHiddenStatusBar = hidden
         setNeedsStatusBarAppearanceUpdate()
@@ -73,7 +73,7 @@ extension UIViewController {
     
     /// 动态设置信号栏样式,请在隐藏了导航栏的VC中使用,如果使用了Nav会失效,需要self.navigationController.navigationBar.barStyle = .default
     /// - Parameter style: 信号栏样式
-    func changeStatusBarStyle(style: UIStatusBarStyle = .default) {
+    public func changeStatusBarStyle(style: UIStatusBarStyle = .default) {
         
         setStyleStatusBar = style
         setNeedsStatusBarAppearanceUpdate()

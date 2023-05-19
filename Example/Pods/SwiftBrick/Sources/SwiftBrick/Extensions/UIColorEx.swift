@@ -9,6 +9,40 @@
 import UIKit
 import Foundation
 // MARK: ===================================扩展: 颜色=========================================
+
+public extension UIColor {
+    /// 支持暗黑模式的颜色
+    static let baseBlue = L.color("baseBlue")
+    static let baseGray = L.color("baseGray")
+    static let baseGreen = L.color("baseGreen")
+    static let baseIndigo = L.color("baseIndigo")
+    static let baseOrange = L.color("baseOrange")
+    static let basePink = L.color("basePink")
+    static let basePurple = L.color("basePurple")
+    static let baseRed = L.color("baseRed")
+    static let baseTeal = L.color("baseTeal")
+    static let baseYellow = L.color("baseYellow")
+    static let baseBackground = L.color("bgColor")
+    static let baseBGColor = L.color("backColor")
+    
+    static let baseLine = L.color("baseLine")
+    
+    static let textTitleColor = L.color("textTitleColor")
+    static let textSecColor = L.color("textSecColor")
+    static let textDesColor = L.color("textDesColor")
+    static let textLinkColor = L.color("textLinkColor")
+    
+}
+
+public extension UIColor {
+    
+    static func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
+        guard #available(iOS 13.0, *) else { return light } 
+        return UIColor { $0.userInterfaceStyle == .dark ? dark : light }
+    }
+
+}
+ 
 public extension UIColor {
     
     ///根据RGB生成颜色
@@ -87,27 +121,6 @@ public extension UIColor {
     func alpha(_ value: CGFloat) -> UIColor {
       return withAlphaComponent(value)
     }
-    
-    /// 支持暗黑模式的颜色
-    static let baseBlue = L.color("baseBlue")
-    static let baseGray = L.color("baseGray")
-    static let baseGreen = L.color("baseGreen")
-    static let baseIndigo = L.color("baseIndigo")
-    static let baseOrange = L.color("baseOrange")
-    static let basePink = L.color("basePink")
-    static let basePurple = L.color("basePurple")
-    static let baseRed = L.color("baseRed")
-    static let baseTeal = L.color("baseTeal")
-    static let baseYellow = L.color("baseYellow")
-    static let baseBackground = L.color("bgColor")
-    static let baseBGColor = L.color("backColor")
-    
-    static let baseLine = L.color("baseLine")
-    
-    static let textTitleColor = L.color("textTitleColor")
-    static let textSecColor = L.color("textSecColor")
-    static let textDesColor = L.color("textDesColor")
-    static let textLinkColor = L.color("textLinkColor")
 
 }
 
@@ -186,4 +199,3 @@ public extension UIColor {
   }
   
 }
-

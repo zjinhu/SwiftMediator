@@ -6,12 +6,12 @@
 [![Version](https://img.shields.io/cocoapods/v/SwiftBrick.svg?style=flat)](http://cocoapods.org/pods/SwiftBrick)
 [![SPM](https://img.shields.io/badge/SPM-supported-DE5C43.svg?style=flat)](https://swift.org/package-manager/)
 ![Xcode 11.0+](https://img.shields.io/badge/Xcode-11.0%2B-blue.svg)
-![iOS 11.0+](https://img.shields.io/badge/iOS-11.0%2B-blue.svg)
+![iOS 13.0+](https://img.shields.io/badge/iOS-13.0%2B-blue.svg)
 ![Swift 5.0+](https://img.shields.io/badge/Swift-5.0%2B-orange.svg)
 
 SwiftBrick是一个简单易用、功能丰富的UI搭建框架，主要目的是为了加速APP开发 。
 
-内含部分图片颜色资源（都支持暗黑模式）。
+内含部分颜色资源（都支持暗黑模式）。
 
 ## 功能
 
