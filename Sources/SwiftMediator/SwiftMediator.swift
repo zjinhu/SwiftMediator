@@ -279,7 +279,7 @@ extension SwiftMediator {
                                selName: String,
                                param: Any? = nil,
                                otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
-
+        
         let sel = NSSelectorFromString(selName)
         guard let _ = class_getInstanceMethod(type(of: objc), sel) else {
             return nil
@@ -344,16 +344,6 @@ extension SwiftMediator {
 
 //MARK:--获取最上层视图
 extension SwiftMediator {
-    /// 获取UIWindowScene
-    @available(iOS 13.0, *)
-    public func currentWindowSence() -> UIWindowScene?  {
-        for scene in UIApplication.shared.connectedScenes{
-            if scene.activationState == .foregroundActive{
-                return scene as? UIWindowScene
-            }
-        }
-        return nil
-    }
     
     /// 获取顶层Nav 根据window
     public func currentNavigationController() -> UINavigationController? {
@@ -363,18 +353,7 @@ extension SwiftMediator {
     /// 获取顶层VC 根据window
     public func currentViewController() -> UIViewController? {
         
-        var window = UIApplication.shared.windows.first
-        //是否为当前显示的window
-        if window?.windowLevel != UIWindow.Level.normal{
-            let windows = UIApplication.shared.windows
-            for  windowTemp in windows{
-                if windowTemp.windowLevel == UIWindow.Level.normal{
-                    window = windowTemp
-                    break
-                }
-            }
-        }
-        let vc = window?.rootViewController
+        let vc = UIWindow.keyWindow?.rootViewController
         return getCurrentViewController(withCurrentVC: vc)
     }
     
@@ -390,21 +369,27 @@ extension SwiftMediator {
             //modal出来的 控制器
             return getCurrentViewController(withCurrentVC: presentVC)
             
-        } else if let splitVC = VC as? UISplitViewController {
+        }
+        else
+        if let splitVC = VC as? UISplitViewController {
             // UISplitViewController 的跟控制器
             if splitVC.viewControllers.isEmpty {
                 return VC
             }else{
                 return getCurrentViewController(withCurrentVC: splitVC.viewControllers.last)
             }
-        } else if let tabVC = VC as? UITabBarController {
+        }
+        else
+        if let tabVC = VC as? UITabBarController {
             // tabBar 的跟控制器
             if let _ = tabVC.viewControllers {
                 return getCurrentViewController(withCurrentVC: tabVC.selectedViewController)
             }else{
                 return VC
             }
-        } else if let naiVC = VC as? UINavigationController {
+        }
+        else
+        if let naiVC = VC as? UINavigationController {
             // 控制器是 nav
             if naiVC.viewControllers.isEmpty {
                 return VC
@@ -412,7 +397,9 @@ extension SwiftMediator {
                 //return getCurrentViewController(withCurrentVC: naiVC.topViewController)
                 return getCurrentViewController(withCurrentVC:naiVC.visibleViewController)
             }
-        } else {
+        }
+        else
+        {
             // 返回顶控制器
             return VC
         }
@@ -420,14 +407,46 @@ extension SwiftMediator {
 }
 
 
+extension UIWindow {
+    /// 获取window
+    public static var keyWindow: UIWindow? {
+        if #available(iOS 13.0, *) {
+            return UIApplication.shared.connectedScenes
+                .sorted { $0.activationState.sortPriority < $1.activationState.sortPriority }
+                .compactMap { $0 as? UIWindowScene }
+                .compactMap { $0.windows.first { $0.isKeyWindow } }
+                .first
+        } else {
+            return UIApplication.shared.keyWindow
+        }
+    }
+    
+}
+
 @available(iOS 13.0, *)
-public extension UIApplication {
-   var keyWindow: UIWindow? {
-       connectedScenes
-           .compactMap {  $0 as? UIWindowScene }
-           .flatMap { $0.windows }
-           .first { $0.isKeyWindow }
-   }
+extension UIWindowScene {
+    /// 获取UIWindowScene
+    public static var currentWindowSence: UIWindowScene?  {
+        for scene in UIApplication.shared.connectedScenes{
+            if scene.activationState == .foregroundActive{
+                return scene as? UIWindowScene
+            }
+        }
+        return nil
+    }
+}
+
+@available(iOS 13.0, *)
+private extension UIScene.ActivationState {
+    var sortPriority: Int {
+        switch self {
+        case .foregroundActive: return 1
+        case .foregroundInactive: return 2
+        case .background: return 3
+        case .unattached: return 4
+        @unknown default: return 5
+        }
+    }
 }
 
 //MARK:--获取对象所在的命名空间

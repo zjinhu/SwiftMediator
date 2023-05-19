@@ -86,12 +86,12 @@ struct SwiftUIView: View {
             Section {
                 Button("打开其他组件的网页H5") {
                     ////此处注意编进URL的字符串不能出现特殊字符,要进行URL编码
-                    SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/JHWebViewController?navTitle=\("打开网页".urlEncoded())&urlString=https://www.qq.com/")
+                    SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/WebViewController?navTitle=\("打开网页".urlEncoded())&urlString=https://www.qq.com/")
                   
                 }
                 
                 Button("打开其他Module的页面") {
-                    SwiftMediator.shared.push("JHWebViewController",
+                    SwiftMediator.shared.push("WebViewController",
                                               moduleName: "SwiftBrick",
                                               paramsDic: ["navTitle":"其他Module的页面","urlString":"https://www.qq.com"])
                 }
