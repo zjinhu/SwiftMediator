@@ -10,28 +10,28 @@ import Foundation
 import UIKit
 import CloudKit
 import Intents
-/**用例  AppDelegateMediator用法
- 1、AppDelegate中添加
+/** Use case AppDelegateMediator usage
+ 1. Add in AppDelegate
  
  lazy var manager: AppDelegateManager = {
-     return AppDelegateManager.init(delegates: [AppDe.init(window)])
+ return AppDelegateManager.init(delegates: [AppDe.init(window)])
  }()
  
- 2、相应代理方法中添加钩子
+ 2. Add a hook to the corresponding proxy method
  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-     manager.application(application, didFinishLaunchingWithOptions: launchOptions)
+ manager. application(application, didFinishLaunchingWithOptions: launchOptions)
  }
  */
 
-//MARK:--AppDelegate解耦
+//MARK:--AppDelegate decoupling
 public typealias AppDelegateMediator = UIResponder & UIApplicationDelegate
 
 public class AppDelegateManager : AppDelegateMediator {
     
     private let delegates : [AppDelegateMediator]
     
-    /// 钩子处需要初始化，采用数组的方式
-    /// - Parameter delegates: 钩子数组
+    /// The hook needs to be initialized in the form of an array
+    /// - Parameter delegates: Array of hooks
     public init(delegates:[AppDelegateMediator]) {
         self.delegates = delegates
     }
@@ -122,7 +122,7 @@ public class AppDelegateManager : AppDelegateMediator {
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)}
     }
-
+    
     /// 打开URL指定的资源
     @discardableResult
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -320,7 +320,7 @@ public class AppDelegateManager : AppDelegateMediator {
     /// 处理指定的SiriKit意图
     @available(iOS 14.0, *)
     public func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any?{
-
+        
         for item in delegates {
             if let any = item.application?(application, handlerFor: intent){
                 return any
@@ -341,8 +341,8 @@ public class AppDelegateManager : AppDelegateMediator {
     
     //MARK:--- 处理CloudKit ----------
     /// App可以访问CloudKit中的共享信息
-     public func application(_ application: UIApplication, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
-         delegates.forEach { _ = $0.application?(application, userDidAcceptCloudKitShareWith: cloudKitShareMetadata)}
-     }
+    public func application(_ application: UIApplication, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
+        delegates.forEach { _ = $0.application?(application, userDidAcceptCloudKitShareWith: cloudKitShareMetadata)}
+    }
 }
 //解耦方案参考https://juejin.im/post/5bd0259d5188251a29719086#comment

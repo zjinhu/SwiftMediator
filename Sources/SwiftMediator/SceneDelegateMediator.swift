@@ -7,17 +7,17 @@
 //
 import UIKit
 import Foundation
-/**用例 SceneDelegateMediator用法
- 1.SceneDelegate中添加
+/** Use case SceneDelegateMediator usage
+ 1. Add in SceneDelegate
  lazy var manager: SceneDelegateManager = {
- return SceneDelegateManager([SceneDe(window)])
+ return SceneDelegateManager([SceneDelegate(window)])
  }()
  
- 2、相应代理方法中添加钩子
- _ = manager.scene(scene, willConnectTo: session, options: connectionOptions)
+ 2. Add a hook to the corresponding proxy method
+ _ = manager. scene(scene, willConnectTo: session, options: connectionOptions)
  */
 
-//MARK:--SceneDelegate解耦
+//MARK:--SceneDelegate decoupling
 @available(iOS 13.0, *)
 public typealias SceneDelegateMediator = UIResponder & UIWindowSceneDelegate
 
@@ -26,8 +26,8 @@ public class SceneDelegateManager : SceneDelegateMediator {
     
     private let delegates : [SceneDelegateMediator]
     
-    /// 钩子处需要初始化，采用数组的方式
-    /// - Parameter delegates: 钩子数组
+    /// The hook needs to be initialized in the form of an array
+    /// - Parameter delegates: Array of hooks
     public init(delegates:[SceneDelegateMediator]) {
         self.delegates = delegates
     }
@@ -83,7 +83,7 @@ public class SceneDelegateManager : SceneDelegateMediator {
         }
         return nil
     }
-
+    
     
     // This will be called after scene connection, but before activation, and will provide the
     // activity that was last supplied to the stateRestorationActivityForScene callback, or
@@ -93,20 +93,20 @@ public class SceneDelegateManager : SceneDelegateMediator {
     public func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity){
         delegates.forEach {_ = $0.scene?(scene, restoreInteractionStateWith: stateRestorationActivity)}
     }
-
+    
     
     public func scene(_ scene: UIScene, willContinueUserActivityWithType userActivityType: String){
         delegates.forEach {_ = $0.scene?(scene, willContinueUserActivityWithType: userActivityType)}
     }
-
+    
     public func scene(_ scene: UIScene, continue userActivity: NSUserActivity){
         delegates.forEach {_ = $0.scene?(scene, continue: userActivity)}
     }
-
+    
     public func scene(_ scene: UIScene, didFailToContinueUserActivityWithType userActivityType: String, error: Error){
         delegates.forEach {_ = $0.scene?(scene, didFailToContinueUserActivityWithType: userActivityType, error: error)}
     }
-
+    
     public func scene(_ scene: UIScene, didUpdate userActivity: NSUserActivity){
         delegates.forEach {_ = $0.scene?(scene, didUpdate: userActivity)}
     }

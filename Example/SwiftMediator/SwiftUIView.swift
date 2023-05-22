@@ -12,23 +12,23 @@ struct SwiftUIView: View {
     var body: some View {
         List {
             Section {
-                Button("默认用法,添加导航栏") {
+                Button("Default usage, add navigation bar") {
                     SwiftMediator.shared.present("TestVC",
-                                                 paramsDic: ["str":"我是字符串",
-                                                             "titleName":"present页面1",
-                                                             "num":13,
+                                                 paramsDic: ["str":"I am a string",
+                                                             "titleName": "present page 1",
+                                                             "num": 13,
                                                              "dic":["a":12,
-                                                                    "b":"测试字符串"]
+                                                                    "b":"test string"]
                                                             ])
                 }
                 
-                Button("可选模态样式,导航栏等") {
-                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"我是字符串",
-                                                                          "titleName":"present页面2",
-                                                                          "num":13,
+                Button("Optional modal style, navigation bar, etc") {
+                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"I am a string",
+                                                                          "titleName": "present page 2",
+                                                                          "num": 13,
                                                                           "dic":["a":12,"b":"hh100"]])
                     SwiftMediator.shared.present(avc, needNav: false, modelStyle: 1)
-                  
+                    
                 }
                 
             } header: {
@@ -36,27 +36,27 @@ struct SwiftUIView: View {
             }
             
             Section {
-                Button("手动初始化push") {
-                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"解放军",
-                                                                          "titleName":"push页面1",
-                                                                          "num":13,
+                Button("Manually initialize push") {
+                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"PLA",
+                                                                          "titleName": "push page 1",
+                                                                          "num": 13,
                                                                           "dic":["a":12,"b":"kk100"]])
                     SwiftMediator.shared.currentNavigationController()?.pushViewController(avc!, animated: true)
                 }
                 
-                Button("默认用法") {
-                    SwiftMediator.shared.push("TestVC", paramsDic: ["str":"每年高考",
-                                                                    "titleName":"push页面2",
-                                                                    "num":13,
+                Button("default usage") {
+                    SwiftMediator.shared.push("TestVC", paramsDic: ["str":"The annual college entrance examination",
+                                                                    "titleName": "push page 2",
+                                                                    "num": 13,
                                                                     "dic":["a":12,"b":"lkj"]])
                 }
                 
-                Button("可选动画,出发页面等") {
-                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":";框架",
-                                                                          "titleName":"push页面3",
-                                                                          "num":13,
+                Button("Optional animation, starting page, etc.") {
+                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":";Frame",
+                                                                          "titleName": "push page 3",
+                                                                          "num": 13,
                                                                           "dic":["a":12,"b":"jlj"]])
-                    //            self.navigationController?.pushViewController(avc!, animated: true)
+                    // self.navigationController?.pushViewController(avc!, animated: true)
                     SwiftMediator.shared.push(avc, animated: false)
                 }
                 
@@ -71,87 +71,87 @@ struct SwiftUIView: View {
                 
                 Button("present") {
                     SwiftMediator.shared.openUrl("app://present/Example/TestVC?str=fhfgdh&titleName=shdhdg&num=111")
-                  
+                    
                 }
                 
-                Button("present,全屏") {
+                Button("present,full screen") {
                     SwiftMediator.shared.openUrl("app://fullScreen/Example/TestVC?str=zfzvzcv&titleName=fghdfhdgh")
-                  
+                    
                 }
- 
+                
             } header: {
-                Text("URL跳转")
+                Text("URL Jump")
             }
             
             Section {
-                Button("打开其他组件的网页H5") {
-                    ////此处注意编进URL的字符串不能出现特殊字符,要进行URL编码
-                    SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/WebViewController?navTitle=\("打开网页".urlEncoded())&urlString=https://www.qq.com/")
-                  
+                Button("Open the webpage H5 of other components") {
+                    ////Here, note that the string encoded into the URL cannot appear special characters, and must be URL-encoded
+                    SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/WebViewController?navTitle=\("Open web page".urlEncoded())&urlString=https://www.qq.com/")
+                    
                 }
                 
-                Button("打开其他Module的页面") {
+                Button("Open other Module's page") {
                     SwiftMediator.shared.push("WebViewController",
                                               moduleName: "SwiftBrick",
-                                              paramsDic: ["navTitle":"其他Module的页面","urlString":"https://www.qq.com"])
+                                              paramsDic: ["navTitle":"Other Module pages","urlString":"https://www.qq.com"])
                 }
                 
             } header: {
-                Text("跨命名空间调用")
+                Text("Cross Namespace Call")
             }
             
             Section {
-                Button("传递参数,返回参数") {
-                    let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodReturn:", param: "参数:fhfh")?.takeUnretainedValue()
+                Button("Pass parameters, return parameters") {
+                    let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodReturn:", param: "parameter:fhfh")?.takeUnretainedValue()
                     print("\(String(describing: str))")
                 }
                 
-                Button("调用类方法") {
+                Button("call class method") {
                     SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethod")
-                  
+                    
                 }
                 
-                Button("调用类方法,传递参数") {
-                    SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodNoReturn:", param: "参数:fhfh")
-                  
+                Button("call class method, pass parameters") {
+                    SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodNoReturn:", param: "Parameter:fhfh")
+                    
                 }
                 
-                Button("调用VC类方法") {
+                Button("call VC class method") {
                     SwiftMediator.shared.callClassMethod(className: "TestVC", selName: "callClassM")
-                  
+                    
                 }
                 
             } header: {
-                Text("类方法调用")
+                Text("Class method call")
             }
             
             Section {
-                Button("VC传递参数,返回参数") {
-                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"我是字符串","titleName":"我是标题","num":13,"dic":["a":12,"b":"sdfg"]])
-                    let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "callMethodReturn:", param: "参数:sdf")?.takeUnretainedValue()
+                Button("VC pass parameters, return parameters") {
+                    let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"I am a string","titleName":"I am a title","num":13,"dic":["a ":12,"b":"sdfg"]])
+                    let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "callMethodReturn:", param: "parameter:sdf")?.takeUnretainedValue()
                     print("\(String(describing: str))")
-                  
+                    
                 }
                 
-                Button("实例方法调用传参,返回") {
+                Button("instance method call pass parameter, return") {
                     let obj = SwiftMediator.shared.initObjc("TestObjc")
-                    let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodReturn:", param: "参数:sdf")?.takeUnretainedValue()
+                    let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodReturn:", param: "parameter:sdf")?.takeUnretainedValue()
                     print("\(String(describing: str))")
                 }
                 
-                Button("实例方法调用传参") {
+                Button("instance method call parameter") {
                     let obj = SwiftMediator.shared.initObjc("TestObjc")
-                    SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodNoReturn:", param: "参数:123")
+                    SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodNoReturn:", param: "Parameter: 123")
                 }
                 
-                Button("实例方法调用") {
+                Button("instance method call") {
                     let obj = SwiftMediator.shared.initObjc("TestObjc")
-        
-                    SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethod", param: "参数:123")
+                    
+                    SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethod", param: "parameter: 123")
                 }
                 
             } header: {
-                Text("实例方法调用")
+                Text("instance method call")
             }
         }
     }

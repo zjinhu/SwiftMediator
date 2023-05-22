@@ -10,33 +10,33 @@ import UIKit
 import SwiftMediator
 @available(iOS 13.0, *)
 class SceneDe: SceneDelegateMediator{
-    var window: UIWindow?
-    init(_ win : UIWindow?) {
-        window = win
-    }
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        print("UIScene在这启动")
-        guard let _ = (scene as? UIWindowScene) else { return }
-    }
+     var window: UIWindow?
+     init(_ win : UIWindow?) {
+         window = win
+     }
+     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+         print("UIScene starts here")
+         guard let _ = (scene as? UIWindowScene) else { return }
+     }
     
-    func sceneWillResignActive(_ scene: UIScene) {
-        print("UIScene在这将要进入后台")
-    }
+     func sceneWillResignActive(_ scene: UIScene) {
+         print("UIScene is about to enter the background")
+     }
 }
 
 
 class AppDe: AppDelegateMediator{
-    var window: UIWindow?
-    init(_ win : UIWindow?) {
-        window = win
-    }
+     var window: UIWindow?
+     init(_ win : UIWindow?) {
+         window = win
+     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        print("UIApplication在这启动")
-        return true
-    }
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+         print("UIApplication starts here")
+         return true
+     }
 
-    func applicationWillResignActive(_ application: UIApplication) {
-        print("UIApplication在这将要进入后台")
-    }
+     func applicationWillResignActive(_ application: UIApplication) {
+         print("UIApplication will enter the background here")
+     }
 }

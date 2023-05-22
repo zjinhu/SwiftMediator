@@ -9,22 +9,22 @@
 import Foundation
 import SwiftShow
 class TestClass {
-
+    
     @objc
     class func callMethodReturn(_ name: String)->String{
-        print("类方法传递参数\(name)")
-        Show.toast("类方法传递参数:\(name)")
-        return "类方法返回参数:laile"
+        print("Class method passing parameters\(name)")
+        Show.toast("Class method passing parameters:\(name)")
+        return "Class method return parameter: laile"
     }
-
+    
     @objc
     class func callMethodNoReturn(_ name: String){
-        print("类方法传递参数\(name)")
-        Show.toast("类方法传递参数:\(name)")
+        print("Class method passing parameters\(name)")
+        Show.toast("Class method passing parameters:\(name)")
     }
     
     @objc
     class func callMethod(){
-        Show.toast("类方法调用")
+        Show.toast("Class method call")
     }
 }

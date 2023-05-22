@@ -1,4 +1,4 @@
-//
+//MARK:--initialize object--Swift//
 //  SwiftMediator.swift
 //  SwiftMediator
 //
@@ -7,21 +7,19 @@
 //
 
 import UIKit
-//MARK:--单例--Swift
 public class SwiftMediator {
     public static let shared = SwiftMediator()
-    ///保证单例调用
     private init(){ }
 }
 
-//MARK:--初始化对象--Swift
+//MARK:--initialize object--Swift
 extension SwiftMediator {
     
-    /// 反射VC初始化并且赋值
+    /// Reflect UIViewController initialization and assignment
     /// - Parameters:
-    ///   - moduleName: 组件boundle名称，不传则为默认命名空间
-    ///   - vcName: VC名称
-    ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
+    /// - moduleName: component boundle name, if not passed, it will be the default namespace
+    /// - vcName: UIViewController name
+    /// - dic: parameter dictionary // Since it is a KVC assignment, @objc must be marked on the parameter
     @discardableResult
     public func initVC(_ vcName: String,
                        moduleName: String? = nil,
@@ -42,11 +40,11 @@ extension SwiftMediator {
         return controller
     }
     
-    /// 反射objc初始化并且赋值 继承NSObject
+    /// Reflect objc initialization and assignment Inherit NSObject
     /// - Parameters:
-    ///   - objcName: objcName
-    ///   - moduleName: moduleName
-    ///   - dic: 参数字典//由于是KVC赋值，必须要在参数上标记@objc
+    /// - objcName: objcName
+    /// - moduleName: moduleName
+    /// - dic: parameter dictionary // Since it is a KVC assignment, @objc must be marked on the parameter
     /// - Returns: objc
     @discardableResult
     public func initObjc(_ objcName: String,
@@ -69,14 +67,14 @@ extension SwiftMediator {
     }
 }
 
-//MARK:--检查属性--Swift
+//MARK:--Inspect property--Swift
 extension SwiftMediator {
-    /// 判断属性是否存在
+    /// Determine whether the attribute exists
     /// - Parameters:
-    ///   - name: 属性名称
-    ///   - obj: 目标对象
+    /// - name: attribute name
+    /// - obj: target object
     private func getTypeOfProperty (_ name: String, obj:AnyObject) -> Bool{
-        // 注意：obj是实例(对象)，如果是类，则无法获取其属性
+        // Note: obj is an instance (object), if it is a class, its properties cannot be obtained
         let morror = Mirror(reflecting: obj)
         let superMorror = Mirror(reflecting: obj).superclassMirror
         
@@ -98,10 +96,10 @@ extension SwiftMediator {
         return false
     }
     
-    /// KVC给属性赋值
+    /// KVC assigns values to attributes
     /// - Parameters:
-    ///   - obj: 目标对象
-    ///   - paramsDic: 参数字典Key必须对应属性名
+    /// - obj: target object
+    /// - paramsDic: The parameter dictionary Key must correspond to the attribute name
     private func setObjectParams(obj: AnyObject, paramsDic:[String:Any]?) {
         if let paramsDic = paramsDic {
             for (key,value) in paramsDic {
@@ -114,15 +112,15 @@ extension SwiftMediator {
     
 }
 
-//MARK:--路由跳转--代码跳转
+//MARK:--route jump--code jump
 extension SwiftMediator {
-    /// 路由Push
+    /// Routing Push
     /// - Parameters:
-    ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
-    ///   - moduleName: 目标VC所在组件名称
-    ///   - vcName: 目标VC名称
-    ///   - paramsDic: 参数字典
-    ///   - animated: 是否有动画
+    /// - fromVC: Jump from that page--if not passed, the top VC is taken by default
+    /// - moduleName: The name of the component where the target VC is located
+    /// - vcName: target VC name
+    /// - paramsDic: parameter dictionary
+    /// - animated: whether there is animation
     public func push(_ vcName: String,
                      moduleName: String? = nil,
                      fromVC: UIViewController? = nil,
@@ -133,11 +131,11 @@ extension SwiftMediator {
         pushVC(animated: animated, vc: vc, fromVC: fromVC)
     }
     
-    /// 简单Push,提前初始化好VC
+    /// Simple Push, initialize VC in advance
     /// - Parameters:
-    ///   - vc: 已初始化好的VC对象
-    ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
-    ///   - animated: 是否有动画
+    /// - vc: initialized VC object
+    /// - fromVC: From which page to push, if not, the route selects the top VC
+    /// - animated: whether there is animation
     public func push(_ vc: UIViewController?,
                      fromVC: UIViewController? = nil,
                      animated: Bool = true) {
@@ -157,15 +155,15 @@ extension SwiftMediator {
         from.navigationController?.pushViewController(vc, animated: animated)
     }
     
-    /// 路由present
+    /// route present
     /// - Parameters:
-    ///   - fromVC: 从那个页面起跳--不传默认取最上层VC
-    ///   - moduleName: 目标VC所在组件名称
-    ///   - vcName: 目标VC名称
-    ///   - paramsDic: 参数字典
-    ///   - modelStyle: 0:模态样式为默认，1:全屏模态,2:custom
-    ///   - needNav: 是否需要导航栏(原生导航栏,如需要自定义导航栏请直接传递相应的带导航栏VC对象)
-    ///   - animated: 是否有动画
+    /// - fromVC: Jump from that page--if not passed, the top VC is taken by default
+    /// - moduleName: The name of the component where the target VC is located
+    /// - vcName: target VC name
+    /// - paramsDic: parameter dictionary
+    /// - modelStyle: 0: modal style is default, 1: full screen modal, 2: custom
+    /// - needNav: Do you need a navigation bar (native navigation bar, if you need a custom navigation bar, please directly pass the corresponding VC object with navigation bar)
+    /// - animated: whether there is animation
     public func present(_ vcName: String,
                         moduleName: String? = nil,
                         paramsDic:[String:Any]? = nil,
@@ -179,13 +177,13 @@ extension SwiftMediator {
         
     }
     
-    /// 简单present,提前初始化好VC
+    /// Simple present, initialize VC in advance
     /// - Parameters:
-    ///   - vc: 已初始化好的VC对象,可传递Nav对象(自定义导航栏的)
-    ///   - fromVC: 从哪个页面push,不传则路由选择最上层VC
-    ///   - needNav: 是否需要导航栏(原生导航栏,如需要自定义导航栏请直接传递相应的带导航栏VC对象)
-    ///   - modelStyle: 0:模态样式为默认，1:全屏模态,2:custom
-    ///   - animated: 是否有动画
+    /// - vc: initialized VC object, can pass Nav object (custom navigation bar)
+    /// - fromVC: From which page to push, if not, the route selects the top VC
+    /// - needNav: Do you need a navigation bar (native navigation bar, if you need a custom navigation bar, please directly pass the corresponding VC object with navigation bar)
+    /// - modelStyle: 0: modal style is default, 1: full screen modal, 2: custom
+    /// - animated: whether there is animation
     public func present(_ vc: UIViewController?,
                         fromVC: UIViewController? = nil,
                         needNav: Bool = false,
@@ -227,6 +225,7 @@ extension SwiftMediator {
         from.present(container, animated: animated, completion: nil)
     }
     
+    /// Exit the current page
     public func dismissVC() {
         let current = currentViewController()
         if let viewControllers: [UIViewController] = current?.navigationController?.viewControllers {
@@ -242,11 +241,11 @@ extension SwiftMediator {
     }
 }
 
-//MARK:--URL路由跳转--Swift
+//MARK:--URL routing jump--Swift
 extension SwiftMediator {
-    /// URL路由跳转 跳转区分Push、present、fullScreen
-    /// - Parameter urlString:调用原生页面功能 scheme ://push/moduleName/vcName?quereyParams
-    /// - 此处注意编进URL的字符串不能出现特殊字符,要进行URL编码,不支持quereyParams参数有url然后url里还有querey(如果非要URL带token这种情况拦截一下使用路由代码跳转)
+    /// URL routing jump Jump to distinguish Push, present, fullScreen
+    /// - Parameter urlString: Call native page function scheme ://push/moduleName/vcName?quereyParams
+    /// - Note here that the string encoded into the URL cannot contain special characters. URL encoding is required. It does not support the queryParams parameter with url and query in the url (if you want the URL to have a token, intercept it and use the routing code jump)
     public func openUrl(_ urlString: String?) {
         
         guard let str = urlString, let url = URL(string: str) else { return }
@@ -266,14 +265,14 @@ extension SwiftMediator {
     }
 }
 
-//MARK:--路由执行方法///Swift反射执行函数功能有限,OC方式可以传递block参数(OC方式的路由中间件参见https://github.com/jackiehu/JHMediator)
+//MARK:--routing execution method ///Swift reflection execution function has limited functions, OC method can pass block parameters (see https://github.com/jackiehu/JHMediator for OC routing middleware)
 extension SwiftMediator {
-    /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)
+    /// Routing call instance object method: @objc must be marked Example: @objc class func qqqqq(_ name: String)
     /// - Parameters:
-    ///   - objc: 初始化好的对象
-    ///   - selName: 方法名
-    ///   - param: 参数1
-    ///   - otherParam: 参数2
+    /// - objc: initialized object
+    /// - selName: method name
+    /// - param: parameter 1
+    /// - otherParam: parameter 2
     @discardableResult
     public func callObjcMethod(objc: AnyObject,
                                selName: String,
@@ -287,13 +286,13 @@ extension SwiftMediator {
         return objc.perform(sel, with: param, with: otherParam)
     }
     
-    /// 路由调用类方法：必须标记@objc  例子：@objc  func qqqqq(_ name: String)
+    /// Routing call class method: @objc must be marked Example: @objc func qqqqq(_ name: String)
     /// - Parameters:
-    ///   - moduleName: 组件名称
-    ///   - className: 类名称
-    ///   - selName: 方法名
-    ///   - param: 参数1
-    ///   - otherParam: 参数2
+    /// - moduleName: component name
+    /// - className: class name
+    /// - selName: method name
+    /// - param: parameter 1
+    /// - otherParam: parameter 2
     @discardableResult
     public func callClassMethod(className: String,
                                 selName: String,
@@ -342,26 +341,26 @@ extension SwiftMediator {
     
 }
 
-//MARK:--获取最上层视图
+//MARK:--Get the top UIViewController
 extension SwiftMediator {
     
-    /// 获取顶层Nav 根据window
+    /// Get the top-level UINavigationController according to the window
     public func currentNavigationController() -> UINavigationController? {
         currentViewController()?.navigationController
     }
     
-    /// 获取顶层VC 根据window
+    /// Get the top-level UIViewController according to the window
     public func currentViewController() -> UIViewController? {
         
         let vc = UIWindow.keyWindow?.rootViewController
         return getCurrentViewController(withCurrentVC: vc)
     }
     
-    ///根据控制器获取 顶层控制器 递归
+    ///Get the top-level controller recursively according to the controller
     private func getCurrentViewController(withCurrentVC VC : UIViewController?) -> UIViewController? {
         
         if VC == nil {
-            debugPrint("🌶： 找不到顶层控制器")
+            debugPrint("🌶： Could not find top level UIViewController")
             return nil
         }
         
@@ -408,7 +407,7 @@ extension SwiftMediator {
 
 
 extension UIWindow {
-    /// 获取window
+    /// get window
     public static var keyWindow: UIWindow? {
         if #available(iOS 13.0, *) {
             return UIApplication.shared.connectedScenes
@@ -425,7 +424,7 @@ extension UIWindow {
 
 @available(iOS 13.0, *)
 extension UIWindowScene {
-    /// 获取UIWindowScene
+    /// Get UIWindowScene
     public static var currentWindowSence: UIWindowScene?  {
         for scene in UIApplication.shared.connectedScenes{
             if scene.activationState == .foregroundActive{
@@ -449,7 +448,7 @@ private extension UIScene.ActivationState {
     }
 }
 
-//MARK:--获取对象所在的命名空间
+//MARK:--Get the namespace where the object is located
 public extension NSObject {
     
     func getModuleName() -> String{
@@ -461,7 +460,7 @@ public extension NSObject {
     }
 }
 
-//MARK:--URL获取query字典
+//MARK:--URL get query dictionary
 public extension URL {
     
     var queryDictionary: [String: Any]? {
@@ -482,14 +481,14 @@ public extension URL {
         return queryStrings
     }
 }
-//MARK:--URL编解码
+//MARK:--URL codec
 public extension String {
-    //将原始的url编码为合法的url
+    //Encode the original url into a valid url
     func urlEncoded() -> String {
         self.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed) ?? ""
     }
     
-    //将编码后的url转换回原始的url
+    //convert the encoded url back to the original url
     func urlDecoded() -> String {
         self.removingPercentEncoding ?? ""
     }

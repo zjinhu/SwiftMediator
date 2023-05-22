@@ -26,60 +26,60 @@ class TestVC: ViewController {
         self.title = titleName
         self.view.backgroundColor = .random
         
-        let label = UILabel().then { lab in
+        let label = UILabel(). then { lab in
             lab.backgroundColor = .orange
             lab.numberOfLines = 0
-            lab.text = "收到String:\(str!)--收到Int:\(num)"
+            lab.text = "Received String:\(str!)--Received Int:\(num)"
             lab.textColor = .random
         }
-        view.addSubview(label)
+        view. addSubview(label)
         label.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(100)
             make.top.equalToSuperview().offset(200)
         }
- 
-        let label2 = UILabel().then { lab in
+        
+        let label2 = UILabel(). then { lab in
             lab.backgroundColor = .orange
             lab.numberOfLines = 0
-            lab.text = "收到字典:\(String(describing: dic))--收到Int:\(num)"
+            lab.text = "Dictionary received:\(String(describing: dic))--Int received:\(num)"
             lab.textColor = .random
         }
-        view.addSubview(label2)
+        view. addSubview(label2)
         label2.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(100)
             make.top.equalToSuperview().offset(300)
         }
- 
-        let button = UIButton().then { btn in
+        
+        let button = UIButton(). then { btn in
             btn.backgroundColor = .random
-            btn.setTitle("关闭页面", for: .normal)
+            btn.setTitle("Close page", for: .normal)
             btn.addTouchUpInSideBtnAction { [weak self] sender in
                 
-                self?.goBack()
+                self?. goBack()
             }
         }
-        view.addSubview(button)
+        view. addSubview(button)
         button.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.height.equalTo(100)
             make.height.equalTo(50)
             make.top.equalToSuperview().offset(60)
         }
- 
+        
     }
     
     @objc
     func callMethodReturn(_ name: String)->String{
-        print("实例方法传递参数\(name)")
-        Show.toast("实例方法传递参数:\(name)")
-        return "实例方法返回参数:back"
+        print("instance method passing parameters\(name)")
+        Show.toast("Instance method passing parameters:\(name)")
+        return "Instance method return parameter: back"
     }
     
     @objc
     class func callClassM(){
-        print("类方法调用")
-        Show.toast("类方法调用")
+        print("Class method call")
+        Show.toast("Class method call")
     }
 }

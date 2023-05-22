@@ -9,22 +9,22 @@
 import UIKit
 import SwiftShow
 class TestObjc: NSObject {
-
+    
     @objc
     func callMethodReturn(_ name: String)->String{
-        print("实例方法传递参数\(name)")
-        Show.toast("实例方法传递参数:\(name)")
-        return "实例方法返回参数:back"
+        print("instance method passing parameters\(name)")
+        Show.toast("Instance method passing parameters:\(name)")
+        return "Instance method return parameter: back"
     }
     
     @objc
     func callMethodNoReturn(_ name: String){
-        print("实例方法传递参数\(name)")
-        Show.toast("实例方法传递参数:\(name)")
+        print("instance method passing parameters\(name)")
+        Show.toast("Instance method passing parameters:\(name)")
     }
     
     @objc
     func callMethod(){
-        Show.toast("实例方法调用")
+        Show.toast("instance method call")
     }
 }

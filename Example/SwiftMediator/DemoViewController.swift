@@ -13,10 +13,10 @@ import Swift_Form
 class DemoViewController: TableViewController {
     
     lazy var former = Former(tableView: self.tableView!)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         if #available(iOS 13.0, *) {
             ///SwiftUI示例
             let controller = UIHostingController(rootView:
@@ -37,7 +37,7 @@ class DemoViewController: TableViewController {
                           sectionFormer4,
                           sectionFormer5)
         }
-
+        
     }
     
     lazy var sectionFormer1 : SectionFormer = {
@@ -45,7 +45,7 @@ class DemoViewController: TableViewController {
                                           row2)
         let header = LabelHeaderFooter()
         header.viewHeight = 20
-        header.title = "present页面,可选导航栏,模态样式"
+        header.title = "present page, optional navigation bar, modal style"
         header.headerFooter.backColor = .baseTeal
         sectionFormer.set(headerViewFormer: header)
         return sectionFormer
@@ -57,7 +57,7 @@ class DemoViewController: TableViewController {
                                           row5)
         let header = LabelHeaderFooter()
         header.viewHeight = 20
-        header.title = "push页面,可关闭动画"
+        header.title = "push page, animation can be turned off"
         header.headerFooter.backColor = .baseTeal
         sectionFormer.set(headerViewFormer: header)
         return sectionFormer
@@ -69,7 +69,7 @@ class DemoViewController: TableViewController {
                                           row8)
         let header = LabelHeaderFooter()
         header.viewHeight = 20
-        header.title = "URL跳转页面,可选push,present"
+        header.title = "URL jump page, optional push, present"
         header.headerFooter.backColor = .baseTeal
         sectionFormer.set(headerViewFormer: header)
         return sectionFormer
@@ -83,7 +83,7 @@ class DemoViewController: TableViewController {
                                           row20)
         let header = LabelHeaderFooter()
         header.viewHeight = 20
-        header.title = "其他方法函数调用"
+        header.title = "Other method function calls"
         header.headerFooter.backColor = .baseTeal
         sectionFormer.set(headerViewFormer: header)
         return sectionFormer
@@ -94,7 +94,7 @@ class DemoViewController: TableViewController {
                                           row13)
         let header = LabelHeaderFooter()
         header.viewHeight = 20
-        header.title = "跨组件调用"
+        header.title = "Cross Component Call"
         header.headerFooter.backColor = .baseTeal
         sectionFormer.set(headerViewFormer: header)
         return sectionFormer
@@ -102,18 +102,18 @@ class DemoViewController: TableViewController {
     
     lazy var row1 : LabelRow = {
         let row = LabelRow()
-        row.title = "present页面"
-        row.subTitle = "默认用法,添加导航栏"
+        row.title = "present page"
+        row.subTitle = "Default usage, add navigation bar"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            SwiftMediator.shared.present("TestVC", paramsDic: ["str":"我是字符串",
-                                                               "titleName":"present页面1",
-                                                               "num":13,
+            SwiftMediator.shared.present("TestVC", paramsDic: ["str":"I am a string",
+                                                               "titleName": "present page 1",
+                                                               "num": 13,
                                                                "dic":["a":12,
-                                                                      "b":"测试字符串"]
+                                                                      "b":"test string"]
                                                               ])
             
         }
@@ -122,16 +122,16 @@ class DemoViewController: TableViewController {
     
     lazy var row2 : LabelRow = {
         let row = LabelRow()
-        row.title = "present页面"
-        row.subTitle = "可选模态样式,导航栏等"
+        row.title = "present page"
+        row.subTitle = "Optional modal styles, navbar, etc"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"我是字符串",
-                                                                  "titleName":"present页面2",
-                                                                  "num":13,
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"I am a string",
+                                                                  "titleName": "present page 2",
+                                                                  "num": 13,
                                                                   "dic":["a":12,"b":"hh100"]])
             SwiftMediator.shared.present(avc, needNav: false, modelStyle: 1)
             
@@ -141,16 +141,16 @@ class DemoViewController: TableViewController {
     
     lazy var row3 : LabelRow = {
         let row = LabelRow()
-        row.title = "push页面"
-        row.subTitle = "手动初始化push"
+        row.title = "push page"
+        row.subTitle = "Manually initialize push"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"解放军",
-                                                                  "titleName":"push页面1",
-                                                                  "num":13,
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"PLA",
+                                                                  "titleName": "push page 1",
+                                                                  "num": 13,
                                                                   "dic":["a":12,"b":"kk100"]])
             SwiftMediator.shared.currentNavigationController()?.pushViewController(avc!, animated: true)
             
@@ -160,16 +160,16 @@ class DemoViewController: TableViewController {
     
     lazy var row4 : LabelRow = {
         let row = LabelRow()
-        row.title = "push页面"
-        row.subTitle = "默认用法"
+        row.title = "push page"
+        row.subTitle = "Default Usage"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            SwiftMediator.shared.push("TestVC", paramsDic: ["str":"每年高考",
-                                                            "titleName":"push页面2",
-                                                            "num":13,
+            SwiftMediator.shared.push("TestVC", paramsDic: ["str":"The annual college entrance examination",
+                                                            "titleName": "push page 2",
+                                                            "num": 13,
                                                             "dic":["a":12,"b":"lkj"]])
             
         }
@@ -178,18 +178,18 @@ class DemoViewController: TableViewController {
     
     lazy var row5 : LabelRow = {
         let row = LabelRow()
-        row.title = "push页面"
-        row.subTitle = "可选动画,出发页面等"
+        row.title = "push page"
+        row.subTitle = "Optional animation, starting page, etc."
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":";框架",
-                                                                  "titleName":"push页面3",
-                                                                  "num":13,
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":";Frame",
+                                                                  "titleName": "push page 3",
+                                                                  "num": 13,
                                                                   "dic":["a":12,"b":"jlj"]])
-            //            self.navigationController?.pushViewController(avc!, animated: true)
+            // self.navigationController?.pushViewController(avc!, animated: true)
             SwiftMediator.shared.push(avc, animated: false)
             
         }
@@ -198,7 +198,7 @@ class DemoViewController: TableViewController {
     
     lazy var row6 : LabelRow = {
         let row = LabelRow()
-        row.title = "URL跳转页面"
+        row.title = "URL jump page"
         row.subTitle = "push"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
@@ -213,7 +213,7 @@ class DemoViewController: TableViewController {
     
     lazy var row7 : LabelRow = {
         let row = LabelRow()
-        row.title = "URL跳转页面"
+        row.title = "URL jump page"
         row.subTitle = "present"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
@@ -228,8 +228,8 @@ class DemoViewController: TableViewController {
     
     lazy var row8 : LabelRow = {
         let row = LabelRow()
-        row.title = "URL跳转页面"
-        row.subTitle = "present,全屏"
+        row.title = "URL jump page"
+        row.subTitle = "present, full screen"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
@@ -243,14 +243,14 @@ class DemoViewController: TableViewController {
     
     lazy var row13 : LabelRow = {
         let row = LabelRow()
-        row.title = "URL跳转页面"
-        row.subTitle = "打开其他组件的网页H5"
+        row.title = "URL jump page"
+        row.subTitle = "Open the webpage H5 of other components"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
-            ////此处注意编进URL的字符串不能出现特殊字符,要进行URL编码
-            SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/JHWebViewController?navTitle=\("打开网页".urlEncoded())&urlString=https://www.qq.com/")
+            ////Here, note that the string encoded into the URL cannot appear special characters, and must be URL-encoded
+            SwiftMediator.shared.openUrl("nnn://push/SwiftBrick/JHWebViewController?navTitle=\("Open web page".urlEncoded())&urlString=https://www.qq.com/")
             
         }
         return row
@@ -258,15 +258,15 @@ class DemoViewController: TableViewController {
     
     lazy var row9 : LabelRow = {
         let row = LabelRow()
-        row.title = "打开其他Module的页面"
+        row.title = "Open other Module's page"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
             SwiftMediator.shared.push("JHWebViewController",
-                                      moduleName: "SwiftBrick",
-                                      paramsDic: ["navTitle":"其他Module的页面","urlString":"https://www.qq.com"])
+                                        moduleName: "SwiftBrick",
+                                        paramsDic: ["navTitle":"Other Module pages","urlString":"https://www.qq.com"])
             
         }
         return row
@@ -274,14 +274,14 @@ class DemoViewController: TableViewController {
     
     lazy var row10 : LabelRow = {
         let row = LabelRow()
-        row.title = "类方法调用"
+        row.title = "Class method call"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            //            SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
-            let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodReturn:", param: "参数:fhfh")?.takeUnretainedValue()
+            // SwiftMediator.shared.callClassMethod(moduleName: "SwiftMediator", objName: "TestClass", selName: "qqqqq:",param: "hahahaha")
+            let str = SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodReturn:", param: "parameter:fhfh")?.takeUnretainedValue()
             print("\(String(describing: str))")
             
         }
@@ -290,12 +290,12 @@ class DemoViewController: TableViewController {
     
     lazy var row19 : LabelRow = {
         let row = LabelRow()
-        row.title = "类方法调用"
+        row.title = "Class method call"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
-
+            
             SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethod")
             
         }
@@ -304,13 +304,13 @@ class DemoViewController: TableViewController {
     
     lazy var row20 : LabelRow = {
         let row = LabelRow()
-        row.title = "类方法调用"
+        row.title = "Class method call"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
-
-            SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodNoReturn:", param: "参数:fhfh")
+            
+            SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodNoReturn:", param: "Parameter:fhfh")
             
         }
         return row
@@ -318,15 +318,15 @@ class DemoViewController: TableViewController {
     
     lazy var row11 : LabelRow = {
         let row = LabelRow()
-        row.title = "实例方法调用"
-        row.subTitle = "可拿实例函数的回传参数"
+        row.title = "Instance method call"
+        row.subTitle = "Can take the return parameters of the instance function"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
-            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"我是字符串","titleName":"我是标题","num":13,"dic":["a":12,"b":"sdfg"]])
-            let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "callMethodReturn:", param: "参数:sdf")?.takeUnretainedValue()
+            let avc = SwiftMediator.shared.initVC("TestVC", dic: ["str":"I am a string","titleName":"I am a title","num":13,"dic":["a ":12,"b":"sdfg"]])
+            let str = SwiftMediator.shared.callObjcMethod(objc: avc!, selName: "callMethodReturn:", param: "parameter:sdf")?.takeUnretainedValue()
             print("\(String(describing: str))")
             
         }
@@ -335,15 +335,15 @@ class DemoViewController: TableViewController {
     
     lazy var row12 : LabelRow = {
         let row = LabelRow()
-        row.title = "实例方法调用"
-        row.subTitle = "用法2"
+        row.title = "Instance method call"
+        row.subTitle = "Usage 2"
         row.cell.addDownLine()
         row.cell.backgroundColor = .baseBGColor
         row.cell.accessoryType = .disclosureIndicator
         row.onSelected { (row) in
             
             let obj = SwiftMediator.shared.initObjc("TestObjc")
-            let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodReturn:", param: "参数:123")?.takeUnretainedValue()
+            let str = SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodReturn:", param: "Parameter:123")?.takeUnretainedValue()
             print("\(String(describing: str))")
             
         }
