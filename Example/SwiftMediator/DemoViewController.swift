@@ -18,6 +18,7 @@ class DemoViewController: TableViewController {
         super.viewDidLoad()
 
         if #available(iOS 13.0, *) {
+            ///SwiftUI示例
             let controller = UIHostingController(rootView:
                                                     SwiftUIView()
             )
@@ -25,7 +26,9 @@ class DemoViewController: TableViewController {
             addChild(controller)
             view.addSubview(controller.view)
             controller.didMove(toParent: self)
+            
         } else {
+            
             self.title = "路由示例"
             
             former.append(sectionFormer: sectionFormer1,
