@@ -26,41 +26,41 @@ class TestVC: ViewController {
         self.title = titleName
         self.view.backgroundColor = .random
         
-        let label = UILabel(). then { lab in
+        let label = UILabel().then { lab in
             lab.backgroundColor = .orange
             lab.numberOfLines = 0
             lab.text = "Received String:\(str!)--Received Int:\(num)"
             lab.textColor = .random
         }
-        view. addSubview(label)
+        view.addSubview(label)
         label.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(100)
             make.top.equalToSuperview().offset(200)
         }
         
-        let label2 = UILabel(). then { lab in
+        let label2 = UILabel().then { lab in
             lab.backgroundColor = .orange
             lab.numberOfLines = 0
             lab.text = "Dictionary received:\(String(describing: dic))--Int received:\(num)"
             lab.textColor = .random
         }
-        view. addSubview(label2)
+        view.addSubview(label2)
         label2.snp.makeConstraints { make in
             make.left.right.equalToSuperview()
             make.height.equalTo(100)
             make.top.equalToSuperview().offset(300)
         }
         
-        let button = UIButton(). then { btn in
+        let button = UIButton().then { btn in
             btn.backgroundColor = .random
             btn.setTitle("Close page", for: .normal)
             btn.addTouchUpInSideBtnAction { [weak self] sender in
                 
-                self?. goBack()
+                self?.goBack()
             }
         }
-        view. addSubview(button)
+        view.addSubview(button)
         button.snp.makeConstraints { make in
             make.left.equalToSuperview()
             make.width.height.equalTo(100)
