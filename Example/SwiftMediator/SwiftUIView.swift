@@ -153,6 +153,10 @@ struct SwiftUIView: View {
             } header: {
                 Text("instance method call")
             }
+            
+            Spacer()
+                .height(60)
+                .listRowBackground(Color.clear)
         }
     }
 }
