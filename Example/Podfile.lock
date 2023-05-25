@@ -24,9 +24,7 @@ PODS:
   - SwiftBrick/ViewFactory (2.3.8):
     - SwiftBrick/Extensions
     - SwiftBrick/Util
-  - SwiftButton (1.1.1):
-    - SnapKit
-  - SwiftMediator (1.1.8)
+  - SwiftMediator (1.2.0)
   - SwiftShow (0.7.6):
     - SwiftShow/Class (= 0.7.6)
   - SwiftShow/Class (0.7.6):
@@ -36,7 +34,6 @@ DEPENDENCIES:
   - SnapKit
   - Swift_Form
   - SwiftBrick
-  - SwiftButton
   - SwiftMediator (from `../`)
   - SwiftShow
 
@@ -45,7 +42,6 @@ SPEC REPOS:
     - SnapKit
     - Swift_Form
     - SwiftBrick
-    - SwiftButton
     - SwiftShow
 
 EXTERNAL SOURCES:
@@ -56,10 +52,9 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swift_Form: 2d4a3318f33540707a1173ee857233cd39acd961
   SwiftBrick: 05cf4fee475bd133db2b5e7f348e75025d339534
-  SwiftButton: 3f6c23719b4668ed0c092dbac9e0d7df48d83127
-  SwiftMediator: 89d18f47a37689d5c05a5a0dcea39753d77da274
+  SwiftMediator: f48d57387c7b7693989cab0762e3aac0b8c04b0c
   SwiftShow: 5cd3fa366dd87d330ab2a7c0cfee167ccc924a3b
 
-PODFILE CHECKSUM: 2a88fd30f75210c939987b4a8bf862b8b43d50bf
+PODFILE CHECKSUM: ca5aede2a6c4855f875f5ef2b750ee294af7daaa
 
 COCOAPODS: 1.12.1

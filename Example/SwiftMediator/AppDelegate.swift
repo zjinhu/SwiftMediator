@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftMediator
+import SwiftBrick
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

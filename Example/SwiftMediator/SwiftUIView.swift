@@ -27,7 +27,7 @@ struct SwiftUIView: View {
                                                                           "titleName": "present page 2",
                                                                           "num": 13,
                                                                           "dic":["a":12,"b":"hh100"]])
-                    SwiftMediator.shared.present(avc, needNav: false, modelStyle: 1)
+                    SwiftMediator.shared.present(avc, needNav: false, modelStyle: .popover)
                     
                 }
                 
@@ -59,6 +59,11 @@ struct SwiftUIView: View {
                     // self.navigationController?.pushViewController(avc!, animated: true)
                     SwiftMediator.shared.push(avc, animated: false)
                 }
+                
+                Text("Hello, World!")
+                    .onTapGesture {
+                        SwiftMediator.shared.push(Text("123"))
+                    }
                 
             } header: {
                 Text("Push")

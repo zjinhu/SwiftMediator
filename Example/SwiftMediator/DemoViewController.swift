@@ -133,7 +133,7 @@ class DemoViewController: TableViewController {
                                                                   "titleName": "present page 2",
                                                                   "num": 13,
                                                                   "dic":["a":12,"b":"hh100"]])
-            SwiftMediator.shared.present(avc, needNav: false, modelStyle: 1)
+            SwiftMediator.shared.present(avc, needNav: false)
             
         }
         return row

@@ -8,5 +8,4 @@ target 'Example' do
   pod 'Swift_Form'
   pod 'SwiftBrick'
   pod 'SwiftShow'
-  pod 'SwiftButton'
 end

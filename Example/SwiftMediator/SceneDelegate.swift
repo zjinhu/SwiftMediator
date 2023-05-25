@@ -20,6 +20,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         manager.scene(scene, willConnectTo: session, options: connectionOptions)
         guard let _ = (scene as? UIWindowScene) else { return }
+
+        // 设置按钮颜色
+        UINavigationBar.appearance().tintColor = .red
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
