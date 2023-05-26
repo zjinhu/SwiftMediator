@@ -185,7 +185,7 @@ URL routing jump Jump to distinguish between Push, present, and fullScreen, and 
                          dic: [String : Any]? = nil) -> NSObject?
 ```
 
-### Method call: Swift currently only supports simple parameter passing, and the OC version of [JHMediator](https://github.com/jackiehu/JHMediator) supports parameters such as closure Block
+### Method call: Support parameters such as closure Block, please refer to Demo for detailed usage
 
 ```swift
 /// Routing call instance object method: @objc must be marked Example: @objc class func qqqqq(_ name: String)

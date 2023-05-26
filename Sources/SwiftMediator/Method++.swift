@@ -7,7 +7,7 @@
 
 import Foundation
 
-//MARK:--routing execution method ///Swift reflection execution function has limited functions, OC method can pass block parameters (see https://github.com/jackiehu/JHMediator for OC routing middleware)
+//MARK:--routing execution method
 extension SwiftMediator {
     /// Routing call instance object method: @objc must be marked Example: @objc class func qqqqq(_ name: String)
     /// - Parameters:

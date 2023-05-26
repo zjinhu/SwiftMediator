@@ -180,7 +180,7 @@
 		E98DC8FB2578E76A812E0C94BA10E1B1 /* ConstraintDirectionalInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5ED69C80AF5C1DDA89667E19719333 /* ConstraintDirectionalInsets.swift */; };
 		EAF4C51093CA4DCA749D967716D57FA0 /* LabelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4642BD934B8EC795225FE681A2B3F0B2 /* LabelCell.swift */; };
 		EB947B1F0ACE504C2096C55B25D63E2B /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58E494521B23ABC0086F498141083A35 /* UserCell.swift */; };
-		EC42E8AD71AAD8EBC04C5425704BAC7F /* CurrentVC++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E51B3449F2A6545FE9DE95EFC0F03 /* CurrentVC++.swift */; };
+		EC42E8AD71AAD8EBC04C5425704BAC7F /* ViewController++.swift in Sources */ = {isa = PBXBuildFile; fileRef = 293E51B3449F2A6545FE9DE95EFC0F03 /* ViewController++.swift */; };
 		ECECFA24F34FE59F25CF87D86E8CCCE8 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B24C379E117290F42BECE8CEC6A9420 /* Haptic.swift */; };
 		ED04CB18D0418A65407C49EDD0DE240F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61AF63D95B16B818439A8C7C83AFCB50 /* Foundation.framework */; };
 		ED90AF0578ED1D9B3D3850D1237527C2 /* Shape++.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01F3C74E360143662D96BB24337281D /* Shape++.swift */; };
@@ -294,12 +294,12 @@
 		242A6137C1A3430D709C1161209C6367 /* Swift_Form.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Swift_Form.release.xcconfig; sourceTree = "<group>"; };
 		243410B9535472556EA4BB6DBC133A0D /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		2457BC05FB19571BC8E524EDE68EFC7D /* SnapKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SnapKit-dummy.m"; sourceTree = "<group>"; };
-		293E51B3449F2A6545FE9DE95EFC0F03 /* CurrentVC++.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CurrentVC++.swift"; path = "Sources/SwiftMediator/CurrentVC++.swift"; sourceTree = "<group>"; };
+		293E51B3449F2A6545FE9DE95EFC0F03 /* ViewController++.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ViewController++.swift"; path = "Sources/SwiftMediator/ViewController++.swift"; sourceTree = "<group>"; };
 		2A4741B3CB4B3937E0FD1C0E8BC042F2 /* Navigation++.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Navigation++.swift"; path = "Sources/SwiftMediator/Navigation++.swift"; sourceTree = "<group>"; };
 		2A7231E2B267978A66120FE005115239 /* ConstraintView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintView.swift; path = Sources/ConstraintView.swift; sourceTree = "<group>"; };
 		2FDC74E051288405B0EE2D1D6ECC2A66 /* BaseCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BaseCell.swift; path = Sources/SwiftyForm/Cells/BaseCell.swift; sourceTree = "<group>"; };
 		31C1D37707DFAA5E6A164BCC07834264 /* Pods-Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Example-Info.plist"; sourceTree = "<group>"; };
-		323A3AEF268427A98CEC8DA61F5BCDA4 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		323A3AEF268427A98CEC8DA61F5BCDA4 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		340B45180458BFB6244F848D5FE65B36 /* TextViewCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextViewCell.swift; path = Sources/SwiftyForm/Cells/TextViewCell.swift; sourceTree = "<group>"; };
 		34EB8E2DECCBD6FA41F835CCD2ACC088 /* SnapKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.debug.xcconfig; sourceTree = "<group>"; };
 		35C305D3797C284E6F5BAA1D3E6F9BF8 /* Pods-Example.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Example.modulemap"; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 		379EF08A13029F9BBEB00475B9800D6C /* PopView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopView.swift; path = Sources/SwiftShow/Show/PopView.swift; sourceTree = "<group>"; };
 		37DDF0019B758F342E364CF060D13EFC /* SwiftBrick */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftBrick; path = SwiftBrick.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		383076C6D15C752CA9DA677B56E863E9 /* UITableViewCellEx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UITableViewCellEx.swift; path = Sources/SwiftBrick/Extensions/UITableViewCellEx.swift; sourceTree = "<group>"; };
-		39A71E22B671F4AE43D9086447FE51DA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		39A71E22B671F4AE43D9086447FE51DA /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		3A1F7CEB36FF1591888AC7087152A9F5 /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Sources/Debugging.swift; sourceTree = "<group>"; };
 		3AB2A013D7A3E1492BC94E8903C9E1C6 /* SwiftShow-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftShow-Info.plist"; sourceTree = "<group>"; };
 		3B0846DEB26EE2236291DE18FABBE61E /* Section++.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Section++.swift"; path = "Sources/SwiftBrick/SwiftUI/SwiftUIX/Section++.swift"; sourceTree = "<group>"; };
@@ -402,7 +402,7 @@
 		99CD0EA01C45C951447443F595C0FA7C /* AvatarRowFormer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AvatarRowFormer.swift; path = Sources/SwiftyForm/Formers/AvatarRowFormer.swift; sourceTree = "<group>"; };
 		9C22111B31FCCED99A88637A3E6308C2 /* InlineDatePickerCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InlineDatePickerCell.swift; path = Sources/SwiftyForm/Cells/InlineDatePickerCell.swift; sourceTree = "<group>"; };
 		9C5ED69C80AF5C1DDA89667E19719333 /* ConstraintDirectionalInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDirectionalInsets.swift; path = Sources/ConstraintDirectionalInsets.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E2AE4590D2003CCB22B94D765348CBD /* AppStorageEx.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppStorageEx.swift; path = Sources/SwiftBrick/SwiftUI/AppStorageEx.swift; sourceTree = "<group>"; };
 		A34B711A683BAB6877AD62A248E8F19D /* SwiftUI++.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "SwiftUI++.swift"; path = "Sources/SwiftMediator/SwiftUI++.swift"; sourceTree = "<group>"; };
 		A3F8AB38AA6F124F69BFB4B406BEFC01 /* SwiftMediator.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftMediator.modulemap; sourceTree = "<group>"; };
@@ -419,7 +419,7 @@
 		ABA389D9A54720E0CA8624C1E0C3D0CB /* UserDefault.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = UserDefault.swift; path = Sources/SwiftBrick/Extensions/UserDefault.swift; sourceTree = "<group>"; };
 		AC881FE6BF887B9E4C83BCD234FF42DD /* SwiftMediator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftMediator.swift; path = Sources/SwiftMediator/SwiftMediator.swift; sourceTree = "<group>"; };
 		AF0C923D7EB588A3B8F6915E61600E15 /* Show.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Show.swift; path = Sources/SwiftShow/Show/Show.swift; sourceTree = "<group>"; };
-		AF40D2C661B926825F218A7D7320BD54 /* SwiftMediator.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = SwiftMediator.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		AF40D2C661B926825F218A7D7320BD54 /* SwiftMediator.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = SwiftMediator.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AFECBC24E09D0D25F822C27BD944AFD4 /* Pods-Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Example-frameworks.sh"; sourceTree = "<group>"; };
 		B0424E4060279E8D8DA18502155A1291 /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerRelatable.swift; path = Sources/ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
 		B45138496B85A072654D1D0F8EBBEDE5 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -563,7 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				F37D7690A11B79F401C28D31FC9882D7 /* AppDelegateMediator.swift */,
-				293E51B3449F2A6545FE9DE95EFC0F03 /* CurrentVC++.swift */,
+				293E51B3449F2A6545FE9DE95EFC0F03 /* ViewController++.swift */,
 				F8DC08D6EA3074560A4FAEF6F09BAD2B /* Init++.swift */,
 				EC4D26BDA000A0CF1D9FCE443D272DDC /* Method++.swift */,
 				91F6BE6E5BADEC2C37A4DDCD987F839A /* Model++.swift */,
@@ -633,7 +633,6 @@
 				2439BC08E1E066EFF281DD65D814E722 /* Class */,
 				E2BD883D37BC76A9B77E8B762E383E9F /* Support Files */,
 			);
-			name = SwiftShow;
 			path = SwiftShow;
 			sourceTree = "<group>";
 		};
@@ -679,7 +678,6 @@
 				D170F494E76FEBC075796B019D1C3F7E /* Util */,
 				8B794ED47CD8E596D4E1F6211B060D88 /* ViewFactory */,
 			);
-			name = SwiftBrick;
 			path = SwiftBrick;
 			sourceTree = "<group>";
 		};
@@ -811,7 +809,6 @@
 				DBE68A537A401CE14D74E80FB15A58EB /* UILayoutSupport+Extensions.swift */,
 				9EA06AD3B269F07D3B473751E7994434 /* Support Files */,
 			);
-			name = SnapKit;
 			path = SnapKit;
 			sourceTree = "<group>";
 		};
@@ -919,7 +916,6 @@
 				944E1B5EAF49C021E7DC93616C3C8CFC /* ViewFormer.swift */,
 				DC033209BC990A8EAF11146DD176CA46 /* Support Files */,
 			);
-			name = Swift_Form;
 			path = Swift_Form;
 			sourceTree = "<group>";
 		};
@@ -1370,7 +1366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDA19871F09EE52EA2F9628B82BDE371 /* AppDelegateMediator.swift in Sources */,
-				EC42E8AD71AAD8EBC04C5425704BAC7F /* CurrentVC++.swift in Sources */,
+				EC42E8AD71AAD8EBC04C5425704BAC7F /* ViewController++.swift in Sources */,
 				E3574B1E6F62920E144E1CE66B65A416 /* Init++.swift in Sources */,
 				34D3922CC825CCD553D1BEE8CF07D1E4 /* Method++.swift in Sources */,
 				9B576AE263BAA29850B6C298AC4BA715 /* Model++.swift in Sources */,

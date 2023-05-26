@@ -190,7 +190,7 @@ URL路由跳转 跳转区分Push、present、fullScreen，根据拆分URL的sche
                          dic: [String : Any]? = nil) -> NSObject?
 ```
 
-### 方法调用: swift当前仅支持简单参数传递，闭包Block等参数OC版本的[JHMediator](https://github.com/jackiehu/JHMediator)支持
+### 方法调用: 支持闭包Block等参数 ，详细用法请参考Demo
 
 ```swift
     /// 路由调用实例对象方法：必须标记@objc  例子： @objc class func qqqqq(_ name: String)

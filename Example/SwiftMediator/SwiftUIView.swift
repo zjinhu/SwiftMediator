@@ -126,6 +126,28 @@ struct SwiftUIView: View {
                     
                 }
                 
+                Button("block") {
+ 
+                    let completion: @convention(block) (Int) -> Void = { int in
+                        print("Completed \(int)")
+                    }
+                    
+                    SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodBlock:", param: completion)
+                     
+                   
+                }
+                
+                Button("blockParam") {
+ 
+                    let completion: @convention(block) (Int) -> Void = { int in
+                        print("Completed \(int)")
+                    }
+ 
+                    SwiftMediator.shared.callClassMethod(className: "TestClass", selName: "callMethodBlockWithParame:block:", param: "parameter: 123", otherParam: completion)
+                   
+                }
+                
+                
             } header: {
                 Text("Class method call")
             }
@@ -153,6 +175,28 @@ struct SwiftUIView: View {
                     let obj = SwiftMediator.shared.initObjc("TestObjc")
                     
                     SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethod", param: "parameter: 123")
+                }
+                
+                Button("block") {
+                    let obj = SwiftMediator.shared.initObjc("TestObjc")
+                    
+                    let completion: @convention(block) (Int) -> Void = { int in
+                        print("Completed \(int)")
+                    }
+                    
+                    SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodBlock:", param: completion)
+                   
+                }
+                
+                Button("blockParam") {
+                    let obj = SwiftMediator.shared.initObjc("TestObjc")
+                    
+                    let completion: @convention(block) (Int) -> Void = { int in
+                        print("Completed \(int)")
+                    }
+                    
+                    SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodBlockWithParame:block:", param: "parameter: 123", otherParam: completion)
+                   
                 }
                 
             } header: {

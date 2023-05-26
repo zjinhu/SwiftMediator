@@ -18,9 +18,16 @@ class TestObjc: NSObject {
     }
     
     @objc
-    func callMethodNoReturn(_ name: String){
+    func callMethodBlock(_ block: @escaping (Int) -> ()){
+        block(100)
+        Show.toast("Instance method passing parameters")
+    }
+    
+    @objc
+    func callMethodBlockWithParame(_ name: String, block: @escaping (Int) -> ()){
         print("instance method passing parameters\(name)")
-        Show.toast("Instance method passing parameters:\(name)")
+        block(100)
+        Show.toast("Instance method passing parameters")
     }
     
     @objc
