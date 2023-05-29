@@ -24,7 +24,19 @@ PODS:
   - SwiftBrick/ViewFactory (2.3.8):
     - SwiftBrick/Extensions
     - SwiftBrick/Util
-  - SwiftMediator (1.2.0)
+  - SwiftMediator (1.2.5):
+    - SwiftMediator/Delegate (= 1.2.5)
+    - SwiftMediator/Protocol (= 1.2.5)
+    - SwiftMediator/Target-Action (= 1.2.5)
+    - SwiftMediator/Tools (= 1.2.5)
+  - SwiftMediator/Delegate (1.2.5)
+  - SwiftMediator/Protocol (1.2.5):
+    - SwiftMediator/Delegate
+    - SwiftMediator/Tools
+  - SwiftMediator/Target-Action (1.2.5):
+    - SwiftMediator/Delegate
+    - SwiftMediator/Tools
+  - SwiftMediator/Tools (1.2.5)
   - SwiftShow (0.7.6):
     - SwiftShow/Class (= 0.7.6)
   - SwiftShow/Class (0.7.6):
@@ -52,7 +64,7 @@ SPEC CHECKSUMS:
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
   Swift_Form: 2d4a3318f33540707a1173ee857233cd39acd961
   SwiftBrick: 05cf4fee475bd133db2b5e7f348e75025d339534
-  SwiftMediator: f48d57387c7b7693989cab0762e3aac0b8c04b0c
+  SwiftMediator: fcac30d85fae977f2c25e6b469225ddfb43af632
   SwiftShow: 5cd3fa366dd87d330ab2a7c0cfee167ccc924a3b
 
 PODFILE CHECKSUM: ca5aede2a6c4855f875f5ef2b750ee294af7daaa

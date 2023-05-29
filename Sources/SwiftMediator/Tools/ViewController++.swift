@@ -9,22 +9,22 @@ import UIKit
 import Foundation
 
 //MARK:--Get the top UIViewController
-extension SwiftMediator {
+extension UIViewController {
     
     /// Get the top-level UINavigationController according to the window
-    public func currentNavigationController() -> UINavigationController? {
+    public static func currentNavigationController() -> UINavigationController? {
         currentViewController()?.navigationController
     }
     
     /// Get the top-level UIViewController according to the window
-    public func currentViewController() -> UIViewController? {
+    public static func currentViewController() -> UIViewController? {
         
         let vc = UIWindow.keyWindow?.rootViewController
         return getCurrentViewController(withCurrentVC: vc)
     }
     
     ///Get the top-level controller recursively according to the controller
-    private func getCurrentViewController(withCurrentVC VC : UIViewController?) -> UIViewController? {
+    private static func getCurrentViewController(withCurrentVC VC : UIViewController?) -> UIViewController? {
         
         if VC == nil {
             debugPrint("🌶： Could not find top level UIViewController")

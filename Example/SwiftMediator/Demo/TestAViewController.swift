@@ -1,28 +1,25 @@
 //
-//  TestVC.swift
-//  SwiftMediator
+//  TestAViewController.swift
+//  Example
 //
-//  Created by 张金虎 on 2019/12/5.
-//  Copyright © 2019 狄烨 . All rights reserved.
+//  Created by iOS on 2023/5/26.
 //
 
 import UIKit
+import Foundation
+import SwiftMediator
+import SafariServices
 import SwiftBrick
-import SwiftShow
-class TestVC: ViewController {
-    
-    @objc var titleName : String?
-    @objc var str : String?
-    @objc var num : Int = 0
-    @objc var dic : [String : Any]?
+class TestAViewController: ViewController {
+
+    var titleName : String?
+    var str : String?
+    var num : Int = 0
+    var dic : [String : Any]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.setBackgroundColor(.baseBGColor)
-        navigationController?.navigationBar.setLineHidden(hidden: true)
-        navigationController?.navigationBar.isTranslucent = false
-        
+
         self.title = titleName
         self.view.backgroundColor = .random
         
@@ -67,19 +64,29 @@ class TestVC: ViewController {
             make.height.equalTo(50)
             make.top.equalToSuperview().offset(60)
         }
-        
     }
-    
-    @objc
-    func callMethodReturn(_ name: String)->String{
-        print("instance method passing parameters\(name)")
-        Show.toast("Instance method passing parameters:\(name)")
-        return "Instance method return parameter: back"
+
+}
+
+extension TestAViewController: Routable {
+
+    // 返回一个路由协议的实例
+    static func initVC(params: [String : Any]) -> Routable {
+        let vc = TestAViewController()
+        vc.dic = params
+        return vc
     }
-    
+ 
+//    func openRouter(path: String) {
+//        debugPrint("\(path)")
+//    }
+}
+
+public extension Router {
     @objc
-    class func callClassM(){
-        print("Class method call")
-        Show.toast("Class method call")
+    func registerAController() -> RoutePath {
+        return RoutePath(path: "push://xxx",
+                          routerClass: TestAViewController.self)
     }
 }
+

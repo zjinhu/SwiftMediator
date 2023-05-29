@@ -43,7 +43,7 @@ extension SwiftMediator {
     /// The current UINavigationController pop to the previous page
     /// - Parameter animated: animated
     public func pop(animated: Bool = true){
-        guard let nav = currentNavigationController() else { return }
+        guard let nav = UIViewController.currentNavigationController() else { return }
         nav.popViewController(animated: animated)
     }
     
@@ -51,7 +51,7 @@ extension SwiftMediator {
     /// The current UINavigationController pop to the Root page
     /// - Parameter animated: animated
     public func popToRoot(animated: Bool = true){
-        guard let nav = currentNavigationController() else { return }
+        guard let nav = UIViewController.currentNavigationController() else { return }
         nav.popToRootViewController(animated: animated)
     }
     
@@ -60,7 +60,7 @@ extension SwiftMediator {
     /// - Returns: Bool
     @discardableResult
     public func popTo(_ vc: UIViewController) -> Bool {
-        guard let navigationController = currentNavigationController() else {
+        guard let navigationController = UIViewController.currentNavigationController() else {
             return false
         }
         
@@ -77,7 +77,7 @@ extension SwiftMediator {
     /// - Returns: Bool
     @discardableResult
     public func popTo(_ index: Int) -> Bool {
-        guard let navigationController = currentNavigationController(), index >= 0 else {
+        guard let navigationController = UIViewController.currentNavigationController(), index >= 0 else {
             return false
         }
         
@@ -93,7 +93,7 @@ extension SwiftMediator {
     /// - Returns: Bool
     @discardableResult
     public func popTo(_ navigationBarTitle: String) -> Bool {
-        guard let navigationController = currentNavigationController() else {
+        guard let navigationController = UIViewController.currentNavigationController() else {
             return false
         }
         
@@ -113,7 +113,7 @@ extension SwiftMediator {
         
         vc.hidesBottomBarWhenPushed = true
         guard let from = fromVC else {
-            currentNavigationController()?.pushViewController(vc, animated: animated)
+            UIViewController.currentNavigationController()?.pushViewController(vc, animated: animated)
             return
         }
         from.navigationController?.pushViewController(vc, animated: animated)
@@ -139,7 +139,7 @@ extension SwiftMediator {
     
     /// Remove all pages in the current UINavigationController stack
     fileprivate func removeNavigationStack() {
-        guard let navigationController = currentNavigationController() else {
+        guard let navigationController = UIViewController.currentNavigationController() else {
             return
         }
         navigationController.children.forEach({

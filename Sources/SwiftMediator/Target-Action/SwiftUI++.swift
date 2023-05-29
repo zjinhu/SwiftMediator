@@ -30,7 +30,7 @@ extension SwiftMediator {
     /// Set the current View to Navigation Root
     /// - Parameter view: View
     fileprivate func pushToView<V: View>(view: V, title: String? = nil) {
-        guard let navigationController = currentNavigationController() else {
+        guard let navigationController = UIViewController.currentNavigationController() else {
             return
         }
         

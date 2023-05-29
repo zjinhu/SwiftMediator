@@ -152,7 +152,7 @@ class DemoViewController: TableViewController {
                                                                   "titleName": "push page 1",
                                                                   "num": 13,
                                                                   "dic":["a":12,"b":"kk100"]])
-            SwiftMediator.shared.currentNavigationController()?.pushViewController(avc!, animated: true)
+            UIViewController.currentNavigationController()?.pushViewController(avc!, animated: true)
             
         }
         return row

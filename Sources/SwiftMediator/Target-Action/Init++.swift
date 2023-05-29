@@ -18,7 +18,7 @@ extension SwiftMediator {
     @discardableResult
     public func initVC(_ vcName: String,
                        moduleName: String? = nil,
-                       dic: [String : Any]? = nil) -> UIViewController?{
+                       dic: [String: Any]? = nil) -> UIViewController?{
         
         var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
         if let name = moduleName {

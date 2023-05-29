@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftMediator
 @available(iOS 13.0, *)
 struct SwiftUIView: View {
+ 
     var body: some View {
         List {
             Section {
@@ -41,7 +42,7 @@ struct SwiftUIView: View {
                                                                           "titleName": "push page 1",
                                                                           "num": 13,
                                                                           "dic":["a":12,"b":"kk100"]])
-                    SwiftMediator.shared.currentNavigationController()?.pushViewController(avc!, animated: true)
+                    UIViewController.currentNavigationController()?.pushViewController(avc!, animated: true)
                 }
                 
                 Button("default usage") {
@@ -82,6 +83,12 @@ struct SwiftUIView: View {
                 Button("present,full screen") {
                     SwiftMediator.shared.openUrl("app://fullScreen/Example/TestVC?str=zfzvzcv&titleName=fghdfhdgh")
                     
+                }
+                
+                
+                Button("Router") {
+ 
+                    Router.shared.open("push://xxx?str=fhfgdh&titleName=shdhdg&num=111")
                 }
                 
             } header: {
@@ -198,6 +205,7 @@ struct SwiftUIView: View {
                     SwiftMediator.shared.callObjcMethod(objc: obj!, selName: "callMethodBlockWithParame:block:", param: "parameter: 123", otherParam: completion)
                    
                 }
+
                 
             } header: {
                 Text("instance method call")

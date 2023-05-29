@@ -19,7 +19,7 @@ extension SwiftMediator {
     /// - animated: whether there is animation
     public func present(_ vcName: String,
                         moduleName: String? = nil,
-                        paramsDic:[String:Any]? = nil,
+                        paramsDic: [String: Any]? = nil,
                         fromVC: UIViewController? = nil,
                         needNav: Bool = false,
                         modelStyle: UIModalPresentationStyle = .fullScreen,
@@ -61,7 +61,7 @@ extension SwiftMediator {
         container.modalPresentationStyle = modelStyle
  
         guard let from = fromVC else {
-            currentViewController()?.present(container, animated: animated, completion: nil)
+            UIViewController.currentViewController()?.present(container, animated: animated, completion: nil)
             return
         }
         from.present(container, animated: animated, completion: nil)
@@ -69,7 +69,7 @@ extension SwiftMediator {
     
     /// Exit the current page
     public func dismissVC(animated: Bool = true) {
-        let current = currentViewController()
+        let current = UIViewController.currentViewController()
         if let viewControllers: [UIViewController] = current?.navigationController?.viewControllers {
             guard viewControllers.count <= 1 else {
                 current?.navigationController?.popViewController(animated: animated)
