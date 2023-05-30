@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		79C4269D830B013338B6F065 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032E85D6DD7FF75D30613CFE /* Pods_Example.framework */; };
-		8111DC6C2A20AB6B0061C897 /* TestAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8111DC6B2A20AB6B0061C897 /* TestAViewController.swift */; };
 		8167F3D92A11DE8700F1BE30 /* DelegateMediator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167F3D82A11DE8700F1BE30 /* DelegateMediator.swift */; };
 		8167F3DD2A11DE8E00F1BE30 /* TestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167F3DA2A11DE8E00F1BE30 /* TestVC.swift */; };
 		8167F3DE2A11DE8E00F1BE30 /* TestObjc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8167F3DB2A11DE8E00F1BE30 /* TestObjc.swift */; };
@@ -25,7 +24,6 @@
 /* Begin PBXFileReference section */
 		032E85D6DD7FF75D30613CFE /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		26958CBE9D5B43D6995FA780 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
-		8111DC6B2A20AB6B0061C897 /* TestAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TestAViewController.swift; path = Demo/TestAViewController.swift; sourceTree = "<group>"; };
 		8167F3D82A11DE8700F1BE30 /* DelegateMediator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DelegateMediator.swift; sourceTree = "<group>"; };
 		8167F3DA2A11DE8E00F1BE30 /* TestVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVC.swift; sourceTree = "<group>"; };
 		8167F3DB2A11DE8E00F1BE30 /* TestObjc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestObjc.swift; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 				819E404A2A0CD8CA00D1F708 /* AppDelegate.swift */,
 				819E404C2A0CD8CA00D1F708 /* SceneDelegate.swift */,
 				819E404E2A0CD8CA00D1F708 /* DemoViewController.swift */,
-				8111DC6B2A20AB6B0061C897 /* TestAViewController.swift */,
 				817E881B2A17665B0012D541 /* SwiftUIView.swift */,
 				817E881D2A1767E80012D541 /* Demo */,
 				819E40502A0CD8CA00D1F708 /* Main.storyboard */,
@@ -234,7 +231,6 @@
 			files = (
 				8167F3DD2A11DE8E00F1BE30 /* TestVC.swift in Sources */,
 				819E404F2A0CD8CA00D1F708 /* DemoViewController.swift in Sources */,
-				8111DC6C2A20AB6B0061C897 /* TestAViewController.swift in Sources */,
 				817E881C2A17665B0012D541 /* SwiftUIView.swift in Sources */,
 				8167F3D92A11DE8700F1BE30 /* DelegateMediator.swift in Sources */,
 				819E404B2A0CD8CA00D1F708 /* AppDelegate.swift in Sources */,

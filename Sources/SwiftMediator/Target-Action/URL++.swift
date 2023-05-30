@@ -21,15 +21,39 @@ extension SwiftMediator {
         
         switch url.host {
         case "push":
-            push(last, moduleName: first, paramsDic: url.queryDictionary)
+            push(last, moduleName: first, paramsDic: url.parameters)
         case "fullScreen":
-            present(last, moduleName: first, paramsDic: url.queryDictionary)
+            present(last, moduleName: first, paramsDic: url.parameters)
         default:
             if #available(iOS 13.0, *) {
-                present(last, moduleName: first, paramsDic: url.queryDictionary, modelStyle: .automatic)
+                present(last, moduleName: first, paramsDic: url.parameters, modelStyle: .automatic)
             } else {
-                present(last, moduleName: first, paramsDic: url.queryDictionary)
+                present(last, moduleName: first, paramsDic: url.parameters)
             }
         }
+    }
+}
+
+public extension URL {
+    
+    var parameters: [String: Any]? {
+        guard let components = URLComponents(url: self, resolvingAgainstBaseURL: true),
+        let queryItems = components.queryItems else { return nil }
+        return queryItems.reduce(into: [String: Any]()) { (result, item) in
+            result[item.name] = item.value
+        }
+    }
+
+}
+//MARK:--URL codec
+public extension String {
+    //Encode the original url into a valid url
+    func urlEncoded() -> String {
+        self.addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed) ?? ""
+    }
+    
+    //convert the encoded url back to the original url
+    func urlDecoded() -> String {
+        self.removingPercentEncoding ?? ""
     }
 }

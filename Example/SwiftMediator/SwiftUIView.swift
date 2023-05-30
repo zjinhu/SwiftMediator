@@ -84,13 +84,7 @@ struct SwiftUIView: View {
                     SwiftMediator.shared.openUrl("app://fullScreen/Example/TestVC?str=zfzvzcv&titleName=fghdfhdgh")
                     
                 }
-                
-                
-                Button("Router") {
  
-                    Router.shared.open("push://xxx?str=fhfgdh&titleName=shdhdg&num=111")
-                }
-                
             } header: {
                 Text("URL Jump")
             }

@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'SwiftMediator'
-  s.version          = '1.2.6'
+  s.version          = '1.3.0'
   s.summary          = '路由.'
  
   s.description      = <<-DESC
@@ -19,13 +19,6 @@ Pod::Spec.new do |s|
 
   s.frameworks   =  "UIKit","Foundation","SwiftUI" #支持的框架
 
- 
-  s.subspec 'Protocol' do |ss|
-    ss.dependency 'SwiftMediator/Delegate'
-    ss.dependency 'SwiftMediator/Tools'
-    ss.source_files = 'Sources/SwiftMediator/Protocol/**/*'
-  end
-
   s.subspec 'Target-Action' do |ss|
     ss.dependency 'SwiftMediator/Delegate'
     ss.dependency 'SwiftMediator/Tools'
@@ -39,6 +32,5 @@ Pod::Spec.new do |s|
   s.subspec 'Tools' do |ss|
     ss.source_files = 'Sources/SwiftMediator/Tools/**/*'
   end
-  
-  s.default_subspec = 'Target-Action'
+ 
 end

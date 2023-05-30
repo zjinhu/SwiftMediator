@@ -1,6 +1,6 @@
 {
   "name": "SwiftMediator",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "summary": "路由.",
   "description": "工具.",
   "homepage": "https://github.com/jackiehu/",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/jackiehu/SwiftMediator.git",
-    "tag": "1.2.5"
+    "tag": "1.2.6"
   },
   "platforms": {
     "ios": "11.0"
@@ -30,18 +30,6 @@
     "SwiftUI"
   ],
   "subspecs": [
-    {
-      "name": "Protocol",
-      "dependencies": {
-        "SwiftMediator/Delegate": [
-
-        ],
-        "SwiftMediator/Tools": [
-
-        ]
-      },
-      "source_files": "Sources/SwiftMediator/Protocol/**/*"
-    },
     {
       "name": "Target-Action",
       "dependencies": {
