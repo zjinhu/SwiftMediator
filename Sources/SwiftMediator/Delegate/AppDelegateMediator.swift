@@ -8,8 +8,13 @@
 
 import Foundation
 import UIKit
+#if canImport(CloudKit)
 import CloudKit
+#endif
+#if canImport(Intents)
 import Intents
+#endif
+
 /** Use case AppDelegateMediator usage
  1. Add in AppDelegate
  
