@@ -14,6 +14,7 @@ fadir()
 CUR_DIR=$(cd `dirname $0` && pwd -P ) 
 echo "当前文件路径 $CUR_DIR"
 cd $CUR_DIR
+cd ../
 
 echo "
 🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  🎉  "
@@ -108,7 +109,7 @@ echo "
 echo "
 🚀 即将发布 V $user_tags 版本的 $podspec 到 $repo, 更新: $update_message 
 "
-    fastlane release_pod t:$user_tags p:$podspec r:$repo m:$update_message
+    fastlane release_pod t:$user_tags p:$podspec r:$repo m:$update_message i:true
     ;; 
 
     0)
@@ -116,7 +117,7 @@ echo "
 echo "
 🚀 即将发布 V $user_tags 版本的 $podspec, 更新: $update_message 
 "
-    fastlane release_pod t:$user_tags p:$podspec m:$update_message
+    fastlane release_pod t:$user_tags p:$podspec m:$update_message i:true
     ;;
 esac
 

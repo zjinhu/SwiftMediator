@@ -5,57 +5,14 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: git_pull" time="53.066302">
+      <testcase classname="fastlane.lanes" name="0: git_pull" time="1.319556">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: ensure_git_branch" time="0.025916">
+      <testcase classname="fastlane.lanes" name="1: ensure_git_branch" time="0.090265">
         
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="02: version_bump_podspec" time="0.005939">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="03: git_add" time="0.058012">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="04: git_commit" time="0.103808">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="05: pod_lib_lint" time="35.658353">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="06: push_to_git_remote" time="2.209503">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="07: git_tag_exists" time="0.030259">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="08: add_git_tag" time="0.04354">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="09: push_git_tags" time="2.473417">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: pod_push" time="45.428859">
+          <failure message="/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:229:in `chdir&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:229:in `execute_action&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing&apos;&#10;Fastfile:21:in `block in parsing_binding&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/lane.rb:41:in `call&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:49:in `block in execute&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:45:in `chdir&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/runner.rb:45:in `execute&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/lane_manager.rb:46:in `cruise_lane&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/command_line_handler.rb:34:in `handle&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/commander-4.6.0/lib/commander/command.rb:187:in `call&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/commander-4.6.0/lib/commander/command.rb:157:in `run&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/commands_generator.rb:363:in `run&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/commands_generator.rb:43:in `start&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/gems/fastlane-2.225.0/bin/fastlane:23:in `&lt;top (required)&gt;&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/bin/fastlane:25:in `load&apos;&#10;/usr/local/Cellar/fastlane/2.225.0/libexec/bin/fastlane:25:in `&lt;main&gt;&apos;&#10;&#10;Git is not on a branch matching `main`. Current branch is `master`! Please ensure the repo is checked out to the correct branch." />
         
       </testcase>
     
