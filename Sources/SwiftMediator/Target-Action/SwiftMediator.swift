@@ -22,3 +22,20 @@ public class SwiftMediator {
     /// 私有初始化方法，确保单例唯一性 / Private initializer to ensure singleton uniqueness
     private init(){ }
 }
+
+extension SwiftMediator {
+    /// Resolve module namespace safely and avoid force-unwrapping bundle metadata.
+    func resolvedNamespace(_ moduleName: String?) -> String {
+        if let moduleName, !moduleName.isEmpty {
+            return moduleName
+        }
+        if let executable = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String, !executable.isEmpty {
+            return executable
+        }
+        if let bundleIdentifier = Bundle.main.bundleIdentifier,
+           let last = bundleIdentifier.split(separator: ".").last,
+           !last.isEmpty {
+            return String(last)
+        }
+        return ""
+    }

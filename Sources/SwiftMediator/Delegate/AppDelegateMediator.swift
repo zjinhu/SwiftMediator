@@ -47,6 +47,38 @@ public class AppDelegateManager : AppDelegateMediator {
     public init(delegates:[AppDelegateMediator]) {
         self.delegates = delegates
     }
+
+    /// Wrap completion so it can only be fired once when multiple delegates are registered.
+    private func makeOnceHandler<T>(_ handler: @escaping (T) -> Void) -> (T) -> Void {
+        let lock = NSLock()
+        var fired = false
+        return { value in
+            lock.lock()
+            guard !fired else {
+                lock.unlock()
+                return
+            }
+            fired = true
+            lock.unlock()
+            handler(value)
+        }
+    }
+
+    /// Wrap completion so it can only be fired once when multiple delegates are registered.
+    private func makeOnceHandler(_ handler: @escaping () -> Void) -> () -> Void {
+        let lock = NSLock()
+        var fired = false
+        return {
+            lock.lock()
+            guard !fired else {
+                lock.unlock()
+                return
+            }
+            fired = true
+            lock.unlock()
+            handler()
+        }
+    }
     
     //MARK:--- 启动初始化 / Launch Initialization ----------
     /// App 即将启动 / App will finish launching
@@ -132,7 +164,16 @@ public class AppDelegateManager : AppDelegateMediator {
     
     /// 收到远程通知 / Received remote notification
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        delegates.forEach { _ = $0.application?(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)}
+        let onceCompletion = makeOnceHandler(completionHandler)
+        var handled = false
+        for item in delegates {
+            if item.application?(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: onceCompletion) != nil {
+                handled = true
+            }
+        }
+        if !handled {
+            onceCompletion(.noData)
+        }
     }
     
     /// 处理 URL 打开请求 / Handle URL open request
@@ -150,12 +191,30 @@ public class AppDelegateManager : AppDelegateMediator {
     /// 后台数据获取 / Background fetch (deprecated in iOS 13)
     @available(iOS, introduced: 7.0, deprecated: 13.0, message: "Use a BGAppRefreshTask in the BackgroundTasks framework instead")
     public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        delegates.forEach { _ = $0.application?(application, performFetchWithCompletionHandler: completionHandler)}
+        let onceCompletion = makeOnceHandler(completionHandler)
+        var handled = false
+        for item in delegates {
+            if item.application?(application, performFetchWithCompletionHandler: onceCompletion) != nil {
+                handled = true
+            }
+        }
+        if !handled {
+            onceCompletion(.noData)
+        }
     }
     
     /// 后台 URL 会话事件处理 / Handle background URL session events
     public func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        delegates.forEach { _ = $0.application?(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)}
+        let onceCompletion = makeOnceHandler(completionHandler)
+        var handled = false
+        for item in delegates {
+            if item.application?(application, handleEventsForBackgroundURLSession: identifier, completionHandler: onceCompletion) != nil {
+                handled = true
+            }
+        }
+        if !handled {
+            onceCompletion()
+        }
     }
     
     //MARK:--- 状态恢复管理 / State Restoration Management ----------
@@ -214,8 +273,9 @@ public class AppDelegateManager : AppDelegateMediator {
     
     /// 继续用户活动 / Continue user activity
     public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        let onceRestoration = makeOnceHandler(restorationHandler)
         for item in delegates {
-            if let bool = item.application?(application, continue: userActivity, restorationHandler: restorationHandler), !bool {
+            if let bool = item.application?(application, continue: userActivity, restorationHandler: onceRestoration), !bool {
                 return false
             }
         }
@@ -234,13 +294,31 @@ public class AppDelegateManager : AppDelegateMediator {
     
     /// 处理主屏幕快速操作 / Handle home screen quick action
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
-        delegates.forEach { _ = $0.application?(application, performActionFor: shortcutItem, completionHandler: completionHandler)}
+        let onceCompletion = makeOnceHandler(completionHandler)
+        var handled = false
+        for item in delegates {
+            if item.application?(application, performActionFor: shortcutItem, completionHandler: onceCompletion) != nil {
+                handled = true
+            }
+        }
+        if !handled {
+            onceCompletion(false)
+        }
     }
     
     //MARK:--- WatchKit 交互 / WatchKit Interaction ----------
     /// 回复配对的 watchOS App 请求 / Reply to paired watchOS app request
     public func application(_ application: UIApplication, handleWatchKitExtensionRequest userInfo: [AnyHashable : Any]?, reply: @escaping ([AnyHashable : Any]?) -> Void) {
-        delegates.forEach { _ = $0.application?(application, handleWatchKitExtensionRequest: userInfo, reply: reply)}
+        let onceReply = makeOnceHandler(reply)
+        var handled = false
+        for item in delegates {
+            if item.application?(application, handleWatchKitExtensionRequest: userInfo, reply: onceReply) != nil {
+                handled = true
+            }
+        }
+        if !handled {
+            onceReply(nil)
+        }
     }
     
     //MARK:--- HealthKit 交互 / HealthKit Interaction ----------
@@ -269,7 +347,7 @@ public class AppDelegateManager : AppDelegateMediator {
                 return mask
             }
         }
-        return UIInterfaceOrientationMask()
+        return .all
     }
     
     /// 状态栏方向即将更改 / Status bar orientation will change

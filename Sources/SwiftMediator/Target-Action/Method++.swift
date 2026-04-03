@@ -48,11 +48,7 @@ extension SwiftMediator {
                                 moduleName: String? = nil,
                                 param: Any? = nil,
                                 otherParam: Any? = nil ) -> Unmanaged<AnyObject>?{
-        
-        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-        if let name = moduleName {
-            namespace = name
-        }
+        let namespace = resolvedNamespace(moduleName)
         let className = "\(namespace).\(className)"
         guard let cls: AnyObject? = NSClassFromString(className) else {
             return nil

@@ -24,11 +24,7 @@ extension SwiftMediator {
     public func initVC(_ vcName: String,
                        moduleName: String? = nil,
                        dic: [String: Any]? = nil) -> UIViewController?{
-        
-        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-        if let name = moduleName {
-            namespace = name
-        }
+        let namespace = resolvedNamespace(moduleName)
         
         let className = "\(namespace).\(vcName)"
         let cls: AnyClass? = NSClassFromString(className)
@@ -50,11 +46,7 @@ extension SwiftMediator {
     public func initObjc(_ objcName: String,
                          moduleName: String? = nil,
                          dic: [String : Any]? = nil) -> NSObject?{
-        
-        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-        if let name = moduleName {
-            namespace = name
-        }
+        let namespace = resolvedNamespace(moduleName)
         
         let className = "\(namespace).\(objcName)"
         let cls: AnyClass? = NSClassFromString(className)
@@ -76,11 +68,7 @@ extension SwiftMediator {
     public func initView(_ viewName: String,
                        moduleName: String? = nil,
                        dic: [String: Any]? = nil) -> UIView?{
-        
-        var namespace = Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
-        if let name = moduleName {
-            namespace = name
-        }
+        let namespace = resolvedNamespace(moduleName)
         
         let className = "\(namespace).\(viewName)"
         let cls: AnyClass? = NSClassFromString(className)

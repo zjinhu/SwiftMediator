@@ -11,6 +11,9 @@
 
 import UIKit
 import Foundation
+#if canImport(CloudKit)
+import CloudKit
+#endif
 
 /** 使用方式 / Usage:
  1. 在 SceneDelegate 中添加 / Add in SceneDelegate:
@@ -40,6 +43,22 @@ public class SceneDelegateManager : SceneDelegateMediator {
     /// - Parameter delegates: 代理对象数组 / Array of delegates
     public init(delegates:[SceneDelegateMediator]) {
         self.delegates = delegates
+    }
+
+    /// Wrap completion so it can only be fired once when multiple delegates are registered.
+    private func makeOnceHandler<T>(_ handler: @escaping (T) -> Void) -> (T) -> Void {
+        let lock = NSLock()
+        var fired = false
+        return { value in
+            lock.lock()
+            guard !fired else {
+                lock.unlock()
+                return
+            }
+            fired = true
+            lock.unlock()
+            handler(value)
+        }
     }
     
     /// Scene 即将连接 / Scene will connect to session
@@ -90,6 +109,61 @@ public class SceneDelegateManager : SceneDelegateMediator {
     /// Scene 处理 URL 打开 / Scene handle URL open
     public func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         delegates.forEach {_ = $0.scene?(scene, openURLContexts: URLContexts)}
+    }
+
+    /// Scene 更新坐标空间/方向/trait（iOS 26 起已废弃） / Scene updated coordinate space/orientation/traits (deprecated in iOS 26)
+    public func windowScene(_ windowScene: UIWindowScene,
+                            didUpdate previousCoordinateSpace: UICoordinateSpace,
+                            interfaceOrientation previousInterfaceOrientation: UIInterfaceOrientation,
+                            traitCollection previousTraitCollection: UITraitCollection) {
+        delegates.forEach {
+            _ = $0.windowScene?(
+                windowScene,
+                didUpdate: previousCoordinateSpace,
+                interfaceOrientation: previousInterfaceOrientation,
+                traitCollection: previousTraitCollection
+            )
+        }
+    }
+
+    /// Scene 已处理主屏快捷操作 / Scene handled home screen shortcut action
+    public func windowScene(_ windowScene: UIWindowScene,
+                            performActionFor shortcutItem: UIApplicationShortcutItem,
+                            completionHandler: @escaping (Bool) -> Void) {
+        let onceCompletion = makeOnceHandler(completionHandler)
+        var handled = false
+        for item in delegates {
+            if item.windowScene?(windowScene, performActionFor: shortcutItem, completionHandler: onceCompletion) != nil {
+                handled = true
+            }
+        }
+        if !handled {
+            onceCompletion(false)
+        }
+    }
+
+#if canImport(CloudKit)
+    /// Scene 接受 CloudKit 分享 / Scene accepted CloudKit share invitation
+    public func windowScene(_ windowScene: UIWindowScene, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
+        delegates.forEach { _ = $0.windowScene?(windowScene, userDidAcceptCloudKitShareWith: cloudKitShareMetadata) }
+    }
+#endif
+
+    /// Scene 几何信息更新（iOS 26+） / Scene effective geometry updated (iOS 26+)
+    @available(iOS 26.0, *)
+    public func windowScene(_ windowScene: UIWindowScene, didUpdateEffectiveGeometry previousEffectiveGeometry: UIWindowScene.Geometry) {
+        delegates.forEach { _ = $0.windowScene?(windowScene, didUpdateEffectiveGeometry: previousEffectiveGeometry) }
+    }
+
+    /// Scene 窗口控制样式（iOS 26+） / Preferred windowing control style for scene (iOS 26+)
+    @available(iOS 26.0, *)
+    public func preferredWindowingControlStyle(for windowScene: UIWindowScene) -> UIWindowScene.WindowingControlStyle {
+        for item in delegates {
+            if let style = item.preferredWindowingControlStyle?(for: windowScene) {
+                return style
+            }
+        }
+        return .automatic
     }
     
     /// 获取状态恢复活动 / Get state restoration activity

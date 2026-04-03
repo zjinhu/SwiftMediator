@@ -88,6 +88,7 @@ extension SwiftMediator {
         if index < navigationController.children.count - 1{
             let vc = navigationController.children[index]
             navigationController.popToViewController(vc, animated: true)
+            return true
         }
         return false
     }
@@ -163,7 +164,15 @@ public extension NSObject {
     func getModuleName() -> String{
         let name = type(of: self).description()
         guard let module : String = name.components(separatedBy: ".").first else {
-            return Bundle.main.infoDictionary!["CFBundleExecutable"] as! String
+            if let executable = Bundle.main.object(forInfoDictionaryKey: "CFBundleExecutable") as? String, !executable.isEmpty {
+                return executable
+            }
+            if let bundleIdentifier = Bundle.main.bundleIdentifier,
+               let last = bundleIdentifier.split(separator: ".").last,
+               !last.isEmpty {
+                return String(last)
+            }
+            return ""
         }
         return module
     }
