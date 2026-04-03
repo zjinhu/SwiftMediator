@@ -39,3 +39,4 @@ extension SwiftMediator {
         }
         return ""
     }
+}
