@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# 计时
+SECONDS=0
+# 获取工程根目录
+
+fadir()  
+{  
+    local this_dir=`pwd`  
+    local child_dir="$1" 
+    dirname "$child_dir" 
+    cd $this_dir  
+} 
+CUR_DIR=$(cd `dirname $0` && pwd -P ) 
+echo "当前文件路径 $CUR_DIR"
+cd $CUR_DIR
+cd ../
+
+# 退出时遇到错误即停止执行
+set -e
+
+# 提示输入版本号
+read -p "请输入新版本号（如 1.0.0）: " VERSION
+
+# 检查是否为空
+if [[ -z "$VERSION" ]]; then
+  echo "❌ 版本号不能为空"
+  exit 1
+fi
+
+# 提示输入更新说明
+read -p "请输入更新内容: " MESSAGE
+
+if [[ -z "$MESSAGE" ]]; then
+  echo "❌ 更新说明不能为空"
+  exit 1
+fi
+
+# 确认当前分支是 master
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD)
+
+if [[ "$CURRENT_BRANCH" != "master" ]]; then
+  echo "❌ 当前分支为 $CURRENT_BRANCH，请切换到 master 分支"
+  exit 1
+fi
+
+# 拉取 tags
+git pull --tags
+
+# 添加所有改动
+git add .
+
+# 提交更新说明
+git commit -m "$MESSAGE"
+
+# 推送代码
+git push origin master
+
+# 检查 tag 是否已存在
+if git rev-parse "refs/tags/$VERSION" >/dev/null 2>&1; then
+  echo "⚠️ 发现已存在 tag: $VERSION，正在删除旧 tag"
+  git tag -d "$VERSION"
+  git push origin ":refs/tags/$VERSION"
+fi
+
+# 添加新的 tag
+git tag "$VERSION"
+
+# 推送 tag
+git push origin "$VERSION"
+
+echo "✅ 发布完成：版本号 $VERSION"
+exit

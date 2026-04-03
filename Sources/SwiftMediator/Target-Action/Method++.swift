@@ -4,17 +4,22 @@
 //
 //  Created by iOS on 2023/5/25.
 //
+//  方法路由调用扩展 / Method Routing Invocation Extension
+//  支持实例方法和类方法的动态调用
+//  Supports dynamic invocation of instance methods and class methods
 
 import Foundation
 
-//MARK:--routing execution method
+//MARK:--方法路由调用 / Method Routing Invocation--Swift
 extension SwiftMediator {
-    /// Routing call instance object method: @objc must be marked Example: @objc class func qqqqq(_ name: String)
+    /// 路由调用实例对象方法 / Route and invoke instance method
+    /// - 注意: 方法必须标记 @objc，例如: @objc func methodName(_ param: Any) / Method must be marked @objc
     /// - Parameters:
-    /// - objc: initialized object
-    /// - selName: method name
-    /// - param: parameter 1
-    /// - otherParam: parameter 2
+    ///   - objc: 已初始化的对象实例 / Initialized object instance
+    ///   - selName: 方法名 / Method name
+    ///   - param: 第一个参数 / First parameter
+    ///   - otherParam: 第二个参数 / Second parameter
+    /// - Returns: 方法执行结果 / Execution result, or nil if method not found
     @discardableResult
     public func callObjcMethod(objc: AnyObject,
                                selName: String,
@@ -28,13 +33,15 @@ extension SwiftMediator {
         return objc.perform(sel, with: param, with: otherParam)
     }
     
-    /// Routing call class method: @objc must be marked Example: @objc func qqqqq(_ name: String)
+    /// 路由调用类方法 / Route and invoke class method
+    /// - 注意: 方法必须标记 @objc，例如: @objc class func methodName(_ param: Any) / Method must be marked @objc
     /// - Parameters:
-    /// - moduleName: component name
-    /// - className: class name
-    /// - selName: method name
-    /// - param: parameter 1
-    /// - otherParam: parameter 2
+    ///   - className: 类名 / Class name
+    ///   - selName: 方法名 / Method name
+    ///   - moduleName: 组件名称 / Component bundle name
+    ///   - param: 第一个参数 / First parameter
+    ///   - otherParam: 第二个参数 / Second parameter
+    /// - Returns: 方法执行结果 / Execution result, or nil if class or method not found
     @discardableResult
     public func callClassMethod(className: String,
                                 selName: String,
@@ -58,27 +65,5 @@ extension SwiftMediator {
         
         return cls?.perform(sel, with: param, with: otherParam)
     }
-    
-    //    /// 路由调用类方法，仅支持单一参数或者无参数，样式：@objc class func qqqqq(_ name: String)
-    //    /// - Parameters:
-    //    ///   - moduleName: 组件名称
-    //    ///   - objName: 类名称
-    //    ///   - selName: 方法名
-    //    ///   - param: 参数
-    //    func callClassMethod(moduleName: String, objName: String, selName: String, param: Any? = nil ){
-    //        let className = "\(moduleName).\(objName)"
-    //        let cls: AnyClass? = NSClassFromString(className)
-    //
-    //        let sel = NSSelectorFromString(selName)
-    //
-    //        guard let method = class_getClassMethod(cls, sel) else {
-    //            return
-    //        }
-    //        let imp = method_getImplementation(method)
-    //
-    //        typealias Function = @convention(c) (AnyObject, Selector, Any?) -> Void
-    //        let function = unsafeBitCast(imp, to: Function.self)
-    //        return function(cls!, sel, param)
-    //    }
     
 }

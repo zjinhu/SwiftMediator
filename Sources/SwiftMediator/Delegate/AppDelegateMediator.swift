@@ -5,6 +5,9 @@
 //  Created by iOS on 2021/11/10.
 //  Copyright © 2021 狄烨 . All rights reserved.
 //
+//  AppDelegate 生命周期解耦中介 / AppDelegate Lifecycle Decoupling Mediator
+//  支持将 AppDelegate 的代理方法分发到多个模块
+//  Supports distributing AppDelegate delegate methods to multiple modules
 
 import Foundation
 import UIKit
@@ -15,34 +18,38 @@ import CloudKit
 import Intents
 #endif
 
-/** Use case AppDelegateMediator usage
- 1. Add in AppDelegate
+/** 使用方式 / Usage:
+ 1. 在 AppDelegate 中添加 / Add in AppDelegate:
  
- lazy var manager: AppDelegateManager = {
- return AppDelegateManager.init(delegates: [AppDe.init(window)])
- }()
+    lazy var manager: AppDelegateManager = {
+        return AppDelegateManager.init(delegates: [AppDe.init(window)])
+    }()
  
- 2. Add a hook to the corresponding proxy method
- func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
- manager. application(application, didFinishLaunchingWithOptions: launchOptions)
- }
+ 2. 在对应代理方法中添加钩子 / Add hook to corresponding delegate method:
+ 
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        manager.application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
  */
 
-//MARK:--AppDelegate decoupling
+//MARK:--AppDelegate 解耦 / AppDelegate Decoupling--Swift
+/// AppDelegate 代理协议类型别名 / AppDelegate delegate protocol typealias
 public typealias AppDelegateMediator = UIResponder & UIApplicationDelegate
 
+/// AppDelegate 代理管理器，负责分发代理方法到多个模块 / AppDelegate proxy manager, responsible for distributing delegate methods to multiple modules
 public class AppDelegateManager : AppDelegateMediator {
     
+    /// 代理对象数组 / Array of delegate objects
     private let delegates : [AppDelegateMediator]
     
-    /// The hook needs to be initialized in the form of an array
-    /// - Parameter delegates: Array of hooks
+    /// 初始化方法，需传入代理对象数组 / Initializer, requires an array of delegate objects
+    /// - Parameter delegates: 代理对象数组 / Array of delegates
     public init(delegates:[AppDelegateMediator]) {
         self.delegates = delegates
     }
     
-    //MARK:--- 启动 初始化 ----------
-    /// 即将启动
+    //MARK:--- 启动初始化 / Launch Initialization ----------
+    /// App 即将启动 / App will finish launching
     @discardableResult
     public func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
@@ -54,7 +61,7 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    /// 启动完成
+    /// App 启动完成 / App did finish launching
     @discardableResult
     public func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         for item in delegates {
@@ -65,73 +72,72 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    //MARK:--- 程序状态更改和系统事件 ----------
-    /// 即将过渡到前台
+    //MARK:--- 程序状态更改和系统事件 / App State Changes and System Events ----------
+    /// App 即将过渡到前台 / App will enter foreground
     public func applicationWillEnterForeground(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationWillEnterForeground?(application)}
     }
     
-    /// 过渡到活动状态
+    /// App 过渡到活动状态 / App did become active
     public func applicationDidBecomeActive(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationDidBecomeActive?(application)}
     }
     
-    /// 即将进入非活动状态，在此期间，App不接收消息或事件
-    /// 如:来电话
+    /// App 即将进入非活动状态 / App will resign active
+    /// 例如：来电时 / e.g., when receiving a phone call
     public func applicationWillResignActive(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationWillResignActive?(application)}
     }
     
-    /// 已过渡到后台
+    /// App 已过渡到后台 / App did enter background
     public func applicationDidEnterBackground(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationDidEnterBackground?(application)}
     }
     
-    /// 内存警告
+    /// 收到内存警告 / Received memory warning
     public func applicationDidReceiveMemoryWarning(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationDidReceiveMemoryWarning?(application)}
     }
     
-    /// App 即将终止
+    /// App 即将终止 / App will terminate
     public func applicationWillTerminate(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationWillTerminate?(application)}
     }
     
-    /// 时间发生重大变化
+    /// 时间发生重大变化 / Significant time change occurred
     public func applicationSignificantTimeChange(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationSignificantTimeChange?(application)}
     }
     
-    /// 受保护的文件已经可用
+    /// 受保护的文件已可用 / Protected data did become available
     public func applicationProtectedDataDidBecomeAvailable(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationProtectedDataDidBecomeAvailable?(application)}
     }
     
-    /// 受保护的文件即将变为不可用
+    /// 受保护的文件即将不可用 / Protected data will become unavailable
     public func applicationProtectedDataWillBecomeUnavailable(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationProtectedDataWillBecomeUnavailable?(application)}
     }
     
-    //MARK:--- 处理远程通知注册 ----------
-    /// 该App已成功注册Apple推送通知服务
+    //MARK:--- 远程通知注册 / Remote Notification Registration ----------
+    /// 成功注册 Apple 推送通知服务 / Successfully registered for Apple push notifications
     public func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         delegates.forEach { _ = $0.application?(application, didRegisterForRemoteNotificationsWithDeviceToken: deviceToken)}
     }
     
-    /// Apple推送通知服务无法成功完成注册过程时
+    /// 注册远程通知失败 / Failed to register for remote notifications
     public func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         delegates.forEach { _ = $0.application?(application, didFailToRegisterForRemoteNotificationsWithError: error)}
     }
     
-    /// 已到达远程通知，表明有数据要提取
+    /// 收到远程通知 / Received remote notification
     public func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, didReceiveRemoteNotification: userInfo, fetchCompletionHandler: completionHandler)}
     }
     
-    /// 打开URL指定的资源
+    /// 处理 URL 打开请求 / Handle URL open request
     @discardableResult
     public func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        //delegates.forEach { _ = $0.application?(app, open: url, options: options)}
         for item in delegates {
             if let bool = item.application?(app, open: url, options: options), !bool {
                 return false
@@ -140,20 +146,20 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    //MARK:--- 在后台下载数据 ----------
-    /// 如果有数据要下载，它可以开始获取操作
+    //MARK:--- 后台数据下载 / Background Data Download ----------
+    /// 后台数据获取 / Background fetch (deprecated in iOS 13)
     @available(iOS, introduced: 7.0, deprecated: 13.0, message: "Use a BGAppRefreshTask in the BackgroundTasks framework instead")
     public func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         delegates.forEach { _ = $0.application?(application, performFetchWithCompletionHandler: completionHandler)}
     }
     
-    /// 与URL会话相关的事件正在等待处理
+    /// 后台 URL 会话事件处理 / Handle background URL session events
     public func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
         delegates.forEach { _ = $0.application?(application, handleEventsForBackgroundURLSession: identifier, completionHandler: completionHandler)}
     }
     
-    //MARK:--- 管理App状态恢复 ----------
-    /// 是否应该保留App的状态。
+    //MARK:--- 状态恢复管理 / State Restoration Management ----------
+    /// 是否应保存 App 状态 / Whether app state should be saved
     @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldSaveSecureApplicationState: instead")
     public func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
         for item in delegates {
@@ -164,7 +170,7 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    /// 是否应恢复App保存的状态信息
+    /// 是否应恢复 App 状态 / Whether app state should be restored
     @available(iOS, introduced: 6.0, deprecated: 13.2, message: "Use application:shouldRestoreSecureApplicationState: instead")
     public func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
         for item in delegates {
@@ -175,7 +181,7 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    /// 提供指定的视图控制器
+    /// 提供指定视图控制器 / Provide view controller with restoration identifier
     public func application(_ application: UIApplication, viewControllerWithRestorationIdentifierPath identifierComponents: [String], coder: NSCoder) -> UIViewController? {
         for item in delegates {
             if let vc = item.application?(application, viewControllerWithRestorationIdentifierPath: identifierComponents, coder: coder) {
@@ -185,18 +191,18 @@ public class AppDelegateManager : AppDelegateMediator {
         return nil
     }
     
-    /// 在状态保存过程开始时保存任何高级状态信息
+    /// 状态保存 / State will encode restorable state
     public func application(_ application: UIApplication, willEncodeRestorableStateWith coder: NSCoder) {
         delegates.forEach { _ = $0.application?(application, willEncodeRestorableStateWith: coder)}
     }
     
-    /// 在状态恢复过程中恢复任何高级状态信息
+    /// 状态恢复 / State did decode restorable state
     public func application(_ application: UIApplication, didDecodeRestorableStateWith coder: NSCoder) {
         delegates.forEach { _ = $0.application?(application, didDecodeRestorableStateWith: coder)}
     }
     
-    //MARK:--- 持续的用户活动和处理快速操作 ----------
-    /// 您的App是否负责在延续活动花费的时间超过预期时通知用户
+    //MARK:--- 用户活动与快速操作 / User Activities and Quick Actions ----------
+    /// 是否负责通知用户活动超时 / Whether app is responsible for notifying user of activity timeout
     public func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
         for item in delegates {
             if let bool = item.application?(application, willContinueUserActivityWithType: userActivityType), !bool {
@@ -206,7 +212,7 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    /// 可以使用继续活动的数据
+    /// 继续用户活动 / Continue user activity
     public func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         for item in delegates {
             if let bool = item.application?(application, continue: userActivity, restorationHandler: restorationHandler), !bool {
@@ -216,37 +222,36 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    /// 活动已更新
+    /// 用户活动已更新 / User activity did update
     public func application(_ application: UIApplication, didUpdate userActivity: NSUserActivity) {
         delegates.forEach { _ = $0.application?(application, didUpdate: userActivity)}
     }
     
-    /// 活动无法继续
+    /// 用户活动继续失败 / User activity failed to continue
     public func application(_ application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: Error) {
         delegates.forEach { _ = $0.application?(application, didFailToContinueUserActivityWithType: userActivityType, error: error)}
     }
     
-    /// 当用户为您的应用选择主屏幕快速操作时调用，除非您在启动方法中截获了交互
+    /// 处理主屏幕快速操作 / Handle home screen quick action
     public func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
         delegates.forEach { _ = $0.application?(application, performActionFor: shortcutItem, completionHandler: completionHandler)}
     }
     
-    //MARK:--- 与WatchKit交互 ----------
-    /// 回复配对的watchOSApp的请求
+    //MARK:--- WatchKit 交互 / WatchKit Interaction ----------
+    /// 回复配对的 watchOS App 请求 / Reply to paired watchOS app request
     public func application(_ application: UIApplication, handleWatchKitExtensionRequest userInfo: [AnyHashable : Any]?, reply: @escaping ([AnyHashable : Any]?) -> Void) {
         delegates.forEach { _ = $0.application?(application, handleWatchKitExtensionRequest: userInfo, reply: reply)}
     }
     
-    //MARK:--- 与HealthKit交互 ----------
-    /// 当应用应该要求用户访问他或她的HealthKit数据时调用
+    //MARK:--- HealthKit 交互 / HealthKit Interaction ----------
+    /// 请求健康数据授权 / Request health data authorization
     public func applicationShouldRequestHealthAuthorization(_ application: UIApplication) {
         delegates.forEach { _ = $0.applicationShouldRequestHealthAuthorization?(application)}
     }
     
-    //MARK:--- 不允许指定的应用扩展类型 ----------
-    /// 要求代理授予使用基于指定扩展点标识符的应用扩展的权限
-    /// 如禁用第三方输入法 Custom keyboard，当启动输入法时会调用
-    /// iOS 8系统有6个支持扩展的系统区域，分别是Today、Share、Action、Photo Editing、Storage Provider、Custom keyboard。支持扩展的系统区域也被称为扩展点。
+    //MARK:--- 应用扩展管理 / App Extension Management ----------
+    /// 是否允许指定扩展点 / Whether to allow specified extension point
+    /// 例如：禁用第三方输入法 / e.g., disable third-party keyboards
     public func application(_ application: UIApplication, shouldAllowExtensionPointIdentifier extensionPointIdentifier: UIApplication.ExtensionPointIdentifier) -> Bool {
         for item in delegates {
             if let bool = item.application?(application, shouldAllowExtensionPointIdentifier: extensionPointIdentifier), !bool {
@@ -256,8 +261,8 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    //MARK:--- 管理界面 ----------
-    /// 询问接口方向，以用于指定窗口中的视图控制器
+    //MARK:--- 界面管理 / Interface Management ----------
+    /// 支持的界面方向 / Supported interface orientations for window
     public func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         for item in delegates {
             if let mask = item.application?(application, supportedInterfaceOrientationsFor: window) {
@@ -267,41 +272,44 @@ public class AppDelegateManager : AppDelegateMediator {
         return UIInterfaceOrientationMask()
     }
     
-    /// 当状态栏的界面方向即将更改时
+    /// 状态栏方向即将更改 / Status bar orientation will change
     @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, willChangeStatusBarOrientation newStatusBarOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         delegates.forEach { _ = $0.application?(application, willChangeStatusBarOrientation: newStatusBarOrientation, duration: duration)}
     }
     
-    /// 当状态栏的界面方向发生变化时
+    /// 状态栏方向已更改 / Status bar orientation did change
     @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation) {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarOrientation: oldStatusBarOrientation)}
     }
     
-    /// 当状态栏的Frame即将更改时
+    /// 状态栏 Frame 即将更改 / Status bar frame will change
     @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, willChangeStatusBarFrame newStatusBarFrame: CGRect) {
         delegates.forEach { _ = $0.application?(application, willChangeStatusBarFrame: newStatusBarFrame)}
     }
     
-    /// 当状态栏的Frame更改时
+    /// 状态栏 Frame 已更改 / Status bar frame did change
     @available(iOS, introduced: 2.0, deprecated: 13.0, message: "Use viewWillTransitionToSize:withTransitionCoordinator: instead.")
     public func application(_ application: UIApplication, didChangeStatusBarFrame oldStatusBarFrame: CGRect) {
         delegates.forEach { _ = $0.application?(application, didChangeStatusBarFrame: oldStatusBarFrame)}
     }
     
+    /// 配置 Scene 连接 / Configure scene connection
     @available(iOS 13.0, *)
     public func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         delegates.forEach { _ = $0.application?(application, configurationForConnecting: connectingSceneSession,options: options)}
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
+    /// Scene 会话已丢弃 / Scene session did discard
     @available(iOS 13.0, *)
     public func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         delegates.forEach { _ = $0.application?(application, didDiscardSceneSessions: sceneSessions)}
     }
     
+    /// 是否应保存安全应用状态 / Whether secure app state should be saved
     @available(iOS 13.2, *)
     public func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool{
         for item in delegates {
@@ -312,6 +320,7 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
+    /// 是否应恢复安全应用状态 / Whether secure app state should be restored
     @available(iOS 13.2, *)
     public func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool{
         for item in delegates {
@@ -321,8 +330,9 @@ public class AppDelegateManager : AppDelegateMediator {
         }
         return true
     }
-    //MARK:--- 处理SiriKit意图 ----------
-    /// 处理指定的SiriKit意图
+    
+    //MARK:--- SiriKit 意图处理 / SiriKit Intent Handling ----------
+    /// 处理 SiriKit 意图 / Handle SiriKit intent
     @available(iOS 14.0, *)
     public func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any?{
         
@@ -334,6 +344,7 @@ public class AppDelegateManager : AppDelegateMediator {
         return nil
     }
     
+    /// 是否应自动本地化快捷键命令 / Whether key commands should be automatically localized
     @available(iOS 15.0, *)
     public func applicationShouldAutomaticallyLocalizeKeyCommands(_ application: UIApplication) -> Bool{
         for item in delegates {
@@ -344,10 +355,9 @@ public class AppDelegateManager : AppDelegateMediator {
         return true
     }
     
-    //MARK:--- 处理CloudKit ----------
-    /// App可以访问CloudKit中的共享信息
+    //MARK:--- CloudKit 共享 / CloudKit Sharing ----------
+    /// 用户接受 CloudKit 共享 / User accepted CloudKit share
     public func application(_ application: UIApplication, userDidAcceptCloudKitShareWith cloudKitShareMetadata: CKShare.Metadata) {
         delegates.forEach { _ = $0.application?(application, userDidAcceptCloudKitShareWith: cloudKitShareMetadata)}
     }
 }
-//解耦方案参考https://juejin.im/post/5bd0259d5188251a29719086#comment

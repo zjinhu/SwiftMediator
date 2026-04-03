@@ -1,80 +1,98 @@
 //
 //  SceneDelegateMediator.swift
-//  UIMediator
+//  SwiftMediator
 //
 //  Created by iOS on 2023/5/9.
 //  Copyright © 2023 狄烨 . All rights reserved.
 //
+//  SceneDelegate 生命周期解耦中介 / SceneDelegate Lifecycle Decoupling Mediator
+//  支持将 SceneDelegate 的代理方法分发到多个模块（iOS 13+）
+//  Supports distributing SceneDelegate delegate methods to multiple modules (iOS 13+)
+
 import UIKit
 import Foundation
-/** Use case SceneDelegateMediator usage
- 1. Add in SceneDelegate
- lazy var manager: SceneDelegateManager = {
- return SceneDelegateManager([SceneDelegate(window)])
- }()
+
+/** 使用方式 / Usage:
+ 1. 在 SceneDelegate 中添加 / Add in SceneDelegate:
  
- 2. Add a hook to the corresponding proxy method
- _ = manager. scene(scene, willConnectTo: session, options: connectionOptions)
+    lazy var manager: SceneDelegateManager = {
+        return SceneDelegateManager([SceneDelegate(window)])
+    }()
+ 
+ 2. 在对应代理方法中添加钩子 / Add hook to corresponding delegate method:
+ 
+    _ = manager.scene(scene, willConnectTo: session, options: connectionOptions)
  */
 
-//MARK:--SceneDelegate decoupling
+//MARK:--SceneDelegate 解耦 / SceneDelegate Decoupling--Swift
+/// SceneDelegate 代理协议类型别名 / SceneDelegate delegate protocol typealias
 @available(iOS 13.0, *)
 public typealias SceneDelegateMediator = UIResponder & UIWindowSceneDelegate
 
+/// SceneDelegate 代理管理器，负责分发代理方法到多个模块 / SceneDelegate proxy manager, responsible for distributing delegate methods to multiple modules
 @available(iOS 13.0, *)
 public class SceneDelegateManager : SceneDelegateMediator {
     
+    /// 代理对象数组 / Array of delegate objects
     private let delegates : [SceneDelegateMediator]
     
-    /// The hook needs to be initialized in the form of an array
-    /// - Parameter delegates: Array of hooks
+    /// 初始化方法，需传入代理对象数组 / Initializer, requires an array of delegate objects
+    /// - Parameter delegates: 代理对象数组 / Array of delegates
     public init(delegates:[SceneDelegateMediator]) {
         self.delegates = delegates
     }
     
-    /// 用法同didFinishLaunchingWithOptions
+    /// Scene 即将连接 / Scene will connect to session
+    /// 用法同 didFinishLaunchingWithOptions / Similar to didFinishLaunchingWithOptions
     /// - Parameters:
-    ///   - scene: scene
-    ///   - session: session
-    ///   - connectionOptions: connectionOptions
+    ///   - scene: 场景对象 / Scene object
+    ///   - session: 会话对象 / Session object
+    ///   - connectionOptions: 连接选项 / Connection options
     public func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         delegates.forEach {_ = $0.scene?(scene, willConnectTo: session, options: connectionOptions) }
     }
     
-    /// 当场景与app断开连接是调用（注意，以后它可能被重新连接
-    /// - Parameter scene: scene
+    /// Scene 已断开连接 / Scene did disconnect
+    /// 当场景与 App 断开连接时调用（注意：之后可能重新连接）/ Called when scene disconnects from app (note: may reconnect later)
+    /// - Parameter scene: 场景对象 / Scene object
     public func sceneDidDisconnect(_ scene: UIScene) {
         delegates.forEach {_ = $0.sceneDidDisconnect?(scene)}
     }
     
-    /// 当用户开始与场景进行交互（例如从应用切换器中选择场景）时，会调用
-    /// - Parameter scene: scene
+    /// Scene 变为活动状态 / Scene did become active
+    /// 当用户开始与场景交互时调用（如从应用切换器中选择场景）/ Called when user starts interacting with scene
+    /// - Parameter scene: 场景对象 / Scene object
     public func sceneDidBecomeActive(_ scene: UIScene) {
         delegates.forEach {_ = $0.sceneDidBecomeActive?(scene)}
     }
     
-    /// 当用户停止与场景交互（例如通过切换器切换到另一个场景）时调用
-    /// - Parameter scene: scene
+    /// Scene 即将进入非活动状态 / Scene will resign active
+    /// 当用户停止与场景交互时调用（如通过切换器切换到另一个场景）/ Called when user stops interacting with scene
+    /// - Parameter scene: 场景对象 / Scene object
     public func sceneWillResignActive(_ scene: UIScene) {
         delegates.forEach {_ = $0.sceneWillResignActive?(scene)}
     }
     
-    /// 当场景进入后台时调用，即该应用已最小化但仍存活在后台中
-    /// - Parameter scene: scene
+    /// Scene 进入后台 / Scene did enter background
+    /// 当场景进入后台时调用，即 App 已最小化但仍存活在后台 / Called when scene enters background
+    /// - Parameter scene: 场景对象 / Scene object
     public func sceneDidEnterBackground(_ scene: UIScene) {
         delegates.forEach {_ = $0.sceneDidEnterBackground?(scene)}
     }
     
-    /// 当场景变成活动窗口时调用，即从后台状态变成开始或恢复状态
-    /// - Parameter scene: scene
+    /// Scene 即将进入前台 / Scene will enter foreground
+    /// 当场景变成活动窗口时调用，即从后台状态变成开始或恢复状态 / Called when scene becomes active window
+    /// - Parameter scene: 场景对象 / Scene object
     public func sceneWillEnterForeground(_ scene: UIScene) {
         delegates.forEach {_ = $0.sceneWillEnterForeground?(scene)}
     }
     
+    /// Scene 处理 URL 打开 / Scene handle URL open
     public func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         delegates.forEach {_ = $0.scene?(scene, openURLContexts: URLContexts)}
     }
     
+    /// 获取状态恢复活动 / Get state restoration activity
     public func stateRestorationActivity(for scene: UIScene) -> NSUserActivity?{
         for item in delegates{
             if let userActivity = item.stateRestorationActivity?(for: scene){
@@ -84,29 +102,28 @@ public class SceneDelegateManager : SceneDelegateMediator {
         return nil
     }
     
-    
-    // This will be called after scene connection, but before activation, and will provide the
-    // activity that was last supplied to the stateRestorationActivityForScene callback, or
-    // set on the UISceneSession.stateRestorationActivity property.
-    // Note that, if it's required earlier, this activity is also already available in the
-    // UISceneSession.stateRestorationActivity at scene connection time.
+    /// 恢复交互状态 / Restore interaction state
+    /// 在场景连接后、激活前调用，提供上次保存的 NSUserActivity / Called after scene connection, before activation
     public func scene(_ scene: UIScene, restoreInteractionStateWith stateRestorationActivity: NSUserActivity){
         delegates.forEach {_ = $0.scene?(scene, restoreInteractionStateWith: stateRestorationActivity)}
     }
     
-    
+    /// 用户活动即将继续 / User activity will continue
     public func scene(_ scene: UIScene, willContinueUserActivityWithType userActivityType: String){
         delegates.forEach {_ = $0.scene?(scene, willContinueUserActivityWithType: userActivityType)}
     }
     
+    /// 继续用户活动 / Continue user activity
     public func scene(_ scene: UIScene, continue userActivity: NSUserActivity){
         delegates.forEach {_ = $0.scene?(scene, continue: userActivity)}
     }
     
+    /// 用户活动继续失败 / User activity failed to continue
     public func scene(_ scene: UIScene, didFailToContinueUserActivityWithType userActivityType: String, error: Error){
         delegates.forEach {_ = $0.scene?(scene, didFailToContinueUserActivityWithType: userActivityType, error: error)}
     }
     
+    /// 用户活动已更新 / User activity did update
     public func scene(_ scene: UIScene, didUpdate userActivity: NSUserActivity){
         delegates.forEach {_ = $0.scene?(scene, didUpdate: userActivity)}
     }
